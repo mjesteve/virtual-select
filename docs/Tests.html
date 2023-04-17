@@ -2,21 +2,119 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta charset="utf-8">
   <meta name="Custom Template for injecting custom style CSS">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
   <link rel="stylesheet" href="assets/virtual-select.min.css">
   <link rel="stylesheet" href="assets/tooltip.min.css">
-  <link rel="stylesheet" href="assets/extension/defaults.css">
-  <script src="../dist/virtual-select.min.js"></script>
+
+  <script src="assets/virtual-select.js"></script>
   <script src="assets/tooltip.min.js"></script>
 
   <style>
-    body {
-      font-family: Verdana, Geneva, Tahoma, sans-serif;
-      font-size: 1em;
+    .vscomp-options-container {
+      scrollbar-color: rgba(0, 0, 0, 0.6) rgba(156, 156, 156, 0.6);
+      scrollbar-width: thin;
     }
+
+    .vscomp-options-container::-webkit-scrollbar {
+      background: rgba(156, 156, 156, 0.6);
+      width: 8px;
+      cursor: pointer;
+    }
+
+    .vscomp-options-container::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    /*.checkbox-icon{
+    display:none !important;
+  }*/
+    .vscomp-search-clear {
+      display: none;
+    }
+
+    .vscomp-wrapper.has-select-all .vscomp-search-input {
+      width: calc(100% - 35px);
+    }
+
+    .vscomp-option.selected {
+      background-color: rgba(62, 78, 91, 0.1);
+    }
+
+    .vscomp-option {
+      padding: 0px 10px;
+    }
+
+    .vscomp-option.focused {
+      background-color: rgba(62, 78, 91, 0.05);
+    }
+
+    .vscomp-wrapper .checkbox-icon::after {
+      border: 1px solid #3e4e5b;
+    }
+
+    .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon::after,
+    .vscomp-wrapper .checkbox-icon.checked::after {
+      border-color: #3e4e5b;
+      border-left-color: transparent;
+      border-top-color: transparent;
+    }
+
+    .vscomp-wrapper {
+      color: #3e4e5b !important;
+      font-size: 14px;
+    }
+
+    .vscomp-dropbox {
+      background-color: #af73ab;
+      border: 2px solid #fade52 !important;
+    }
+
+    .vscomp-search-container {
+      padding: 0px 10px;
+      border-bottom-color: #3e4e5b;
+    }
+
+    .vscomp-search-container .vscomp-search-input {
+      border: 1px solid #3e4e5b;
+      background: transparent;
+      padding: 0 4px;
+      height: 30px;
+      color: #3e4e5b !important;
+    }
+
+    .vscomp-search-container .vscomp-search-input::placeholder {
+      color: #3e4e5b !important;
+    }
+
+    .vscomp-search-container .vscomp-search-clear {
+      color: #3e4e5b;
+    }
+
+    .vscomp-wrapper.has-search-value .vscomp-toggle-all-button {
+      opacity: 0.5;
+    }
+
+    .keep-always-open .vscomp-toggle-button {
+      display: none;
+    }
+
+    .vscomp-toggle-button {
+      background-color: #af73ab;
+      border: 2px solid #fade52;
+    }
+
+    .vscomp-toggle-button .vscomp-arrow::after {
+      border-right-color: #3e4e5b;
+      border-bottom-color: #3e4e5b;
+    }
+
+    .vscomp-toggle-button .vscomp-value {
+      opacity: 1 !important;
+    }
+
     .container {
       float: left;
       width: 300px;
@@ -73,7 +171,8 @@
       zIndex:80
     });
 
-    var milist =  VirtualSelect.init({
+
+  /*   var milist =  VirtualSelect.init({
       ele: '#sample-list',
       options: arPages,
       hideClearButton: false,
@@ -84,20 +183,24 @@
       markSearchResults: true,
       optionsCount: 10,
       selectedValue: 20
-    });
+    }); */
  
     //alert(document.getElementById('sample-select').value); //return 20
     //alert(misel.$ele.value); //return 20
+    alert(document.getElementById('sample-select').value); //return 20
+    alert(misel.value); //return undefined
 
     function getValue(){
       var myc = document.getElementById('sample-select');
       alert(myc.value); //return value selected
+      alert(misel.value); //return undefined
     }
     function setValue(){
-      var val = prompt('Type value to select');
       var myc = document.getElementById('sample-select');
-      myc.setValue(val);
-      milist.$ele.setValue(val);
+      myc.setValue(50); // selects the item with value=50 and displays it in textinput
+      alert(myc.value); // return 50
+      misel.setValue(100); // triggers change event but does not select the correct item
+      alert(misel.value); //return undefined
     }
     
   </script>
