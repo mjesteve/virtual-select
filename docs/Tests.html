@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="Custom Template for injecting custom style CSS">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <link rel="stylesheet" href="assets/virtual-select.min.css">
+  <link rel="stylesheet" href="assets/tooltip.min.css">
+
+  <script src="assets/virtual-select.js"></script>
+  <script src="assets/tooltip.min.js"></script>
+
+  <style>
+    .vscomp-options-container {
+      scrollbar-color: rgba(0, 0, 0, 0.6) rgba(156, 156, 156, 0.6);
+      scrollbar-width: thin;
+    }
+
+    .vscomp-options-container::-webkit-scrollbar {
+      background: rgba(156, 156, 156, 0.6);
+      width: 8px;
+      cursor: pointer;
+    }
+
+    .vscomp-options-container::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    /*.checkbox-icon{
+    display:none !important;
+  }*/
+    .vscomp-search-clear {
+      display: none;
+    }
+
+    .vscomp-wrapper.has-select-all .vscomp-search-input {
+      width: calc(100% - 35px);
+    }
+
+    .vscomp-option.selected {
+      background-color: rgba(62, 78, 91, 0.1);
+    }
+
+    .vscomp-option {
+      padding: 0px 10px;
+    }
+
+    .vscomp-option.focused {
+      background-color: rgba(62, 78, 91, 0.05);
+    }
+
+    .vscomp-wrapper .checkbox-icon::after {
+      border: 1px solid #3e4e5b;
+    }
+
+    .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon::after,
+    .vscomp-wrapper .checkbox-icon.checked::after {
+      border-color: #3e4e5b;
+      border-left-color: transparent;
+      border-top-color: transparent;
+    }
+
+    .vscomp-wrapper {
+      color: #3e4e5b !important;
+      font-size: 14px;
+    }
+
+    .vscomp-dropbox {
+      background-color: #af73ab;
+      border: 2px solid #fade52 !important;
+    }
+
+    .vscomp-search-container {
+      padding: 0px 10px;
+      border-bottom-color: #3e4e5b;
+    }
+
+    .vscomp-search-container .vscomp-search-input {
+      border: 1px solid #3e4e5b;
+      background: transparent;
+      padding: 0 4px;
+      height: 30px;
+      color: #3e4e5b !important;
+    }
+
+    .vscomp-search-container .vscomp-search-input::placeholder {
+      color: #3e4e5b !important;
+    }
+
+    .vscomp-search-container .vscomp-search-clear {
+      color: #3e4e5b;
+    }
+
+    .vscomp-wrapper.has-search-value .vscomp-toggle-all-button {
+      opacity: 0.5;
+    }
+
+    .keep-always-open .vscomp-toggle-button {
+      display: none;
+    }
+
+    .vscomp-toggle-button {
+      background-color: #af73ab;
+      border: 2px solid #fade52;
+    }
+
+    .vscomp-toggle-button .vscomp-arrow::after {
+      border-right-color: #3e4e5b;
+      border-bottom-color: #3e4e5b;
+    }
+
+    .vscomp-toggle-button .vscomp-value {
+      opacity: 1 !important;
+    }
+
+    .container {
+      float: left;
+      width: 300px;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="height: 500px; width: 500px; background-color: darkcyan;">
+
+    <div id="sample-select"></div>
+    <button type="button" onclick="getValue()">Get value</button>
+    <button type="button" onclick="setValue()">Set value 10</button>
+  </div>
+
+  <script type="text/javascript">
+
+    //  https://codepen.io/dams591/pen/zYojWNb?editors=1010
+    const items = 10;
+    const fontSize = '29px';
+
+    const data = [];
+
+    for (let idx = 1; idx <= items; idx++) {
+      data.push({ label: `Label ${idx}`, value: idx });
+    }
+    const arPages = [{label:1,value:1}, {label:2,value:2}, {label:3,value:3}, {label:4,value:4}, {label:5,value:5}, {label:6,value:6}, 
+          {label:7,value:7}, {label:8,value:8}, {label:9,value:9}, {label:10,value:10},{label:11,value:11}, {label:12,value:12}, 
+          {label:13,value:13}, {label:14,value:14}, {label:15,value:15}, {label:16,value:16}, {label:17,value:17}, {label:18,value:18}, 
+          {label:19,value:19}, {label:20,value:20}, {label:25,value:25}, {label:30,value:30}, {label:35,value:35}, {label:40,value:40}, 
+          {label:45,value:45}, {label:50,value:50}, {label:100,value:100}];
+
+    const arPages1 = [{nregpag:1}, {nregpag:2}, {nregpag:3}, {nregpag:4}, {nregpag:5}, {nregpag:6}, {nregpag:7}, {nregpag:8}, {nregpag:9}, {nregpag:10}, 
+            {nregpag:11}, {nregpag:12}, {nregpag:13}, {nregpag:14}, {nregpag:15}, {nregpag:16}, {nregpag:17}, {nregpag:18}, {nregpag:19}, {nregpag:20}, 
+            {nregpag:25}, {nregpag:30}, {nregpag:35}, {nregpag:40}, {nregpag:45}, {nregpag:50}, {nregpag:100}];
+
+    var misel =  VirtualSelect.init({
+      ele: '#sample-select',
+      options: arPages1,
+      hideClearButton: true,
+      optionsCount: 10,
+      optionHeight:"35px",
+      labelKey: "nregpag", valueKey: "nregpag",
+      disabledOpions: [],
+      dropboxWrapper: 'body',
+      markSearchResults: true,
+      optionsCount: 10,
+      position: 'bottom',
+      selectedValue: 20,
+      showValueAsTags: false,
+      zIndex:80
+    });
+
+    alert(document.getElementById('sample-select').value); //return 20
+    alert(misel.value); //return undefined
+
+    function getValue(){
+      var myc = document.getElementById('sample-select');
+      alert(myc.value); //return value selected
+      alert(misel.value); //return undefined
+    }
+    function setValue(){
+      var myc = document.getElementById('sample-select');
+      myc.setValue(50); // selects the item with value=50 and displays it in textinput
+      alert(myc.value); // return 50
+      misel.setValue(100); // triggers change event but does not select the correct item
+      alert(misel.value); //return undefined
+    }
+    
+  </script>
+
+</body>
+
+</html>
