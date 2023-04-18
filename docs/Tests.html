@@ -6,115 +6,14 @@
   <meta name="Custom Template for injecting custom style CSS">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-  <link rel="stylesheet" href="assets/virtual-select.min.css">
-  <link rel="stylesheet" href="assets/tooltip.min.css">
+  <link rel="stylesheet" href="assets/extension/virtual-select.css">
+  <link rel="stylesheet" href="assets/extension/tooltip.min.css">
+  <link rel="stylesheet" href="assets/extension/defaults.css">
 
   <script src="assets/virtual-select.js"></script>
   <script src="assets/tooltip.min.js"></script>
 
   <style>
-    .vscomp-options-container {
-      scrollbar-color: rgba(0, 0, 0, 0.6) rgba(156, 156, 156, 0.6);
-      scrollbar-width: thin;
-    }
-
-    .vscomp-options-container::-webkit-scrollbar {
-      background: rgba(156, 156, 156, 0.6);
-      width: 8px;
-      cursor: pointer;
-    }
-
-    .vscomp-options-container::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    /*.checkbox-icon{
-    display:none !important;
-  }*/
-    .vscomp-search-clear {
-      display: none;
-    }
-
-    .vscomp-wrapper.has-select-all .vscomp-search-input {
-      width: calc(100% - 35px);
-    }
-
-    .vscomp-option.selected {
-      background-color: rgba(62, 78, 91, 0.1);
-    }
-
-    .vscomp-option {
-      padding: 0px 10px;
-    }
-
-    .vscomp-option.focused {
-      background-color: rgba(62, 78, 91, 0.05);
-    }
-
-    .vscomp-wrapper .checkbox-icon::after {
-      border: 1px solid #3e4e5b;
-    }
-
-    .vscomp-wrapper.multiple .vscomp-option.selected .checkbox-icon::after,
-    .vscomp-wrapper .checkbox-icon.checked::after {
-      border-color: #3e4e5b;
-      border-left-color: transparent;
-      border-top-color: transparent;
-    }
-
-    .vscomp-wrapper {
-      color: #3e4e5b !important;
-      font-size: 14px;
-    }
-
-    .vscomp-dropbox {
-      background-color: #af73ab;
-      border: 2px solid #fade52 !important;
-    }
-
-    .vscomp-search-container {
-      padding: 0px 10px;
-      border-bottom-color: #3e4e5b;
-    }
-
-    .vscomp-search-container .vscomp-search-input {
-      border: 1px solid #3e4e5b;
-      background: transparent;
-      padding: 0 4px;
-      height: 30px;
-      color: #3e4e5b !important;
-    }
-
-    .vscomp-search-container .vscomp-search-input::placeholder {
-      color: #3e4e5b !important;
-    }
-
-    .vscomp-search-container .vscomp-search-clear {
-      color: #3e4e5b;
-    }
-
-    .vscomp-wrapper.has-search-value .vscomp-toggle-all-button {
-      opacity: 0.5;
-    }
-
-    .keep-always-open .vscomp-toggle-button {
-      display: none;
-    }
-
-    .vscomp-toggle-button {
-      background-color: #af73ab;
-      border: 2px solid #fade52;
-    }
-
-    .vscomp-toggle-button .vscomp-arrow::after {
-      border-right-color: #3e4e5b;
-      border-bottom-color: #3e4e5b;
-    }
-
-    .vscomp-toggle-button .vscomp-value {
-      opacity: 1 !important;
-    }
-
     .container {
       float: left;
       width: 300px;
