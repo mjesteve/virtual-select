@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="assets/extension/virtual-select.css">
   <link rel="stylesheet" href="assets/extension/tooltip.min.css">
   <link rel="stylesheet" href="assets/extension/defaults.css">
-  <script src="assets/virtual-select.min.js"></script>
+  <script src="assets/virtual-select.js"></script>
   <script src="assets/tooltip.min.js"></script>
   <style>
   /*.vscomp-options-container {
@@ -188,7 +188,7 @@
     VirtualSelect.init({
       ele: '#dropdown2',
       search: true,
-      searchPlaceholder: 'test',
+      searchPlaceholderText: 'test',
       multiple: true,
       //optionHeight: fontSize, // font size *2 + 1 ?
       options: data,
@@ -218,6 +218,7 @@
         { label: 'Options 2', value: '2' },
         { label: 'Options 3', value: '3' },
       ],
+      search:true
     });
   }, false);
 
