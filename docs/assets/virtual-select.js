@@ -3343,6 +3343,9 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function setValueMethod() {
       var _this$virtualSelect;
       (_this$virtualSelect = this.virtualSelect).setValueMethod.apply(_this$virtualSelect, arguments);
+      if (this.virtualSelect.focusSelectedOptionOnOpen && this.virtualSelect.keepAlwaysOpen) {
+        this.virtualSelect.setScrollTop();
+      }
     }
   }, {
     key: "setOptionsMethod",

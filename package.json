@@ -3,6 +3,8 @@
   "version": "1.0.40",
   "description": "A javascript plugin for dropdown with virtual scroll",
   "scripts": {
+    "builddev": "webpack --mode development",
+    "builddevwatch": "webpack --mode development --watch",
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
     "validate": "tsc && eslint src/**/*.js && stylelint src/sass/**/*.scss",
