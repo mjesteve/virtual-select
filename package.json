@@ -1,8 +1,10 @@
 {
   "name": "virtual-select-plugin",
-  "version": "1.0.39",
-  "description": "A javascript plugin for dropdown with virtual scroll",
+  "version": "1.0.39.1",
+  "description": "A javascript plugin for dropdown with virtual scroll-custom",
   "scripts": {
+    "builddev": "webpack --mode development",
+    "builddevwatch": "webpack --mode development --watch",
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
     "validate": "tsc && eslint src/**/*.js && stylelint src/sass/**/*.scss",

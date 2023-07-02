@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.0.39
+ * Virtual Select v1.0.39.1
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  *//******/ (function() { // webpackBootstrap
@@ -3343,6 +3343,9 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function setValueMethod() {
       var _this$virtualSelect;
       (_this$virtualSelect = this.virtualSelect).setValueMethod.apply(_this$virtualSelect, arguments);
+      if (this.virtualSelect.focusSelectedOptionOnOpen && this.virtualSelect.keepAlwaysOpen) {
+        this.virtualSelect.setScrollTop();
+      }
     }
   }, {
     key: "setOptionsMethod",

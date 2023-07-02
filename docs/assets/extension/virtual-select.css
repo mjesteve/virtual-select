@@ -1,8 +1,6 @@
-@namespace "http://www.w3.org/1999/xhtml";
 @namespace j "library://ns.apache.org/royale/jewel";
+@namespace "http://www.w3.org/1999/xhtml";
 @namespace vsel "library://ns.apache.org/royale/externsjs/virtualselect";
-@namespace j "library://ns.apache.org/royale/jewel";
-@namespace "http://www.w3.org/1999/xhtml";
 @-webkit-keyframes vscomp-animation-spin {
   to {
     transform: rotateZ(360deg);
@@ -78,15 +76,6 @@
   right: 0;
   top: 0;
   width: 30px;
-  /*&::after
-   * transform: rotate(45deg)
-   * border: 1px solid transparent
-   * border-bottom-color: $arrow-color
-   * border-right-color: $arrow-color
-   * content: ""
-   * height: 8px
-   * margin-top: -6px
-   * width: 8px */
 }
 .vscomp-arrow:hover {
   background: #cccccc;
@@ -97,6 +86,15 @@
   color: #808080;
 }
 
+/* &::after
+ * transform: rotate(45deg)
+ * border: 1px solid transparent
+ * border-bottom-color: $arrow-color
+ * border-right-color: $arrow-color
+ * content: ""
+ * height: 8px
+ * margin-top: -6px
+ * width: 8px */
 .vscomp-clear-icon {
   height: 12px;
   position: relative;
@@ -260,6 +258,19 @@
 }
 .vscomp-search-input:focus {
   outline: none;
+}
+
+.vscomp-search-label,
+.vscomp-live-region {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 .vscomp-search-clear {

@@ -3139,6 +3139,9 @@ export class VirtualSelect {
 
   static setValueMethod(...params) {
     this.virtualSelect.setValueMethod(...params);
+    if (this.virtualSelect.focusSelectedOptionOnOpen && this.virtualSelect.keepAlwaysOpen) {
+      this.virtualSelect.setScrollTop();
+    }
   }
 
   static setOptionsMethod(...params) {
