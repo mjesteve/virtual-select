@@ -6,14 +6,17 @@
   <meta name="Custom Template for injecting custom style CSS">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-  <link rel="stylesheet" href="assets/extension/virtual-select.css">
-  <link rel="stylesheet" href="assets/extension/tooltip.min.css">
+  <link rel="stylesheet" href="assets/virtual-select.min.css">
+  <link rel="stylesheet" href="assets/tooltip.min.css">
   <link rel="stylesheet" href="assets/extension/defaults.css">
-
-  <script src="assets/virtual-select.js"></script>
+  <script src="../dist/virtual-select.min.js"></script>
   <script src="assets/tooltip.min.js"></script>
 
   <style>
+    body {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+      font-size: 1em;
+    }
     .container {
       float: left;
       width: 300px;
@@ -92,14 +95,12 @@
     function getValue(){
       var myc = document.getElementById('sample-select');
       alert(myc.value); //return value selected
-      alert(misel.value); //return undefined
     }
     function setValue(){
+      var val = prompt('Type value to select');
       var myc = document.getElementById('sample-select');
-      myc.setValue(50); // selects the item with value=50 and displays it in textinput
-      alert(myc.value); // return 50
-      misel.setValue(100); // triggers change event but does not select the correct item
-      alert(misel.value); //return undefined
+      myc.setValue(val);
+      milist.$ele.setValue(val);
     }
     
   </script>
