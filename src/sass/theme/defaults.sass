@@ -43,4 +43,29 @@
 				box-shadow: none
 
 .vscomp-search-input
-	font-size: inherit
+	background-color: transparent;
+    border-radius: 20px;
+	// border: 0;
+	// padding: 10px 0;
+	// font-size: 15px;
+	border: 1px solid #d9d9d9; /* jewel textinput input */
+	color: inherit;
+	font-size: inherit;
+	height: 38px;
+    padding-left: 42px;
+    padding-right: 14px;
+  	//width: calc(100% - 30px);
+
+.vscomp-search-input::before {
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f007";
+}
+
+
+
