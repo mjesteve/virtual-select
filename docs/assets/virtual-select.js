@@ -3,42 +3,188 @@
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  *//******/ (function() { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ "./src/utils/dom-utils.js":
-/*!********************************!*\
-  !*** ./src/utils/dom-utils.js ***!
-  \********************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+!function() {
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DomUtils": function() { return /* binding */ DomUtils; }
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils/utils.js");
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+// UNUSED EXPORTS: VirtualSelect
+
+;// CONCATENATED MODULE: ./src/utils/utils.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+var Utils = /*#__PURE__*/function () {
+  function Utils() {
+    _classCallCheck(this, Utils);
+  }
+  _createClass(Utils, null, [{
+    key: "getString",
+    value:
+    /**
+     * @param {any} text
+     * @returns {string}
+     */
+    function getString(text) {
+      return text || text === 0 ? text.toString() : '';
+    }
+
+    /**
+     * @param {any} value
+     * @param {boolean} defaultValue
+     * @returns {boolean}
+     */
+  }, {
+    key: "convertToBoolean",
+    value: function convertToBoolean(value) {
+      var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var result;
+      if (value === true || value === 'true') {
+        result = true;
+      } else if (value === false || value === 'false') {
+        result = false;
+      } else {
+        result = defaultValue;
+      }
+      return result;
+    }
+
+    /**
+     * @param {any} value
+     * @returns {boolean}
+     */
+  }, {
+    key: "isEmpty",
+    value: function isEmpty(value) {
+      var result = false;
+      if (!value) {
+        result = true;
+      } else if (Array.isArray(value)) {
+        if (value.length === 0) {
+          result = true;
+        }
+      } else if (_typeof(value) === 'object' && Object.keys(value).length === 0) {
+        result = true;
+      }
+      return result;
+    }
+
+    /**
+     * @param {any} value
+     * @returns {boolean}
+     */
+  }, {
+    key: "isNotEmpty",
+    value: function isNotEmpty(value) {
+      return !this.isEmpty(value);
+    }
+
+    /**
+     * @param {any[]} array
+     * @param {any} value
+     * @param {boolean} cloneArray
+     * @returns {any[]}
+     */
+  }, {
+    key: "removeItemFromArray",
+    value: function removeItemFromArray(array, value) {
+      var cloneArray = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      if (!Array.isArray(array) || !array.length) {
+        return array;
+      }
+      var inputArr = cloneArray ? _toConsumableArray(array) : array;
+      var index = inputArr.indexOf(value);
+      if (index !== -1) {
+        inputArr.splice(index, 1);
+      }
+      return inputArr;
+    }
+
+    /**
+     * @param {any[]} array
+     * @returns {any[]}
+     */
+  }, {
+    key: "removeArrayEmpty",
+    value: function removeArrayEmpty(array) {
+      if (!Array.isArray(array) || !array.length) {
+        return [];
+      }
+      return array.filter(function (d) {
+        return !!d;
+      });
+    }
+
+    /**
+     * @param {number} max
+     * @param {number} max
+     * @returns {number}
+     */
+  }, {
+    key: "getRandomInt",
+    value: function getRandomInt(max) {
+      var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var minN = Math.ceil(min);
+      var maxN = Math.floor(max);
+      return Math.floor(Math.random() * (maxN - minN - 1)) + minN;
+    }
+
+    /**
+     * @param {string} text
+     * @return {string}
+     */
+  }, {
+    key: "regexEscape",
+    value: function regexEscape(text) {
+      var ESC_REGEX = /[-/\\^$*+?.()|[\]{}]/g;
+      return text.replace(ESC_REGEX, '\\$&');
+    }
+
+    /**
+     * @param {string} text
+     * @return {string}
+     */
+  }, {
+    key: "normalizeString",
+    value: function normalizeString(text) {
+      var NON_WORD_REGEX = /[^\w]/g;
+      return text.normalize('NFD').replace(NON_WORD_REGEX, '');
+    }
+  }]);
+  return Utils;
+}();
+;// CONCATENATED MODULE: ./src/utils/dom-utils.js
+function dom_utils_typeof(obj) { "@babel/helpers - typeof"; return dom_utils_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, dom_utils_typeof(obj); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || dom_utils_unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function dom_utils_toConsumableArray(arr) { return dom_utils_arrayWithoutHoles(arr) || dom_utils_iterableToArray(arr) || dom_utils_unsupportedIterableToArray(arr) || dom_utils_nonIterableSpread(); }
+function dom_utils_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function dom_utils_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return dom_utils_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return dom_utils_arrayLikeToArray(o, minLen); }
+function dom_utils_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function dom_utils_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return dom_utils_arrayLikeToArray(arr); }
+function dom_utils_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function dom_utils_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function dom_utils_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, dom_utils_toPropertyKey(descriptor.key), descriptor); } }
+function dom_utils_createClass(Constructor, protoProps, staticProps) { if (protoProps) dom_utils_defineProperties(Constructor.prototype, protoProps); if (staticProps) dom_utils_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function dom_utils_toPropertyKey(arg) { var key = dom_utils_toPrimitive(arg, "string"); return dom_utils_typeof(key) === "symbol" ? key : String(key); }
+function dom_utils_toPrimitive(input, hint) { if (dom_utils_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (dom_utils_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 
 var DomUtils = /*#__PURE__*/function () {
   function DomUtils() {
-    _classCallCheck(this, DomUtils);
+    dom_utils_classCallCheck(this, DomUtils);
   }
-  _createClass(DomUtils, null, [{
+  dom_utils_createClass(DomUtils, null, [{
     key: "addClass",
     value:
     /**
@@ -52,7 +198,7 @@ var DomUtils = /*#__PURE__*/function () {
       var classNamesArr = classNames.split(' ');
       DomUtils.getElements($ele).forEach(function ($this) {
         var _$this$classList;
-        (_$this$classList = $this.classList).add.apply(_$this$classList, _toConsumableArray(classNamesArr));
+        (_$this$classList = $this.classList).add.apply(_$this$classList, dom_utils_toConsumableArray(classNamesArr));
       });
     }
 
@@ -69,7 +215,7 @@ var DomUtils = /*#__PURE__*/function () {
       var classNamesArr = classNames.split(' ');
       DomUtils.getElements($ele).forEach(function ($this) {
         var _$this$classList2;
-        (_$this$classList2 = $this.classList).remove.apply(_$this$classList2, _toConsumableArray(classNamesArr));
+        (_$this$classList2 = $this.classList).remove.apply(_$this$classList2, dom_utils_toConsumableArray(classNamesArr));
       });
     }
 
@@ -272,7 +418,7 @@ var DomUtils = /*#__PURE__*/function () {
       if (!$ele) {
         return;
       }
-      var eventsArray = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.removeArrayEmpty(events.split(' '));
+      var eventsArray = Utils.removeArrayEmpty(events.split(' '));
       eventsArray.forEach(function (event) {
         var $eleArray = DomUtils.getElements($ele);
         $eleArray.forEach(function ($this) {
@@ -362,281 +508,26 @@ var DomUtils = /*#__PURE__*/function () {
   }]);
   return DomUtils;
 }();
-
-/***/ }),
-
-/***/ "./src/utils/index.js":
-/*!****************************!*\
-  !*** ./src/utils/index.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DomUtils": function() { return /* reexport safe */ _dom_utils__WEBPACK_IMPORTED_MODULE_1__.DomUtils; },
-/* harmony export */   "Utils": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.Utils; }
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils/utils.js");
-/* harmony import */ var _dom_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-utils */ "./src/utils/dom-utils.js");
-
-
-
-/***/ }),
-
-/***/ "./src/utils/utils.js":
-/*!****************************!*\
-  !*** ./src/utils/utils.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Utils": function() { return /* binding */ Utils; }
-/* harmony export */ });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var Utils = /*#__PURE__*/function () {
-  function Utils() {
-    _classCallCheck(this, Utils);
-  }
-  _createClass(Utils, null, [{
-    key: "getString",
-    value:
-    /**
-     * @param {any} text
-     * @returns {string}
-     */
-    function getString(text) {
-      return text || text === 0 ? text.toString() : '';
-    }
-
-    /**
-     * @param {any} value
-     * @param {boolean} defaultValue
-     * @returns {boolean}
-     */
-  }, {
-    key: "convertToBoolean",
-    value: function convertToBoolean(value) {
-      var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var result;
-      if (value === true || value === 'true') {
-        result = true;
-      } else if (value === false || value === 'false') {
-        result = false;
-      } else {
-        result = defaultValue;
-      }
-      return result;
-    }
-
-    /**
-     * @param {any} value
-     * @returns {boolean}
-     */
-  }, {
-    key: "isEmpty",
-    value: function isEmpty(value) {
-      var result = false;
-      if (!value) {
-        result = true;
-      } else if (Array.isArray(value)) {
-        if (value.length === 0) {
-          result = true;
-        }
-      } else if (_typeof(value) === 'object' && Object.keys(value).length === 0) {
-        result = true;
-      }
-      return result;
-    }
-
-    /**
-     * @param {any} value
-     * @returns {boolean}
-     */
-  }, {
-    key: "isNotEmpty",
-    value: function isNotEmpty(value) {
-      return !this.isEmpty(value);
-    }
-
-    /**
-     * @param {any[]} array
-     * @param {any} value
-     * @param {boolean} cloneArray
-     * @returns {any[]}
-     */
-  }, {
-    key: "removeItemFromArray",
-    value: function removeItemFromArray(array, value) {
-      var cloneArray = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      if (!Array.isArray(array) || !array.length) {
-        return array;
-      }
-      var inputArr = cloneArray ? _toConsumableArray(array) : array;
-      var index = inputArr.indexOf(value);
-      if (index !== -1) {
-        inputArr.splice(index, 1);
-      }
-      return inputArr;
-    }
-
-    /**
-     * @param {any[]} array
-     * @returns {any[]}
-     */
-  }, {
-    key: "removeArrayEmpty",
-    value: function removeArrayEmpty(array) {
-      if (!Array.isArray(array) || !array.length) {
-        return [];
-      }
-      return array.filter(function (d) {
-        return !!d;
-      });
-    }
-
-    /**
-     * @param {number} max
-     * @param {number} max
-     * @returns {number}
-     */
-  }, {
-    key: "getRandomInt",
-    value: function getRandomInt(max) {
-      var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      var minN = Math.ceil(min);
-      var maxN = Math.floor(max);
-      return Math.floor(Math.random() * (maxN - minN - 1)) + minN;
-    }
-
-    /**
-     * @param {string} text
-     * @return {string}
-     */
-  }, {
-    key: "regexEscape",
-    value: function regexEscape(text) {
-      var ESC_REGEX = /[-/\\^$*+?.()|[\]{}]/g;
-      return text.replace(ESC_REGEX, '\\$&');
-    }
-
-    /**
-     * @param {string} text
-     * @return {string}
-     */
-  }, {
-    key: "normalizeString",
-    value: function normalizeString(text) {
-      var NON_WORD_REGEX = /[^\w]/g;
-      return text.normalize('NFD').replace(NON_WORD_REGEX, '');
-    }
-  }]);
-  return Utils;
-}();
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
-"use strict";
-var __webpack_exports__ = {};
-/*!*******************************!*\
-  !*** ./src/virtual-select.js ***!
-  \*******************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "VirtualSelect": function() { return /* binding */ VirtualSelect; }
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils/index.js");
+;// CONCATENATED MODULE: ./src/virtual-select.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _defineProperty(obj, key, value) { key = virtual_select_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function virtual_select_typeof(obj) { "@babel/helpers - typeof"; return virtual_select_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, virtual_select_typeof(obj); }
+function virtual_select_slicedToArray(arr, i) { return virtual_select_arrayWithHoles(arr) || virtual_select_iterableToArrayLimit(arr, i) || virtual_select_unsupportedIterableToArray(arr, i) || virtual_select_nonIterableRest(); }
+function virtual_select_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function virtual_select_iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0) { ; } } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function virtual_select_arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function virtual_select_toConsumableArray(arr) { return virtual_select_arrayWithoutHoles(arr) || virtual_select_iterableToArray(arr) || virtual_select_unsupportedIterableToArray(arr) || virtual_select_nonIterableSpread(); }
+function virtual_select_nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function virtual_select_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return virtual_select_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return virtual_select_arrayLikeToArray(o, minLen); }
+function virtual_select_iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function virtual_select_arrayWithoutHoles(arr) { if (Array.isArray(arr)) return virtual_select_arrayLikeToArray(arr); }
+function virtual_select_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function virtual_select_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function virtual_select_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, virtual_select_toPropertyKey(descriptor.key), descriptor); } }
+function virtual_select_createClass(Constructor, protoProps, staticProps) { if (protoProps) virtual_select_defineProperties(Constructor.prototype, protoProps); if (staticProps) virtual_select_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function virtual_select_toPropertyKey(arg) { var key = virtual_select_toPrimitive(arg, "string"); return virtual_select_typeof(key) === "symbol" ? key : String(key); }
+function virtual_select_toPrimitive(input, hint) { if (virtual_select_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (virtual_select_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 /** cSpell:ignore nocheck, Labelledby, vscomp, tabindex, combobox, haspopup, listbox, activedescendant */
 /* eslint-disable class-methods-use-this */
 // @ts-nocheck
@@ -651,7 +542,8 @@ var keyDownMethodMapping = {
 var valueLessProps = ['autofocus', 'disabled', 'multiple', 'required'];
 var nativeProps = ['autofocus', 'class', 'disabled', 'id', 'multiple', 'name', 'placeholder', 'required'];
 var attrPropsMapping;
-var dataProps = ['additionalClasses', 'aliasKey', 'allOptionsSelectedText', 'allowNewOption', 'alwaysShowSelectedOptionsCount', 'alwaysShowSelectedOptionsLabel', 'ariaLabelledby', 'ariaLabelText', 'autoSelectFirstOption', 'clearButtonText', 'descriptionKey', 'disableAllOptionsSelectedText', 'disableOptionGroupCheckbox', 'disableSelectAll', 'disableValidation', 'dropboxWidth', 'dropboxWrapper', 'emptyValue', 'enableSecureText', 'focusSelectedOptionOnOpen', 'hasOptionDescription', 'hideClearButton', 'hideValueTooltipOnSelectAll', 'keepAlwaysOpen', 'labelKey', 'markSearchResults', 'maxValues', 'maxWidth', 'minValues', 'moreText', 'noOfDisplayValues', 'noOptionsText', 'noSearchResultsText', 'optionHeight', 'optionSelectedText', 'optionsCount', 'optionsSelectedText', 'popupDropboxBreakpoint', 'popupPosition', 'position', 'search', 'searchByStartsWith', 'searchDelay', 'searchFormLabel', 'searchGroup', 'searchNormalize', 'searchPlaceholderText', 'selectAllOnlyVisible', 'selectAllText', 'setValueAsArray', 'showDropboxAsPopup', 'showOptionsOnlyOnSearch', 'showSelectedOptionsFirst', 'showValueAsTags', 'silentInitialValueSet', 'textDirection', 'tooltipAlignment', 'tooltipFontSize', 'tooltipMaxWidth', 'updatePositionThrottle', 'useGroupValue', 'valueKey', 'zIndex'];
+var dataProps = ['additionalClasses', 'aliasKey', 'allOptionsSelectedText', 'allowNewOption', 'alwaysShowSelectedOptionsCount', 'alwaysShowSelectedOptionsLabel', 'ariaLabelledby', 'ariaLabelText', 'autoSelectFirstOption', 'clearButtonText', 'descriptionKey', 'disableAllOptionsSelectedText', 'disableOptionGroupCheckbox', 'disableSelectAll', 'disableValidation', 'dropboxWidth', 'dropboxWrapper', 'emptyValue', 'enableSecureText', 'focusSelectedOptionOnOpen', 'hasOptionDescription', 'hideClearButton', 'hideValueTooltipOnSelectAll', 'keepAlwaysOpen', 'labelKey', 'markSearchResults', 'maxValues', 'maxWidth', 'minValues', 'moreText', 'noOfDisplayValues', 'noOptionsText', 'noSearchResultsText', 'optionHeight', 'optionSelectedText', 'optionsCount', 'optionsSelectedText', 'popupDropboxBreakpoint', 'popupPosition', 'position', 'search', 'searchByStartsWith', 'searchDelay', 'searchFormLabel', 'searchGroup', 'searchNormalize', 'searchPlaceholderText', 'selectAllOnlyVisible', 'selectAllText', 'setValueAsArray', 'showDropboxAsPopup', 'showOptionsOnlyOnSearch', 'showSelectedOptionsFirst', 'showValueAsTags', 'silentInitialValueSet', 'textDirection', 'tooltipAlignment', 'tooltipFontSize', 'tooltipMaxWidth', 'updatePositionThrottle', 'useGroupValue', 'valueKey', 'zIndex', 'hideSelectDisplayOnkeepAlwaysOpen' // Royale
+];
 
 /** Class representing VirtualSelect */
 var VirtualSelect = /*#__PURE__*/function () {
@@ -659,7 +551,7 @@ var VirtualSelect = /*#__PURE__*/function () {
    * @param {virtualSelectOptions} options
    */
   function VirtualSelect(options) {
-    _classCallCheck(this, VirtualSelect);
+    virtual_select_classCallCheck(this, VirtualSelect);
     try {
       this.createSecureTextElements();
       this.setProps(options);
@@ -675,7 +567,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }
 
   /** render methods - start */
-  _createClass(VirtualSelect, [{
+  virtual_select_createClass(VirtualSelect, [{
     key: "render",
     value: function render() {
       if (!this.$ele) {
@@ -687,6 +579,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       var clearButtonTooltip = this.getTooltipAttrText(this.clearButtonText);
       var ariaLabelledbyText = this.ariaLabelledby ? "aria-labelledby=\"".concat(this.ariaLabelledby, "\"") : '';
       var ariaLabelText = this.ariaLabelText ? "aria-label=\"".concat(this.ariaLabelText, "\"") : '';
+      // Royale
+      var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
       var isExpanded = false;
       if (this.additionalClasses) {
         wrapperClasses += " ".concat(this.additionalClasses);
@@ -721,7 +615,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (this.popupPosition) {
         wrapperClasses += " popup-position-".concat(this.popupPosition.toLowerCase());
       }
-      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, "\n      >\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n\n        <div class=\"vscomp-toggle-button\">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n\n          <div class=\"vscomp-arrow\"></div>\n\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        <section role=\"region\" class=\"vscomp-live-region\" aria-live=\"polite\">\n          <p class=\"vscomp-live-region-title\"></p>\n        </section>\n\n        ").concat(this.renderDropbox({
+      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, "\n      >\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n\n        <div class=\"vscomp-toggle-button\" ").concat(hideDisplay, ">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n\n          <div class=\"vscomp-arrow\"></div>\n\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        <section role=\"region\" class=\"vscomp-live-region\" aria-live=\"polite\">\n          <p class=\"vscomp-live-region-title\"></p>\n        </section>\n\n        ").concat(this.renderDropbox({
         wrapperClasses: wrapperClasses
       }), "\n      </div>");
       this.$ele.innerHTML = html;
@@ -731,7 +625,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (this.hasDropboxWrapper) {
         this.$allWrappers = [this.$wrapper, this.$dropboxWrapper];
         this.$dropboxContainer = this.$dropboxWrapper.querySelector('.vscomp-dropbox-container');
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$dropboxContainer, 'pop-comp-wrapper');
+        DomUtils.addClass(this.$dropboxContainer, 'pop-comp-wrapper');
       } else {
         this.$allWrappers = [this.$wrapper];
         this.$dropboxContainer = this.$wrapper.querySelector('.vscomp-dropbox-container');
@@ -762,7 +656,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         this.hasDropboxWrapper = true;
         $dropboxWrapper.innerHTML = html;
         $wrapper.appendChild($dropboxWrapper);
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass($dropboxWrapper, "vscomp-dropbox-wrapper ".concat(wrapperClasses));
+        DomUtils.addClass($dropboxWrapper, "vscomp-dropbox-wrapper ".concat(wrapperClasses));
         return '';
       }
       this.hasDropboxWrapper = false;
@@ -783,9 +677,9 @@ var VirtualSelect = /*#__PURE__*/function () {
         uniqueId = this.uniqueId,
         searchGroup = this.searchGroup;
       var hasLabelRenderer = typeof labelRenderer === 'function';
-      var convertToBoolean = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.convertToBoolean;
+      var convertToBoolean = Utils.convertToBoolean;
       if (markSearchResults) {
-        searchRegex = new RegExp("(".concat(_utils__WEBPACK_IMPORTED_MODULE_0__.Utils.regexEscape(this.searchValue), ")(?!([^<]+)?>)"), 'gi');
+        searchRegex = new RegExp("(".concat(Utils.regexEscape(this.searchValue), ")(?!([^<]+)?>)"), 'gi');
       }
       if (this.multiple) {
         checkboxHtml = '<span class="checkbox-icon"></span>';
@@ -897,7 +791,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!$ele) {
         return;
       }
-      var eventsArray = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.removeArrayEmpty(events.split(' '));
+      var eventsArray = Utils.removeArrayEmpty(events.split(' '));
       eventsArray.forEach(function (event) {
         var eventsKey = "".concat(method, "-").concat(event);
         var callback = _this2.events[eventsKey];
@@ -905,7 +799,7 @@ var VirtualSelect = /*#__PURE__*/function () {
           callback = _this2[method].bind(_this2);
           _this2.events[eventsKey] = callback;
         }
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addEvent($ele, event, callback);
+        DomUtils.addEvent($ele, event, callback);
       });
     }
   }, {
@@ -992,8 +886,8 @@ var VirtualSelect = /*#__PURE__*/function () {
     key: "onOptionsClick",
     value: function onOptionsClick(e) {
       var $option = e.target.closest('.vscomp-option');
-      if ($option && !_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($option, 'disabled')) {
-        if (_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($option, 'group-title')) {
+      if ($option && !DomUtils.hasClass($option, 'disabled')) {
+        if (DomUtils.hasClass($option, 'group-title')) {
           this.onGroupTitleClick($option);
         } else {
           this.selectOption($option, {
@@ -1008,7 +902,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!$ele || !this.multiple || this.disableOptionGroupCheckbox) {
         return;
       }
-      var isAdding = !_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($ele, 'selected');
+      var isAdding = !DomUtils.hasClass($ele, 'selected');
       this.toggleGroupTitleCheckbox($ele, isAdding);
       this.toggleGroupOptions($ele, isAdding);
     }
@@ -1029,7 +923,7 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function onOptionsMouseOver(e) {
       var $ele = e.target.closest('.vscomp-option');
       if ($ele && this.isOpened()) {
-        if (_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($ele, 'disabled') || _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($ele, 'group-title')) {
+        if (DomUtils.hasClass($ele, 'disabled') || DomUtils.hasClass($ele, 'group-title')) {
           this.removeOptionFocus();
         } else {
           this.focusOption({
@@ -1080,12 +974,12 @@ var VirtualSelect = /*#__PURE__*/function () {
         var isRemoved = false;
         mutations.forEach(function (mutation) {
           if (!isAdded) {
-            isAdded = _toConsumableArray(mutation.addedNodes).some(function ($ele) {
+            isAdded = virtual_select_toConsumableArray(mutation.addedNodes).some(function ($ele) {
               return !!($ele === $vscompEle || $ele.contains($vscompEle));
             });
           }
           if (!isRemoved) {
-            isRemoved = _toConsumableArray(mutation.removedNodes).some(function ($ele) {
+            isRemoved = virtual_select_toConsumableArray(mutation.removedNodes).some(function ($ele) {
               return !!($ele === $vscompEle || $ele.contains($vscompEle));
             });
           }
@@ -1129,7 +1023,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "afterRenderWrapper",
     value: function afterRenderWrapper() {
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$ele, 'vscomp-ele');
+      DomUtils.addClass(this.$ele, 'vscomp-ele');
       this.renderSearch();
       this.setEleStyles();
       this.setDropboxStyles();
@@ -1163,9 +1057,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       var hasNoOptions = !this.options.length && !this.hasServerSearch;
       var hasNoSearchResults = !hasNoOptions && !visibleOptions.length;
       if (!this.allowNewOption || this.hasServerSearch || this.showOptionsOnlyOnSearch) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$allWrappers, 'has-no-search-results', hasNoSearchResults);
+        DomUtils.toggleClass(this.$allWrappers, 'has-no-search-results', hasNoSearchResults);
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$allWrappers, 'has-no-options', hasNoOptions);
+      DomUtils.toggleClass(this.$allWrappers, 'has-no-options', hasNoOptions);
       this.setOptionAttr();
       this.setOptionsPosition();
       this.setOptionsTooltip();
@@ -1237,7 +1131,7 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function setProps(params) {
       var options = this.setDefaultProps(params);
       this.setPropsFromElementAttr(options);
-      var convertToBoolean = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.convertToBoolean;
+      var convertToBoolean = Utils.convertToBoolean;
       this.$ele = options.ele;
       this.dropboxWrapper = options.dropboxWrapper;
       this.valueKey = options.valueKey;
@@ -1311,6 +1205,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.ariaLabelText = options.ariaLabelText;
       this.maxWidth = options.maxWidth;
       this.searchDelay = options.searchDelay;
+      this.hideSelectDisplayOnkeepAlwaysOpen = options.hideSelectDisplayOnkeepAlwaysOpen; // Royale
 
       /** @type {string[]} */
       this.selectedValues = [];
@@ -1501,7 +1396,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       } else {
         /** taking first value for single select */
         var _validValues = validValues;
-        var _validValues2 = _slicedToArray(_validValues, 1);
+        var _validValues2 = virtual_select_slicedToArray(_validValues, 1);
         validValues = _validValues2[0];
       }
       this.beforeValueSet();
@@ -1654,8 +1549,8 @@ var VirtualSelect = /*#__PURE__*/function () {
         descriptionKey = this.descriptionKey,
         aliasKey = this.aliasKey,
         hasOptionDescription = this.hasOptionDescription;
-      var getString = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.getString,
-        convertToBoolean = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.convertToBoolean;
+      var getString = Utils.getString,
+        convertToBoolean = Utils.convertToBoolean;
       var secureText = this.secureText.bind(this);
       var getAlias = this.getAlias.bind(this);
       var index = 0;
@@ -1666,7 +1561,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         disabledOptionsMapping[d] = true;
       });
       var prepareOption = function prepareOption(d) {
-        if (_typeof(d) !== 'object') {
+        if (virtual_select_typeof(d) !== 'object') {
           var _d2;
           // eslint-disable-next-line no-param-reassign
           d = (_d2 = {}, _defineProperty(_d2, valueKey, d), _defineProperty(_d2, labelKey, d), _d2);
@@ -1679,7 +1574,7 @@ var VirtualSelect = /*#__PURE__*/function () {
           index: index,
           value: value,
           label: label,
-          labelNormalized: _this6.searchNormalize ? _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.normalizeString(label).toLowerCase() : label.toLowerCase(),
+          labelNormalized: _this6.searchNormalize ? Utils.normalizeString(label).toLowerCase() : label.toLowerCase(),
           alias: getAlias(d[aliasKey]),
           isVisible: convertToBoolean(d.isVisible, true),
           isNew: d.isNew || false,
@@ -1777,7 +1672,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       } else {
         this.updatePosition();
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass(this.$allWrappers, 'server-searching');
+      DomUtils.removeClass(this.$allWrappers, 'server-searching');
     }
   }, {
     key: "setSelectedOptions",
@@ -1789,7 +1684,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "setSortedOptions",
     value: function setSortedOptions() {
-      var sortedOptions = _toConsumableArray(this.options);
+      var sortedOptions = virtual_select_toConsumableArray(this.options);
       if (this.showSelectedOptionsFirst && this.selectedValues.length) {
         if (this.hasOptionGroup) {
           sortedOptions = this.sortOptionsGroup(sortedOptions);
@@ -1802,7 +1697,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "setVisibleOptions",
     value: function setVisibleOptions() {
-      var visibleOptions = _toConsumableArray(this.sortedOptions);
+      var visibleOptions = virtual_select_toConsumableArray(this.sortedOptions);
       var maxOptionsToShow = this.optionsCount * 2;
       var startIndex = this.getVisibleStartIndex();
       var newOption = this.getNewOption();
@@ -1823,7 +1718,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         return inView;
       });
       if (newOption) {
-        visibleOptions = [newOption].concat(_toConsumableArray(visibleOptions));
+        visibleOptions = [newOption].concat(virtual_select_toConsumableArray(visibleOptions));
       }
       this.visibleOptions = visibleOptions;
       this.renderOptions();
@@ -1833,7 +1728,7 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function setOptionsPosition(startIndex) {
       var top = (startIndex || this.getVisibleStartIndex()) * this.optionHeight;
       this.$options.style.transform = "translate3d(0, ".concat(top, "px, 0)");
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData(this.$options, 'top', top);
+      DomUtils.setData(this.$options, 'top', top);
     }
   }, {
     key: "setOptionsTooltip",
@@ -1843,9 +1738,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       var hasOptionDescription = this.hasOptionDescription;
       visibleOptions.forEach(function (d) {
         var $optionEle = _this8.$dropboxContainer.querySelector(".vscomp-option[data-index=\"".concat(d.index, "\"]"));
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData($optionEle.querySelector('.vscomp-option-text'), 'tooltip', d.label);
+        DomUtils.setData($optionEle.querySelector('.vscomp-option-text'), 'tooltip', d.label);
         if (hasOptionDescription) {
-          _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData($optionEle.querySelector('.vscomp-option-description'), 'tooltip', d.description);
+          DomUtils.setData($optionEle.querySelector('.vscomp-option-description'), 'tooltip', d.description);
         }
       });
     }
@@ -1861,7 +1756,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!isValidValue) {
         this.selectedValues = [];
       } else if (Array.isArray(value)) {
-        this.selectedValues = _toConsumableArray(value);
+        this.selectedValues = virtual_select_toConsumableArray(value);
       } else {
         this.selectedValues = [value];
       }
@@ -1871,13 +1766,13 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.isMaxValuesSelected = !!(this.maxValues && this.maxValues <= this.selectedValues.length);
       this.toggleAllOptionsClass();
       this.setValueText();
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$allWrappers, 'has-value', _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.isNotEmpty(this.selectedValues));
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$allWrappers, 'max-value-selected', this.isMaxValuesSelected);
+      DomUtils.toggleClass(this.$allWrappers, 'has-value', Utils.isNotEmpty(this.selectedValues));
+      DomUtils.toggleClass(this.$allWrappers, 'max-value-selected', this.isMaxValuesSelected);
       if (!disableValidation) {
         this.validate();
       }
       if (!disableEvent) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'change', true);
+        DomUtils.dispatchEvent(this.$ele, 'change', true);
       }
     }
   }, {
@@ -1931,7 +1826,7 @@ var VirtualSelect = /*#__PURE__*/function () {
           $valueText.innerHTML = aggregatedValueText;
           if (multiple) {
             var maxValues = this.maxValues;
-            var showSelectedCount = this.alwaysShowSelectedOptionsCount || _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasEllipsis($valueText);
+            var showSelectedCount = this.alwaysShowSelectedOptionsCount || DomUtils.hasEllipsis($valueText);
             if (showSelectedCount || maxValues || showValueAsTags) {
               var countText = "<span class=\"vscomp-selected-value-count\">".concat(selectedLength, "</span>");
               if (maxValues) {
@@ -1963,9 +1858,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       } else if (!showValueAsTags) {
         tooltipText = valueTooltip.join(', ');
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData($valueText, 'tooltip', tooltipText);
+      DomUtils.setData($valueText, 'tooltip', tooltipText);
       if (multiple) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData($valueText, 'tooltipEllipsisOnly', selectedLength === 0);
+        DomUtils.setData($valueText, 'tooltipEllipsisOnly', selectedLength === 0);
         if (showValueAsTags) {
           this.updatePosition();
         }
@@ -1985,7 +1880,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       var searchValue = value.replace(/\\/g, '').toLowerCase().trim();
       this.searchValue = searchValue;
       this.searchValueOriginal = value;
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$allWrappers, 'has-search-value', value);
+      DomUtils.toggleClass(this.$allWrappers, 'has-search-value', value);
       this.afterSetSearchValue();
     }
   }, {
@@ -2000,7 +1895,7 @@ var VirtualSelect = /*#__PURE__*/function () {
 
       /** If searchNormalize we'll normalize the searchValue */
       var searchValue = this.searchValue;
-      searchValue = this.searchNormalize ? _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.normalizeString(searchValue) : searchValue;
+      searchValue = this.searchNormalize ? Utils.normalizeString(searchValue) : searchValue;
       var isOptionVisible = this.isOptionVisible.bind(this);
       if (this.hasOptionGroup) {
         visibleOptionGroupsMapping = this.getVisibleOptionGroupsMapping(searchValue);
@@ -2072,11 +1967,17 @@ var VirtualSelect = /*#__PURE__*/function () {
       } else {
         optionsHeight = this.optionsHeight;
         if (this.keepAlwaysOpen) {
-          _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle(this.$noOptions, 'height', optionsHeight);
-          _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle(this.$noSearchResults, 'height', optionsHeight);
+          DomUtils.setStyle(this.$noOptions, 'height', optionsHeight);
+          DomUtils.setStyle(this.$noSearchResults, 'height', optionsHeight);
         }
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
+
+      // Royale. If the component always has the dropdown open, we set the size.
+      if (this.keepAlwaysOpen) {
+        DomUtils.setStyle(this.$optionsContainer, 'min-height', optionsHeight);
+      } else {
+        DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
+      }
       this.afterSetOptionsContainerHeight(reset);
     }
   }, {
@@ -2143,7 +2044,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         return;
       }
       var width = this.dropboxWidth || "".concat(this.$wrapper.offsetWidth, "px");
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle(this.$dropboxContainer, 'max-width', width);
+      DomUtils.setStyle(this.$dropboxContainer, 'max-width', width);
     }
   }, {
     key: "setEleStyles",
@@ -2153,7 +2054,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (maxWidth) {
         styles['max-width'] = maxWidth;
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyles(this.$ele, styles);
+      DomUtils.setStyles(this.$ele, styles);
     }
   }, {
     key: "setDropboxStyles",
@@ -2170,8 +2071,8 @@ var VirtualSelect = /*#__PURE__*/function () {
           containerStyles.width = dropboxWidth;
         }
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyles(this.$dropboxContainer, containerStyles);
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyles(this.$dropbox, styles);
+      DomUtils.setStyles(this.$dropboxContainer, containerStyles);
+      DomUtils.setStyles(this.$dropbox, styles);
     }
   }, {
     key: "setOptionAttr",
@@ -2179,9 +2080,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       var $visibleOptions = this.$visibleOptions;
       var options = this.options;
       var optionHeight = "".concat(this.optionHeight, "px");
-      var setStyle = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle,
-        getData = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData,
-        setData = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData;
+      var setStyle = DomUtils.setStyle,
+        getData = DomUtils.getData,
+        setData = DomUtils.setData;
       if ($visibleOptions && $visibleOptions.length) {
         $visibleOptions.forEach(function ($option) {
           var optionDetails = options[getData($option, 'index')];
@@ -2197,8 +2098,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!$valueTags || !$valueTags.length) {
         return;
       }
-      var getData = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData,
-        setData = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setData;
+      var getData = DomUtils.getData,
+        setData = DomUtils.setData;
       var options = this.options;
       $valueTags.forEach(function ($valueTag) {
         var index = getData($valueTag, 'index');
@@ -2318,7 +2219,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         'data-tooltip-ellipsis-only': ellipsisOnly,
         'data-tooltip-allow-html': allowHtml
       };
-      return _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getAttributesText(data);
+      return DomUtils.getAttributesText(data);
     }
 
     /**
@@ -2331,7 +2232,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!data) {
         return undefined;
       }
-      var getString = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.getString;
+      var getString = Utils.getString;
       var secureText = this.secureText.bind(this);
       return {
         index: data.index,
@@ -2512,13 +2413,13 @@ var VirtualSelect = /*#__PURE__*/function () {
         if ($sibling) {
           $sibling = $sibling[propName];
         }
-      } while (_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($sibling, 'disabled') || _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($sibling, 'group-title'));
+      } while (DomUtils.hasClass($sibling, 'disabled') || DomUtils.hasClass($sibling, 'group-title'));
       return $sibling;
     }
   }, {
     key: "getUniqueId",
     value: function getUniqueId() {
-      var uniqueId = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.getRandomInt(10000);
+      var uniqueId = Utils.getRandomInt(10000);
       var isAlreadyUsed = document.querySelector("#vscomp-ele-wrapper-".concat(uniqueId));
       if (isAlreadyUsed) {
         return this.getUniqueId();
@@ -2550,14 +2451,14 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function openDropbox(isSilent) {
       this.isSilentOpen = isSilent;
       if (isSilent) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle(this.$dropboxContainer, 'display', 'inline-flex');
+        DomUtils.setStyle(this.$dropboxContainer, 'display', 'inline-flex');
       } else {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'beforeOpen');
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'expanded', true);
+        DomUtils.dispatchEvent(this.$ele, 'beforeOpen');
+        DomUtils.setAria(this.$wrapper, 'expanded', true);
       }
       this.setDropboxWrapperWidth();
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass(this.$allWrappers, 'closed');
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.changeTabIndex(this.$allWrappers, 0);
+      DomUtils.removeClass(this.$allWrappers, 'closed');
+      DomUtils.changeTabIndex(this.$allWrappers, 0);
       if (this.dropboxPopover && !isSilent) {
         this.dropboxPopover.show();
       } else {
@@ -2572,14 +2473,14 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!isSilent) {
         this.moveSelectedOptionsFirst();
         this.setScrollTop();
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$allWrappers, 'focused');
+        DomUtils.addClass(this.$allWrappers, 'focused');
         if (this.showAsPopup) {
-          _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$body, 'vscomp-popup-active');
+          DomUtils.addClass(this.$body, 'vscomp-popup-active');
           this.isPopupActive = true;
         } else {
           this.focusSearchInput();
         }
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'afterOpen');
+        DomUtils.dispatchEvent(this.$ele, 'afterOpen');
       }
     }
   }, {
@@ -2591,11 +2492,11 @@ var VirtualSelect = /*#__PURE__*/function () {
         return;
       }
       if (isSilent) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setStyle(this.$dropboxContainer, 'display', '');
+        DomUtils.setStyle(this.$dropboxContainer, 'display', '');
       } else {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'beforeClose');
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'expanded', false);
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'activedescendant', '');
+        DomUtils.dispatchEvent(this.$ele, 'beforeClose');
+        DomUtils.setAria(this.$wrapper, 'expanded', false);
+        DomUtils.setAria(this.$wrapper, 'activedescendant', '');
       }
       if (this.dropboxPopover && !isSilent) {
         this.dropboxPopover.hide();
@@ -2608,20 +2509,24 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function afterHidePopper() {
       var isSilent = this.isSilentClose;
       this.isSilentClose = false;
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass(this.$allWrappers, 'focused');
+      DomUtils.removeClass(this.$allWrappers, 'focused');
       this.removeOptionFocus();
       if (!isSilent && this.isPopupActive) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass(this.$body, 'vscomp-popup-active');
+        DomUtils.removeClass(this.$body, 'vscomp-popup-active');
         this.isPopupActive = false;
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$allWrappers, 'closed');
+      DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
+<<<<<<< HEAD
 <<<<<<< HEAD
         DomUtils.dispatchEvent(this.$ele, 'afterClose');
         this.focus();
 =======
         _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'afterClose');
 >>>>>>> 81400e2 ([WIP] Tests)
+=======
+        DomUtils.dispatchEvent(this.$ele, 'afterClose');
+>>>>>>> bf406dc ( * @property {boolean} [hideSelectDisplayOnkeepAlwaysOpen] Hide SelectDisplay if keepAlwaysOpen is true)
       }
     }
   }, {
@@ -2657,7 +2562,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "isOpened",
     value: function isOpened() {
-      return !_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass(this.$wrapper, 'closed');
+      return !DomUtils.hasClass(this.$wrapper, 'closed');
     }
   }, {
     key: "focusSearchInput",
@@ -2682,7 +2587,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         /* if no element on focus choose first visible one */
         var firstVisibleOptionIndex = this.getFirstVisibleOptionIndex();
         $newFocusedEle = this.$dropboxContainer.querySelector(".vscomp-option[data-visible-index=\"".concat(firstVisibleOptionIndex, "\"]"));
-        if (_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($newFocusedEle, 'disabled') || _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($newFocusedEle, 'group-title')) {
+        if (DomUtils.hasClass($newFocusedEle, 'disabled') || DomUtils.hasClass($newFocusedEle, 'group-title')) {
           $newFocusedEle = this.getSibling($newFocusedEle, 'next');
         }
       } else {
@@ -2696,7 +2601,7 @@ var VirtualSelect = /*#__PURE__*/function () {
           this.$ariaLiveElem.textContent = $newFocusedEle.textContent;
         }
         this.toggleOptionFocusedState($newFocusedEle, true);
-        this.toggleFocusedProp(_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($newFocusedEle, 'index'), true);
+        this.toggleFocusedProp(DomUtils.getData($newFocusedEle, 'index'), true);
         this.moveFocusedOptionToView($newFocusedEle);
       }
     }
@@ -2717,7 +2622,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       var optionBottom = optionRect.bottom;
       var optionHeight = optionRect.height;
       var optionOffsetTop = $focusedEle.offsetTop;
-      var optionsTop = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData(this.$options, 'top', 'number');
+      var optionsTop = DomUtils.getData(this.$options, 'top', 'number');
 
       /* if option hidden on top */
       if (containerTop > optionTop) {
@@ -2748,7 +2653,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!$ele) {
         return;
       }
-      var isAdding = !_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($ele, 'selected');
+      var isAdding = !DomUtils.hasClass($ele, 'selected');
       if (isAdding) {
         if (this.multiple && this.isMaxValuesSelected) {
           return;
@@ -2759,9 +2664,9 @@ var VirtualSelect = /*#__PURE__*/function () {
         return;
       }
       var selectedValues = this.selectedValues;
-      var selectedValue = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($ele, 'value');
-      var selectedIndex = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($ele, 'index', 'number');
-      var isNewOption = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($ele, 'current-new');
+      var selectedValue = DomUtils.getData($ele, 'value');
+      var selectedIndex = DomUtils.getData($ele, 'index', 'number');
+      var isNewOption = DomUtils.hasClass($ele, 'current-new');
       var shouldSelectRange = false;
       var lastSelectedOptionIndex = this.lastSelectedOptionIndex;
       this.lastSelectedOptionIndex = null;
@@ -2792,7 +2697,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         this.toggleOptionSelectedState($ele);
       } else if (this.multiple) {
         this.toggleOptionSelectedState($ele);
-        _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.removeItemFromArray(selectedValues, selectedValue);
+        Utils.removeItemFromArray(selectedValues, selectedValue);
         this.toggleAllOptionsClass(false);
         this.toggleGroupOptionsParent($ele, false);
       }
@@ -2867,7 +2772,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!this.multiple || this.disableSelectAll) {
         return;
       }
-      var selectingAll = typeof isSelected === 'boolean' ? selectAll : !_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass(this.$toggleAllCheckbox, 'checked');
+      var selectingAll = typeof isSelected === 'boolean' ? selectAll : !DomUtils.hasClass(this.$toggleAllCheckbox, 'checked');
       var selectedValues = [];
       var selectAllOnlyVisible = this.selectAllOnlyVisible;
       this.options.forEach(function (d) {
@@ -2911,7 +2816,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!isAllSelected && this.selectAllOnlyVisible) {
         isAllVisibleSelected = this.isAllOptionsSelected(true);
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$toggleAllCheckbox, 'checked', isAllSelected || isAllVisibleSelected);
+      DomUtils.toggleClass(this.$toggleAllCheckbox, 'checked', isAllSelected || isAllVisibleSelected);
       this.isAllSelected = isAllSelected;
     }
   }, {
@@ -2947,7 +2852,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!this.hasOptionGroup || this.disableOptionGroupCheckbox || !$option) {
         return;
       }
-      var groupIndex = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($option, 'groupIndex');
+      var groupIndex = DomUtils.getData($option, 'groupIndex');
       if (groupIndex !== undefined) {
         groupIndex = parseInt(groupIndex);
       }
@@ -2969,11 +2874,11 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!this.hasOptionGroup || this.disableOptionGroupCheckbox || !$ele) {
         return;
       }
-      var groupIndex = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($ele, 'index', 'number');
+      var groupIndex = DomUtils.getData($ele, 'index', 'number');
       var selectedValues = this.selectedValues,
         selectAllOnlyVisible = this.selectAllOnlyVisible;
       var valuesMapping = {};
-      var removeItemFromArray = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.removeItemFromArray;
+      var removeItemFromArray = Utils.removeItemFromArray;
       selectedValues.forEach(function (d) {
         valuesMapping[d] = true;
       });
@@ -3010,7 +2915,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!$ele) {
         return;
       }
-      var selectedIndex = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($ele, 'index', 'number');
+      var selectedIndex = DomUtils.getData($ele, 'index', 'number');
       this.toggleSelectedProp(selectedIndex, isSelected);
       this.toggleOptionSelectedState($ele, isSelected);
     }
@@ -3059,9 +2964,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       });
       this.afterValueSet();
       if (formReset) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass(this.$allWrappers, 'has-error');
+        DomUtils.removeClass(this.$allWrappers, 'has-error');
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'reset');
+      DomUtils.dispatchEvent(this.$ele, 'reset');
     }
   }, {
     key: "addOption",
@@ -3203,8 +3108,8 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "serverSearch",
     value: function serverSearch() {
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass(this.$allWrappers, 'has-no-search-results');
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$allWrappers, 'server-searching');
+      DomUtils.removeClass(this.$allWrappers, 'has-no-search-results');
+      DomUtils.addClass(this.$allWrappers, 'server-searching');
       this.setSelectedOptions();
       this.onServerSearch(this.searchValue, this);
     }
@@ -3212,8 +3117,8 @@ var VirtualSelect = /*#__PURE__*/function () {
     key: "removeValue",
     value: function removeValue($ele) {
       var selectedValues = this.selectedValues;
-      var selectedValue = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.getData($ele, 'value');
-      _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.removeItemFromArray(selectedValues, selectedValue);
+      var selectedValue = DomUtils.getData($ele, 'value');
+      Utils.removeItemFromArray(selectedValues, selectedValue);
       this.setValueMethod(selectedValues);
     }
   }, {
@@ -3227,7 +3132,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.$ele.disabled = false;
       this.$ele.removeAttribute('disabled');
       this.$hiddenInput.removeAttribute('disabled');
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'disabled', false);
+      DomUtils.setAria(this.$wrapper, 'disabled', false);
     }
   }, {
     key: "disable",
@@ -3235,7 +3140,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.$ele.disabled = true;
       this.$ele.setAttribute('disabled', '');
       this.$hiddenInput.setAttribute('disabled', '');
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'disabled', true);
+      DomUtils.setAria(this.$wrapper, 'disabled', true);
     }
   }, {
     key: "validate",
@@ -3246,11 +3151,11 @@ var VirtualSelect = /*#__PURE__*/function () {
       var hasError = false;
       var selectedValues = this.selectedValues,
         minValues = this.minValues;
-      if (this.required && (_utils__WEBPACK_IMPORTED_MODULE_0__.Utils.isEmpty(selectedValues) || /** required minium options not selected */
+      if (this.required && (Utils.isEmpty(selectedValues) || /** required minium options not selected */
       this.multiple && minValues && selectedValues.length < minValues)) {
         hasError = true;
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass(this.$allWrappers, 'has-error', hasError);
+      DomUtils.toggleClass(this.$allWrappers, 'has-error', hasError);
       return !hasError;
     }
   }, {
@@ -3267,7 +3172,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (this.dropboxPopover) {
         this.dropboxPopover.destroy();
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.removeClass($ele, 'vscomp-ele');
+      DomUtils.removeClass($ele, 'vscomp-ele');
     }
   }, {
     key: "createSecureTextElements",
@@ -3288,7 +3193,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "toggleRequired",
     value: function toggleRequired(isRequired) {
-      this.required = _utils__WEBPACK_IMPORTED_MODULE_0__.Utils.convertToBoolean(isRequired);
+      this.required = Utils.convertToBoolean(isRequired);
       this.$ele.required = this.required;
     }
   }, {
@@ -3296,10 +3201,10 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function toggleOptionSelectedState($ele, value) {
       var isSelected = value;
       if (typeof isSelected === 'undefined') {
-        isSelected = !_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.hasClass($ele, 'selected');
+        isSelected = !DomUtils.hasClass($ele, 'selected');
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass($ele, 'selected', isSelected);
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria($ele, 'selected', isSelected);
+      DomUtils.toggleClass($ele, 'selected', isSelected);
+      DomUtils.setAria($ele, 'selected', isSelected);
     }
   }, {
     key: "toggleOptionFocusedState",
@@ -3307,9 +3212,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (!$ele) {
         return;
       }
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.toggleClass($ele, 'focused', isFocused);
+      DomUtils.toggleClass($ele, 'focused', isFocused);
       if (isFocused) {
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'activedescendant', $ele.id);
+        DomUtils.setAria(this.$wrapper, 'activedescendant', $ele.id);
       }
     }
 
@@ -3356,7 +3261,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "getAttrProps",
     value: function getAttrProps() {
-      var convertPropToDataAttr = _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.convertPropToDataAttr;
+      var convertPropToDataAttr = DomUtils.convertPropToDataAttr;
       var result = {};
       nativeProps.forEach(function (d) {
         result[d] = d;
@@ -3400,7 +3305,7 @@ var VirtualSelect = /*#__PURE__*/function () {
 
       /** creating div element to initiate plugin and removing native element */
       var $newEle = document.createElement('div');
-      _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAttrFromEle($ele, $newEle, Object.keys(attrPropsMapping), valueLessProps);
+      DomUtils.setAttrFromEle($ele, $newEle, Object.keys(attrPropsMapping), valueLessProps);
       $ele.parentNode.insertBefore($newEle, $ele);
       $ele.remove();
 
@@ -3577,9 +3482,6 @@ if (typeof NodeList !== 'undefined' && NodeList.prototype && !NodeList.prototype
 }();
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 !function() {
-/*!*********************************************************!*\
-  !*** ./node_modules/popover-plugin/dist/popover.min.js ***!
-  \*********************************************************/
 /*!
  * Popover v1.0.12
  * https://sa-si-dev.github.io/popover

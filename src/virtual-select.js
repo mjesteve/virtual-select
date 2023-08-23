@@ -80,6 +80,7 @@ const dataProps = [
   'useGroupValue',
   'valueKey',
   'zIndex',
+  'hideSelectDisplayOnkeepAlwaysOpen', // Royale
 ];
 
 /** Class representing VirtualSelect */
@@ -114,6 +115,8 @@ export class VirtualSelect {
     const clearButtonTooltip = this.getTooltipAttrText(this.clearButtonText);
     const ariaLabelledbyText = this.ariaLabelledby ? `aria-labelledby="${this.ariaLabelledby}"` : '';
     const ariaLabelText = this.ariaLabelText ? `aria-label="${this.ariaLabelText}"` : '';
+    // Royale
+    const hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
     let isExpanded = false;
 
     if (this.additionalClasses) {
@@ -165,7 +168,7 @@ export class VirtualSelect {
       >
         <input type="hidden" name="${this.name}" class="vscomp-hidden-input">
 
-        <div class="vscomp-toggle-button">
+        <div class="vscomp-toggle-button" ${hideDisplay}>
           <div class="vscomp-value" ${valueTooltip}>
             ${this.placeholder}
           </div>
@@ -819,6 +822,7 @@ export class VirtualSelect {
     this.ariaLabelText = options.ariaLabelText;
     this.maxWidth = options.maxWidth;
     this.searchDelay = options.searchDelay;
+    this.hideSelectDisplayOnkeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnkeepAlwaysOpen); // Royale
 
     /** @type {string[]} */
     this.selectedValues = [];
@@ -1648,7 +1652,12 @@ export class VirtualSelect {
       }
     }
 
-    DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
+    // Royale. If the component always has the dropdown open, we set the size.
+    if (this.keepAlwaysOpen) {
+      DomUtils.setStyle(this.$optionsContainer, 'min-height', optionsHeight);
+    } else {
+      DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
+    }
 
     this.afterSetOptionsContainerHeight(reset);
   }
