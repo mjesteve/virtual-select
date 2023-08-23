@@ -86,6 +86,7 @@ const dataProps = [
   'useGroupValue',
   'valueKey',
   'zIndex',
+  'hideSelectDisplayOnkeepAlwaysOpen', // Royale
 ];
 
 /** Class representing VirtualSelect */
@@ -122,6 +123,8 @@ export class VirtualSelect {
     const ariaLabelledbyText = this.ariaLabelledby ? `aria-labelledby="${this.ariaLabelledby}"` : '';
     const ariaLabelText = this.ariaLabelText ? `aria-label="${this.ariaLabelText}"` : '';
     const ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? `aria-label="${this.ariaLabelClearButtonText}"` : '';
+    // Royale
+    const hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
     let isExpanded = false;
 
     if (this.additionalClasses) {
@@ -177,7 +180,8 @@ export class VirtualSelect {
         role="combobox" aria-haspopup="listbox" aria-controls="vscomp-dropbox-container-${uniqueId}"
         aria-expanded="${isExpanded}" ${ariaLabelledbyText} ${ariaLabelText}>
         <input type="hidden" name="${this.name}" class="vscomp-hidden-input">
-        <div class="${toggleButtonClasses}">
+
+        <div class="${toggleButtonClasses}" ${hideDisplay}>
           <div class="vscomp-value" ${valueTooltip}>
             ${this.placeholder}
           </div>
@@ -952,6 +956,7 @@ export class VirtualSelect {
 
     this.maxWidth = options.maxWidth;
     this.searchDelay = options.searchDelay;
+    this.hideSelectDisplayOnkeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnkeepAlwaysOpen); // Royale
 
     /** @type {string[]} */
     this.selectedValues = [];
@@ -1798,7 +1803,12 @@ export class VirtualSelect {
       }
     }
 
-    DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
+    // Royale. If the component always has the dropdown open, we set the size.
+    if (this.keepAlwaysOpen) {
+      DomUtils.setStyle(this.$optionsContainer, 'min-height', optionsHeight);
+    } else {
+      DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
+    }
 
     this.afterSetOptionsContainerHeight(reset);
   }
