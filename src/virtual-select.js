@@ -80,7 +80,7 @@ const dataProps = [
   'useGroupValue',
   'valueKey',
   'zIndex',
-  'hideSelectDisplayOnkeepAlwaysOpen', // Royale
+  'hideSelectDisplayOnKeepAlwaysOpen', // Royale
 ];
 
 /** Class representing VirtualSelect */
@@ -116,7 +116,7 @@ export class VirtualSelect {
     const ariaLabelledbyText = this.ariaLabelledby ? `aria-labelledby="${this.ariaLabelledby}"` : '';
     const ariaLabelText = this.ariaLabelText ? `aria-label="${this.ariaLabelText}"` : '';
     // Royale
-    const hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
+    const hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen ? ' style="display:none;"' : '';
     let isExpanded = false;
 
     if (this.additionalClasses) {
@@ -577,6 +577,16 @@ export class VirtualSelect {
   }
 
   onResize() {
+    if (this.showDropboxAsPopup && !this.keepAlwaysOpen) {
+      const newvalue = window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
+
+      if (newvalue !== this.showAsPopup) {
+        this.showAsPopup = newvalue;
+        this.render();
+        return;
+      }
+    }
+
     this.setOptionsContainerHeight(true);
   }
 
@@ -822,7 +832,7 @@ export class VirtualSelect {
     this.ariaLabelText = options.ariaLabelText;
     this.maxWidth = options.maxWidth;
     this.searchDelay = options.searchDelay;
-    this.hideSelectDisplayOnkeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnkeepAlwaysOpen); // Royale
+    this.hideSelectDisplayOnKeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnKeepAlwaysOpen); // Royale
 
     /** @type {string[]} */
     this.selectedValues = [];
@@ -901,6 +911,7 @@ export class VirtualSelect {
       emptyValue: '',
       searchDelay: 300,
       focusSelectedOptionOnOpen: true,
+      hideSelectDisplayOnKeepAlwaysOpen: true,
     };
 
     if (options.hasOptionDescription) {

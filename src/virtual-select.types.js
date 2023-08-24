@@ -40,7 +40,7 @@
  * @property {boolean} [focusSelectedOptionOnOpen=true] Scroll selected option to viewport on dropbox open
  * @property {string} [name] Name attribute for hidden input
  * @property {boolean} [keepAlwaysOpen] Keep dropbox always open with fixed height
- * @property {boolean} [hideSelectDisplayOnkeepAlwaysOpen] Hide SelectDisplay if keepAlwaysOpen is true
+ * @property {boolean} [hideSelectDisplayOnKeepAlwaysOpen] Hide SelectDisplay if keepAlwaysOpen is true
  * @property {number} [maxValues=0] Maximum no.of options allowed to choose in multiple select
  * @property {number} [minValues] Minimum no.of options should be selected to succeed required validation
  * @property {string} [additionalClasses] Additional classes for wrapper element

@@ -58,35 +58,33 @@
 
     var misel =  VirtualSelect.init({
       ele: '#sample-select',
-      options: arPages1,
-      hideClearButton: true,
+      options: arPages,
+      hideClearButton: false,
       optionsCount: 10,
       optionHeight:"35px",
-      labelKey: "nregpag", valueKey: "nregpag",
+      labelKey: "label", valueKey: "value",
       disabledOpions: [],
       dropboxWrapper: 'body',
       markSearchResults: true,
-      optionsCount: 10,
       position: 'bottom',
       selectedValue: 20,
-      showValueAsTags: false,
-      zIndex:80
+      showValueAsTags: false
     });
 
-    var milist =  VirtualSelect.init({
+    /*var milist =  VirtualSelect.init({
       ele: '#sample-list',
       options: arPages,
       hideClearButton: false,
       optionsCount: 10,
       optionHeight:"34px",
       keepAlwaysOpen: true,
-      hideSelectDisplayOnkeepAlwaysOpen: true,
+      hideSelectDisplayOnKeepAlwaysOpen: true,
       focusSelectedOptionOnOpen: true,
       markSearchResults: true,
       optionsCount: 10,
       search: true,
       selectedValue: 20
-    });
+    });*/
  
     //alert(document.getElementById('sample-select').value); //return 20
     //alert(misel.$ele.value); //return 20
@@ -99,7 +97,7 @@
       var val = prompt('Type value to select');
       var myc = document.getElementById('sample-select');
       myc.setValue(val);
-      milist.$ele.setValue(val);
+      //milist.$ele.setValue(val);
     }
     
   </script>
