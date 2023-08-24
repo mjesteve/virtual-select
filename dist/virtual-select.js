@@ -313,6 +313,22 @@ var DomUtils = /*#__PURE__*/function () {
 
     /**
      * @param {HTMLElement} $ele
+     * @param {string} oldClass
+     * @param {string} newClass
+     * @returns {boolean}
+     */
+  }, {
+    key: "replaceClass",
+    value: function replaceClass($ele, oldClass, newClass) {
+      if (!$ele) {
+        return false;
+      }
+      var classes = $ele.classList;
+      return classes.replace(oldClass, newClass);
+    }
+
+    /**
+     * @param {HTMLElement} $ele
      * @returns {boolean}
      */
   }, {
@@ -893,7 +909,8 @@ var keyDownMethodMapping = {
 var valueLessProps = ['autofocus', 'disabled', 'multiple', 'required'];
 var nativeProps = ['autofocus', 'class', 'disabled', 'id', 'multiple', 'name', 'placeholder', 'required'];
 var attrPropsMapping;
-var dataProps = ['additionalClasses', 'additionalDropboxClasses', 'additionalDropboxContainerClasses', 'additionalToggleButtonClasses', 'aliasKey', 'allOptionsSelectedText', 'allowNewOption', 'alwaysShowSelectedOptionsCount', 'alwaysShowSelectedOptionsLabel', 'ariaLabelledby', 'ariaLabelText', 'ariaLabelClearButtonText', 'autoSelectFirstOption', 'clearButtonText', 'descriptionKey', 'disableAllOptionsSelectedText', 'disableOptionGroupCheckbox', 'disableSelectAll', 'disableValidation', 'dropboxWidth', 'dropboxWrapper', 'emptyValue', 'enableSecureText', 'focusSelectedOptionOnOpen', 'hasOptionDescription', 'hideClearButton', 'hideValueTooltipOnSelectAll', 'keepAlwaysOpen', 'labelKey', 'markSearchResults', 'maxValues', 'maxWidth', 'minValues', 'moreText', 'noOfDisplayValues', 'noOptionsText', 'noSearchResultsText', 'optionHeight', 'optionSelectedText', 'optionsCount', 'optionsSelectedText', 'popupDropboxBreakpoint', 'popupPosition', 'position', 'search', 'searchByStartsWith', 'searchDelay', 'searchFormLabel', 'searchGroup', 'searchNormalize', 'searchPlaceholderText', 'selectAllOnlyVisible', 'selectAllText', 'setValueAsArray', 'showDropboxAsPopup', 'showOptionsOnlyOnSearch', 'showSelectedOptionsFirst', 'showValueAsTags', 'silentInitialValueSet', 'textDirection', 'tooltipAlignment', 'tooltipFontSize', 'tooltipMaxWidth', 'updatePositionThrottle', 'useGroupValue', 'valueKey', 'zIndex'];
+var dataProps = ['additionalClasses', 'additionalDropboxClasses', 'additionalDropboxContainerClasses', 'additionalToggleButtonClasses', 'aliasKey', 'allOptionsSelectedText', 'allowNewOption', 'alwaysShowSelectedOptionsCount', 'alwaysShowSelectedOptionsLabel', 'ariaLabelledby', 'ariaLabelText', 'ariaLabelClearButtonText', 'autoSelectFirstOption', 'clearButtonText', 'descriptionKey', 'disableAllOptionsSelectedText', 'disableOptionGroupCheckbox', 'disableSelectAll', 'disableValidation', 'dropboxWidth', 'dropboxWrapper', 'emptyValue', 'enableSecureText', 'focusSelectedOptionOnOpen', 'hasOptionDescription', 'hideClearButton', 'hideValueTooltipOnSelectAll', 'keepAlwaysOpen', 'labelKey', 'markSearchResults', 'maxValues', 'maxWidth', 'minValues', 'moreText', 'noOfDisplayValues', 'noOptionsText', 'noSearchResultsText', 'optionHeight', 'optionSelectedText', 'optionsCount', 'optionsSelectedText', 'popupDropboxBreakpoint', 'popupPosition', 'position', 'search', 'searchByStartsWith', 'searchDelay', 'searchFormLabel', 'searchGroup', 'searchNormalize', 'searchPlaceholderText', 'selectAllOnlyVisible', 'selectAllText', 'setValueAsArray', 'showDropboxAsPopup', 'showOptionsOnlyOnSearch', 'showSelectedOptionsFirst', 'showValueAsTags', 'silentInitialValueSet', 'textDirection', 'tooltipAlignment', 'tooltipFontSize', 'tooltipMaxWidth', 'updatePositionThrottle', 'useGroupValue', 'valueKey', 'zIndex', 'hideSelectDisplayOnKeepAlwaysOpen' // Royale
+];
 
 /** Class representing VirtualSelect */
 var VirtualSelect = /*#__PURE__*/function () {
@@ -930,6 +947,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       var clearButtonTooltip = this.getTooltipAttrText(this.clearButtonText);
       var ariaLabelledbyText = this.ariaLabelledby ? "aria-labelledby=\"".concat(this.ariaLabelledby, "\"") : '';
       var ariaLabelText = this.ariaLabelText ? "aria-label=\"".concat(this.ariaLabelText, "\"") : '';
+      // Royale
+      var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
       var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
       var isExpanded = false;
       if (this.additionalClasses) {
@@ -1400,6 +1419,14 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "onResize",
     value: function onResize() {
+      /* if (this.showDropboxAsPopup && !this.keepAlwaysOpen) {
+        var newvalue = window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
+        if (newvalue !== this.showAsPopup) {
+          this.showAsPopup = newvalue;
+          this.render();
+          return;
+        }
+      } */
       this.setOptionsContainerHeight(true);
     }
 
@@ -1678,7 +1705,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.ariaLabelClearButtonText = options.ariaLabelClearButtonText;
       this.maxWidth = options.maxWidth;
       this.searchDelay = options.searchDelay;
-      this.hideSelectDisplayOnkeepAlwaysOpen = options.hideSelectDisplayOnkeepAlwaysOpen; // Royale
+      this.hideSelectDisplayOnKeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnKeepAlwaysOpen); // Royale
 
       /** @type {string[]} */
       this.selectedValues = [];
@@ -1756,7 +1783,8 @@ var VirtualSelect = /*#__PURE__*/function () {
         hideValueTooltipOnSelectAll: true,
         emptyValue: '',
         searchDelay: 300,
-        focusSelectedOptionOnOpen: true
+        focusSelectedOptionOnOpen: true,
+        hideSelectDisplayOnKeepAlwaysOpen: true
       };
       if (options.hasOptionDescription) {
         defaultOptions.optionsCount = 4;
@@ -3012,8 +3040,6 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
       DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         DomUtils.dispatchEvent(this.$ele, 'afterClose');
       }
       this.$wrapper.focus();

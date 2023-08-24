@@ -70,6 +70,21 @@ export class DomUtils {
 
   /**
    * @param {HTMLElement} $ele
+   * @param {string} oldClass
+   * @param {string} newClass
+   * @returns {boolean}
+   */
+  static replaceClass($ele, oldClass, newClass) {
+    if (!$ele) {
+      return false;
+    }
+
+    const classes = $ele.classList;
+    return classes.replace(oldClass, newClass);
+  }
+
+  /**
+   * @param {HTMLElement} $ele
    * @returns {boolean}
    */
   static hasEllipsis($ele) {

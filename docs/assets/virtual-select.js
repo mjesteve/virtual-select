@@ -313,6 +313,22 @@ var DomUtils = /*#__PURE__*/function () {
 
     /**
      * @param {HTMLElement} $ele
+     * @param {string} oldClass
+     * @param {string} newClass
+     * @returns {boolean}
+     */
+  }, {
+    key: "replaceClass",
+    value: function replaceClass($ele, oldClass, newClass) {
+      if (!$ele) {
+        return false;
+      }
+      var classes = $ele.classList;
+      return classes.replace(oldClass, newClass);
+    }
+
+    /**
+     * @param {HTMLElement} $ele
      * @returns {boolean}
      */
   }, {
@@ -1400,6 +1416,14 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "onResize",
     value: function onResize() {
+      if (this.showDropboxAsPopup && !this.keepAlwaysOpen) {
+        var newvalue = window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
+        if (newvalue !== this.showAsPopup) {
+          this.showAsPopup = newvalue;
+          this.render();
+          return;
+        }
+      }
       this.setOptionsContainerHeight(true);
     }
 
@@ -1678,7 +1702,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.ariaLabelClearButtonText = options.ariaLabelClearButtonText;
       this.maxWidth = options.maxWidth;
       this.searchDelay = options.searchDelay;
-      this.hideSelectDisplayOnkeepAlwaysOpen = options.hideSelectDisplayOnkeepAlwaysOpen; // Royale
+      this.hideSelectDisplayOnKeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnKeepAlwaysOpen); // Royale
 
       /** @type {string[]} */
       this.selectedValues = [];
@@ -1756,7 +1780,8 @@ var VirtualSelect = /*#__PURE__*/function () {
         hideValueTooltipOnSelectAll: true,
         emptyValue: '',
         searchDelay: 300,
-        focusSelectedOptionOnOpen: true
+        focusSelectedOptionOnOpen: true,
+        hideSelectDisplayOnKeepAlwaysOpen: true
       };
       if (options.hasOptionDescription) {
         defaultOptions.optionsCount = 4;

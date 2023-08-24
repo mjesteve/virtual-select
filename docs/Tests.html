@@ -58,19 +58,17 @@
 
     var misel =  VirtualSelect.init({
       ele: '#sample-select',
-      options: arPages1,
-      hideClearButton: true,
+      options: arPages,
+      hideClearButton: false,
       optionsCount: 10,
       optionHeight:"35px",
-      labelKey: "nregpag", valueKey: "nregpag",
+      labelKey: "label", valueKey: "value",
       disabledOpions: [],
       dropboxWrapper: 'body',
       markSearchResults: true,
-      optionsCount: 10,
       position: 'bottom',
       selectedValue: 20,
-      showValueAsTags: false,
-      zIndex:80
+      showValueAsTags: false
     });
 
 
@@ -81,7 +79,7 @@
       optionsCount: 10,
       optionHeight:"34px",
       keepAlwaysOpen: true,
-      hideSelectDisplayOnkeepAlwaysOpen: true,
+      hideSelectDisplayOnKeepAlwaysOpen: true,
       focusSelectedOptionOnOpen: true,
       markSearchResults: true,
       optionsCount: 10,
@@ -102,7 +100,7 @@
       var val = prompt('Type value to select');
       var myc = document.getElementById('sample-select');
       myc.setValue(val);
-      milist.$ele.setValue(val);
+      //milist.$ele.setValue(val);
     }
     
   </script>
