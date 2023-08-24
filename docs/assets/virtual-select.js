@@ -618,9 +618,6 @@ var DomUtils = /*#__PURE__*/function () {
   return DomUtils;
 }();
 
-/***/ }),
-
-/***/ "./src/utils/index.js":
 /*!****************************!*\
   !*** ./src/utils/index.js ***!
   \****************************/
@@ -637,9 +634,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/***/ }),
-
-/***/ "./src/utils/utils.js":
 /*!****************************!*\
   !*** ./src/utils/utils.js ***!
   \****************************/
@@ -3058,8 +3052,6 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
       DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         DomUtils.dispatchEvent(this.$ele, 'afterClose');
       }
       this.$wrapper.focus();
