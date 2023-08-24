@@ -1,13 +1,5 @@
 /*!
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Virtual Select v1.0.40
-=======
- * Virtual Select v1.0.39.2
->>>>>>> 6e2df2c (showAsPopUp now responsive)
-=======
- * Virtual Select v1.0.39.2
->>>>>>> 6e2df2c (showAsPopUp now responsive)
+ * Virtual Select v1.0.40.2
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  *//******/ (function() { // webpackBootstrap
@@ -2571,16 +2563,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
       DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
-<<<<<<< HEAD
-<<<<<<< HEAD
         DomUtils.dispatchEvent(this.$ele, 'afterClose');
         this.focus();
-=======
-        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'afterClose');
->>>>>>> 81400e2 ([WIP] Tests)
-=======
-        DomUtils.dispatchEvent(this.$ele, 'afterClose');
->>>>>>> bf406dc ( * @property {boolean} [hideSelectDisplayOnkeepAlwaysOpen] Hide SelectDisplay if keepAlwaysOpen is true)
       }
     }
   }, {
