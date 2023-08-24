@@ -981,14 +981,31 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "onResize",
     value: function onResize() {
+      // Royale
       if (this.showDropboxAsPopup && !this.keepAlwaysOpen) {
         var newvalue = window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
         if (newvalue !== this.showAsPopup) {
           this.showAsPopup = newvalue;
+          this.optionsCount = this.getOptionsCount(this.optionsCountInit);
+          this.halfOptionsCount = Math.ceil(this.optionsCount / 2);
+          this.optionsHeight = this.getOptionsHeight();
+          if (this.hasDropboxWrapper) {
+            this.$dropboxWrapper.remove();
+            this.mutationObserver.disconnect();
+          }
+          if (this.dropboxPopover) {
+            this.dropboxPopover.destroy();
+          }
           this.render();
+          this.setValue(this.selectedValues, {
+            disableEvent: true,
+            disableValidation: true
+          });
           return;
         }
       }
+      // End Royale
+
       this.setOptionsContainerHeight(true);
     }
 
@@ -1262,7 +1279,10 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
       this.showAsPopup = this.showDropboxAsPopup && !this.keepAlwaysOpen && window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
       this.hasSearchContainer = this.hasSearch || this.multiple && !this.disableSelectAll;
-      this.optionsCount = this.getOptionsCount(options.optionsCount);
+      // Royale
+      this.optionsCountInit = parseInt(options.optionsCount);
+      this.optionsCount = this.getOptionsCount(this.optionsCountInit);
+      // End Royale
       this.halfOptionsCount = Math.ceil(this.optionsCount / 2);
       this.optionsHeight = this.getOptionsHeight();
       this.uniqueId = this.getUniqueId();
@@ -1312,8 +1332,9 @@ var VirtualSelect = /*#__PURE__*/function () {
         emptyValue: '',
         searchDelay: 300,
         focusSelectedOptionOnOpen: true,
-        hideSelectDisplayOnKeepAlwaysOpen: true
+        hideSelectDisplayOnKeepAlwaysOpen: true // Royale
       };
+
       if (options.hasOptionDescription) {
         defaultOptions.optionsCount = 4;
         defaultOptions.optionHeight = '50px';
@@ -3394,9 +3415,11 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function setValueMethod() {
       var _this$virtualSelect;
       (_this$virtualSelect = this.virtualSelect).setValueMethod.apply(_this$virtualSelect, arguments);
+      // Royale
       if (this.virtualSelect.focusSelectedOptionOnOpen && this.virtualSelect.keepAlwaysOpen) {
         this.virtualSelect.setScrollTop();
       }
+      // End Royale
     }
   }, {
     key: "setOptionsMethod",
