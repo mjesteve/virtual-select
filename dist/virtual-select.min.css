@@ -1,6 +1,10 @@
 /*!
 <<<<<<< HEAD
+<<<<<<< HEAD
  * Virtual Select v1.0.40
+=======
+ * Virtual Select v1.0.39.2
+>>>>>>> 6e2df2c (showAsPopUp now responsive)
 =======
  * Virtual Select v1.0.39.2
 >>>>>>> 6e2df2c (showAsPopUp now responsive)
