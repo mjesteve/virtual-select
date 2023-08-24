@@ -2616,9 +2616,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
       _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
-        DomUtils.dispatchEvent(this.$ele, 'afterClose');
-        this.focus();
+        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'afterClose');
       }
+      this.focus();
     }
   }, {
     key: "moveSelectedOptionsFirst",

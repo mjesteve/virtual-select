@@ -2620,6 +2620,10 @@ var VirtualSelect = /*#__PURE__*/function () {
         this.focus();
       }
     }
+        _utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.dispatchEvent(this.$ele, 'afterClose');
+      }
+      this.focus();
+    }
   }, {
     key: "moveSelectedOptionsFirst",
     value: function moveSelectedOptionsFirst() {
