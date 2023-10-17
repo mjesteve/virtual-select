@@ -351,6 +351,16 @@
       pointer-events: none;
     }
   }
+
+  &[read-only] {
+    cursor: auto;
+    user-select: none;
+
+    .vscomp-wrapper {
+      pointer-events: none;
+    }
+  }
+
 }
 
 .vscomp-wrapper {

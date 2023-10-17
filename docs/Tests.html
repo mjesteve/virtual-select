@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" type="text/css" href="https://pro.fontawesome.com/releases/v5.13.0/css/all.css">
   
-  <link rel="stylesheet" href="assets/virtual-select.min.css">
+  <link rel="stylesheet" href="../dist/virtual-select.min.css">
   <link rel="stylesheet" href="assets/tooltip.min.css">
   <script src="../dist/virtual-select.min.js"></script>
   <script src="assets/tooltip.min.js"></script>
@@ -27,12 +27,14 @@
 
 <body>
 
-  <div style="height: 500px; width: 500px; background-color: darkcyan;">
+  <div style="height: 500px; width: 500px; background-color: darkcyan; padding: 20px;">
 
-    <div id="sample-select"></div>
+    <div id="sample-select" style="margin-bottom: 20px;"></div>
     <button type="button" onclick="getValue()">Get value</button>
     <button type="button" onclick="setValue()">Set value 10</button>
-    <div id="sample-list"></div>
+    <button type="button" onclick="readonly(true)">Set read only</button>
+    <button type="button" onclick="readonly(false)">Set read write</button>
+    <div id="sample-list" style="margin-top: 20px;"></div>
   </div>
 
   <script type="text/javascript">
@@ -59,7 +61,7 @@
     var misel =  VirtualSelect.init({
       ele: '#sample-select',
       options: arPages,
-      hideClearButton: false,
+      hideClearButton: true,
       optionsCount: 10,
       optionHeight:"35px",
       labelKey: "label", valueKey: "value",
@@ -67,24 +69,27 @@
       dropboxWrapper: 'body',
       markSearchResults: true,
       position: 'bottom',
-      selectedValue: 20,
-      showValueAsTags: false
+      selectedValue: [10,20,30],
+      showValueAsTags: true,
+      search: true,
+      readOnly: false,
+      multiple: true
     });
 
-    /*var milist =  VirtualSelect.init({
+    var milist =  VirtualSelect.init({
       ele: '#sample-list',
       options: arPages,
       hideClearButton: false,
       optionsCount: 10,
       optionHeight:"34px",
       keepAlwaysOpen: true,
-      hideSelectDisplayOnKeepAlwaysOpen: true,
+      hideSelectDisplayOnKeepAlwaysOpen: false,
       focusSelectedOptionOnOpen: true,
       markSearchResults: true,
-      optionsCount: 10,
       search: true,
-      selectedValue: 20
-    });*/
+      selectedValue: 20,
+      multiple: true, maxValues:3
+    });
  
     //alert(document.getElementById('sample-select').value); //return 20
     //alert(misel.$ele.value); //return 20
@@ -97,7 +102,12 @@
       var val = prompt('Type value to select');
       var myc = document.getElementById('sample-select');
       myc.setValue(val);
-      //milist.$ele.setValue(val);
+      milist.$ele.setValue(val);
+    }
+    function readonly(value){
+      //var myc = document.getElementById('sample-select');
+      misel.setReadOnly(value);
+      milist.setReadOnly(value);
     }
     
   </script>

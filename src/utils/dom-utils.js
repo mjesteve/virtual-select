@@ -251,6 +251,27 @@ export class DomUtils {
 
   /**
    * @param {HTMLElement} $ele
+   * @param {string} events
+   * @param {Function} callback
+   */
+  static removeEvent($ele, events, callback) {
+    if (!$ele) {
+      return;
+    }
+
+    const eventsArray = Utils.removeArrayEmpty(events.split(' '));
+
+    eventsArray.forEach((event) => {
+      const $eleArray = DomUtils.getElements($ele);
+
+      $eleArray.forEach(($this) => {
+        $this.removeEventListener(event, callback);
+      });
+    });
+  }
+
+  /**
+   * @param {HTMLElement} $ele
    * @param {string} eventName
    * @param {boolean} [bubbles]
    */
