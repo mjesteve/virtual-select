@@ -23,7 +23,7 @@ module.exports = (env, options) => {
 
     entry: {
       'styles': ['./src/styles.js', './node_modules/popover-plugin/dist/popover.min.css'],
-      'virtual-select': ['./src/virtual-select-Ext.js', './node_modules/popover-plugin/dist/popover.min.js'],
+      'virtual-select': ['./src/virtual-select.js', './node_modules/popover-plugin/dist/popover.min.js'],
     },
 
     output: {

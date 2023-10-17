@@ -56,7 +56,7 @@ module.exports = (env, options) => {
     ],
 
     optimization: {
-      minimize: true,
+      minimize: false,
       minimizer: [
         new TerserPlugin({
           extractComments: false,
