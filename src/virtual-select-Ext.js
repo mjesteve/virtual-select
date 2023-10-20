@@ -2444,7 +2444,11 @@ export class VirtualSelect {
       if (this.multiple && this.isMaxValuesSelected) {
         return;
       }
-    } else if (!this.multiple) {
+    /** Royale: 1.40.3 -> Add keepAlwaysOpen condition
+     * In list mode - not multi, when we select an option it should not execute closeDropbox()
+     * because it behaves like a select and deletes the content of the Search and rebuilds the options unnecessarily.
+     */
+    } else if (!this.multiple && !this.keepAlwaysOpen) {
       /** on selecting same value in single select */
       this.closeDropbox();
       return;
@@ -2482,8 +2486,8 @@ export class VirtualSelect {
         }
 
         this.closeDropbox();
-
-        if (!isNewOption) {
+        /** Royale: 1.40.3 -> Add keepAlwaysOpen condition */
+        if (!isNewOption && !this.keepAlwaysOpen) {
           this.setSearchValue('');
         }
       }

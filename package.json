@@ -1,6 +1,6 @@
 {
   "name": "virtual-select-plugin",
-  "version": "1.0.40.2",
+  "version": "1.0.40.3",
   "description": "A javascript plugin for dropdown with virtual scroll",
   "scripts": {
     "builddev": "webpack --mode development",
@@ -9,8 +9,8 @@
     "build": "webpack --mode production",
     "validate": "tsc && eslint src/**/*.js && stylelint src/sass/**/*.scss",
     "docs": "docsify serve docs",
-    "t": "docsify serve docs -p 3001 & cypress open --e2e -b chrome",
-    "test": "docsify serve docs -p 3001 & cypress run"
+    "t": "docsify serve docs -p 3001 | cypress open --e2e -b chrome",
+    "test": "docsify serve docs -p 3001 | cypress run"
   },
   "author": "Sa Si Dev",
   "keywords": [
