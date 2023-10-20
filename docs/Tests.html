@@ -80,7 +80,7 @@
   var milist =  VirtualSelect.init({
       ele: '#sample-list',
       options: arPages,
-      hideClearButton: false,
+      hideClearButton: true,
       optionsCount: 10,
       optionHeight:"34px",
       keepAlwaysOpen: true,
@@ -88,8 +88,7 @@
       focusSelectedOptionOnOpen: true,
       markSearchResults: true,
       search: true,
-      selectedValue: 20,
-      multiple: true, maxValues:3
+      multiple: false, maxValues:3, dropboxWrapper: 'self'
     });
  
     //alert(document.getElementById('sample-select').value); //return 20
