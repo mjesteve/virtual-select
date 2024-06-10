@@ -12,17 +12,45 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
 
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/external/vue.css" />
     <link rel="stylesheet" href="assets/external/flags.css" />
     <link rel="stylesheet" href="assets/virtual-select.min.css" />
     <link rel="stylesheet" href="assets/tooltip.min.css" />
     <link rel="stylesheet" href="assets/styles.css" />
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8SKMSNVRP8"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      gtag('config', 'G-8SKMSNVRP8');
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      if (!location.host.includes('localhost')) {
+        (function (w, d, s, l, i) {
+          w[l] = w[l] || [];
+          w[l].push({ 'gtm.start': new Date().getTime(), 'event': 'gtm.js' });
+          var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+          j.async = true;
+          j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+          f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-W36CH4T');
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
 
-    <script src="assets/virtual-select.min.js"></script>
+    <script src="assets/virtual-select.js"></script>
     <script src="assets/tooltip.min.js"></script>
     <script src="assets/script.js"></script>
 

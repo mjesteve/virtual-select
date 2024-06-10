@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** cSpell:ignore Labelledby */
 /**
  * @typedef {object} virtualSelectOptions
@@ -40,10 +41,12 @@
  * @property {boolean} [focusSelectedOptionOnOpen=true] Scroll selected option to viewport on dropbox open
  * @property {string} [name] Name attribute for hidden input
  * @property {boolean} [keepAlwaysOpen] Keep dropbox always open with fixed height
- * @property {boolean} [hideSelectDisplayOnKeepAlwaysOpen] Hide SelectDisplay if keepAlwaysOpen is true
  * @property {number} [maxValues=0] Maximum no.of options allowed to choose in multiple select
  * @property {number} [minValues] Minimum no.of options should be selected to succeed required validation
  * @property {string} [additionalClasses] Additional classes for wrapper element
+ * @property {string} [additionalDropboxClasses] Additional classes for dropbox element
+ * @property {string} [additionalDropboxContainerClasses] Additional classes for dropbox container element
+ * @property {string} [additionalToggleButtonClasses] Additional classes for toggle button element
  * @property {boolean} [showDropboxAsPopup=true] Show dropbox as popup on small screen like mobile
  * @property {string} [popupDropboxBreakpoint='576px'] Maximum screen width that allowed to show dropbox as popup
  * @property {string} [popupPosition=center] Position of the popup (left, center, or right)

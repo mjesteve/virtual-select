@@ -229,6 +229,24 @@ export class DomUtils {
   }
 
   /**
+   * @static
+   * @param {string} [$selector='']
+   * @param {*} [$parentEle=undefined]
+   * @return {*}
+   * @memberof DomUtils
+   */
+  static getElementsBySelector($selector = '', $parentEle = undefined) {
+    let elements;
+    const parent = $parentEle !== undefined ? $parentEle : document;
+
+    if ($selector !== '') {
+      elements = parent.querySelectorAll($selector);
+    }
+
+    return elements !== undefined ? Array.from(elements) : [];
+  }
+
+  /**
    * @param {HTMLElement} $ele
    * @param {string} events
    * @param {Function} callback
@@ -245,27 +263,6 @@ export class DomUtils {
 
       $eleArray.forEach(($this) => {
         $this.addEventListener(event, callback);
-      });
-    });
-  }
-
-  /**
-   * @param {HTMLElement} $ele
-   * @param {string} events
-   * @param {Function} callback
-   */
-  static removeEvent($ele, events, callback) {
-    if (!$ele) {
-      return;
-    }
-
-    const eventsArray = Utils.removeArrayEmpty(events.split(' '));
-
-    eventsArray.forEach((event) => {
-      const $eleArray = DomUtils.getElements($ele);
-
-      $eleArray.forEach(($this) => {
-        $this.removeEventListener(event, callback);
       });
     });
   }
@@ -336,6 +333,23 @@ export class DomUtils {
     DomUtils.getElements($ele).forEach(($this) => {
       // eslint-disable-next-line no-param-reassign
       $this.tabIndex = newTabIndex;
+    });
+  }
+
+  /**
+   * @param {HTMLElement} $ele
+   * @param {string} event
+   * @param {Function} callback
+   */
+  static removeEvent($ele, event, callback) {
+    if (!$ele) {
+      return;
+    }
+
+    const $eleArray = DomUtils.getElements($ele);
+
+    $eleArray.forEach(($this) => {
+      $this.removeEventListener(event, callback);
     });
   }
 }

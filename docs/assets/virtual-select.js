@@ -1,5 +1,5 @@
 /*!
- * Virtual Select v1.0.40.3
+ * Virtual Select v1.0.44.3
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  *//******/ (function() { // webpackBootstrap
@@ -33,6 +33,7 @@ var Utils = /*#__PURE__*/function () {
     /**
      * @param {any} text
      * @returns {string}
+     * @memberof Utils
      */
     function getString(text) {
       return text || text === 0 ? text.toString() : '';
@@ -42,6 +43,7 @@ var Utils = /*#__PURE__*/function () {
      * @param {any} value
      * @param {boolean} defaultValue
      * @returns {boolean}
+     * @memberof Utils
      */
   }, {
     key: "convertToBoolean",
@@ -61,6 +63,7 @@ var Utils = /*#__PURE__*/function () {
     /**
      * @param {any} value
      * @returns {boolean}
+     * @memberof Utils
      */
   }, {
     key: "isEmpty",
@@ -81,6 +84,7 @@ var Utils = /*#__PURE__*/function () {
     /**
      * @param {any} value
      * @returns {boolean}
+     * @memberof Utils
      */
   }, {
     key: "isNotEmpty",
@@ -93,6 +97,7 @@ var Utils = /*#__PURE__*/function () {
      * @param {any} value
      * @param {boolean} cloneArray
      * @returns {any[]}
+     * @memberof Utils
      */
   }, {
     key: "removeItemFromArray",
@@ -112,6 +117,7 @@ var Utils = /*#__PURE__*/function () {
     /**
      * @param {any[]} array
      * @returns {any[]}
+     * @memberof Utils
      */
   }, {
     key: "removeArrayEmpty",
@@ -128,6 +134,7 @@ var Utils = /*#__PURE__*/function () {
      * @param {number} max
      * @param {number} max
      * @returns {number}
+     * @memberof Utils
      */
   }, {
     key: "getRandomInt",
@@ -141,6 +148,7 @@ var Utils = /*#__PURE__*/function () {
     /**
      * @param {string} text
      * @return {string}
+     * @memberof Utils
      */
   }, {
     key: "regexEscape",
@@ -152,12 +160,60 @@ var Utils = /*#__PURE__*/function () {
     /**
      * @param {string} text
      * @return {string}
+     * @memberof Utils
      */
   }, {
     key: "normalizeString",
     value: function normalizeString(text) {
       var NON_WORD_REGEX = /[^\w]/g;
       return text.normalize('NFD').replace(NON_WORD_REGEX, '');
+    }
+
+    /**
+     * @static
+     * @param {*} container
+     * @param {string} text
+     * @return {boolean}
+     * @memberof Utils
+     */
+  }, {
+    key: "willTextOverflow",
+    value: function willTextOverflow(container, text) {
+      var tempElement = document.createElement('div');
+      tempElement.style.position = 'absolute';
+      tempElement.style.visibility = 'hidden';
+      tempElement.style.whiteSpace = 'nowrap';
+      tempElement.style.fontSize = window.getComputedStyle(container).fontSize;
+      tempElement.style.fontFamily = window.getComputedStyle(container).fontFamily;
+      tempElement.textContent = text;
+      document.body.appendChild(tempElement);
+      var textWidth = tempElement.clientWidth;
+      document.body.removeChild(tempElement);
+      return textWidth > container.clientWidth;
+    }
+
+    /**
+     * @static
+     * @param {string} text
+     * @return {string}
+     * @memberof Utils
+     */
+  }, {
+    key: "replaceDoubleQuotesWithHTML",
+    value: function replaceDoubleQuotesWithHTML(text) {
+      return text.replace(/"/g, '&quot;');
+    }
+
+    /**
+     * @static
+     * @param {string} text
+     * @return {boolean}
+     * @memberof Utils
+     */
+  }, {
+    key: "containsHTML",
+    value: function containsHTML(text) {
+      return /<[a-z][\s\S]*>/i.test(text);
     }
   }]);
   return Utils;
@@ -424,6 +480,26 @@ var DomUtils = /*#__PURE__*/function () {
     }
 
     /**
+     * @static
+     * @param {string} [$selector='']
+     * @param {*} [$parentEle=undefined]
+     * @return {*}
+     * @memberof DomUtils
+     */
+  }, {
+    key: "getElementsBySelector",
+    value: function getElementsBySelector() {
+      var $selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      var $parentEle = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+      var elements;
+      var parent = $parentEle !== undefined ? $parentEle : document;
+      if ($selector !== '') {
+        elements = parent.querySelectorAll($selector);
+      }
+      return elements !== undefined ? Array.from(elements) : [];
+    }
+
+    /**
      * @param {HTMLElement} $ele
      * @param {string} events
      * @param {Function} callback
@@ -439,26 +515,6 @@ var DomUtils = /*#__PURE__*/function () {
         var $eleArray = DomUtils.getElements($ele);
         $eleArray.forEach(function ($this) {
           $this.addEventListener(event, callback);
-        });
-      });
-    }
-
-    /**
-     * @param {HTMLElement} $ele
-     * @param {string} events
-     * @param {Function} callback
-     */
-  }, {
-    key: "removeEvent",
-    value: function removeEvent($ele, events, callback) {
-      if (!$ele) {
-        return;
-      }
-      var eventsArray = Utils.removeArrayEmpty(events.split(' '));
-      eventsArray.forEach(function (event) {
-        var $eleArray = DomUtils.getElements($ele);
-        $eleArray.forEach(function ($this) {
-          $this.removeEventListener(event, callback);
         });
       });
     }
@@ -541,6 +597,23 @@ var DomUtils = /*#__PURE__*/function () {
         $this.tabIndex = newTabIndex;
       });
     }
+
+    /**
+     * @param {HTMLElement} $ele
+     * @param {string} event
+     * @param {Function} callback
+     */
+  }, {
+    key: "removeEvent",
+    value: function removeEvent($ele, event, callback) {
+      if (!$ele) {
+        return;
+      }
+      var $eleArray = DomUtils.getElements($ele);
+      $eleArray.forEach(function ($this) {
+        $this.removeEventListener(event, callback);
+      });
+    }
   }]);
   return DomUtils;
 }();
@@ -564,6 +637,7 @@ function virtual_select_Ext_defineProperties(target, props) { for (var i = 0; i 
 function virtual_select_Ext_createClass(Constructor, protoProps, staticProps) { if (protoProps) virtual_select_Ext_defineProperties(Constructor.prototype, protoProps); if (staticProps) virtual_select_Ext_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function virtual_select_Ext_toPropertyKey(arg) { var key = virtual_select_Ext_toPrimitive(arg, "string"); return virtual_select_Ext_typeof(key) === "symbol" ? key : String(key); }
 function virtual_select_Ext_toPrimitive(input, hint) { if (virtual_select_Ext_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (virtual_select_Ext_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* eslint-disable linebreak-style */
 /** cSpell:ignore nocheck, Labelledby, vscomp, tabindex, combobox, haspopup, listbox, activedescendant */
 /* eslint-disable class-methods-use-this */
 // @ts-nocheck
@@ -573,13 +647,16 @@ var searchHeight = 40;
 var keyDownMethodMapping = {
   13: 'onEnterPress',
   38: 'onUpArrowPress',
-  40: 'onDownArrowPress'
+  40: 'onDownArrowPress',
+  46: 'onBackspaceOrDeletePress',
+  // Delete
+  8: 'onBackspaceOrDeletePress' // Backspace
 };
 var valueLessProps = ['autofocus', 'disabled', 'multiple', 'required', 'read-only'];
 // eslint-disable-next-line max-len
 var nativeProps = ['autofocus', 'class', 'disabled', 'id', 'multiple', 'name', 'placeholder', 'required', 'read-only'];
 var attrPropsMapping;
-var dataProps = ['additionalClasses', 'aliasKey', 'allOptionsSelectedText', 'allowNewOption', 'alwaysShowSelectedOptionsCount', 'alwaysShowSelectedOptionsLabel', 'ariaLabelledby', 'ariaLabelText', 'autoSelectFirstOption', 'clearButtonText', 'descriptionKey', 'disableAllOptionsSelectedText', 'disableOptionGroupCheckbox', 'disableSelectAll', 'disableValidation', 'dropboxWidth', 'dropboxWrapper', 'emptyValue', 'enableSecureText', 'focusSelectedOptionOnOpen', 'hasOptionDescription', 'hideClearButton', 'hideValueTooltipOnSelectAll', 'keepAlwaysOpen', 'labelKey', 'markSearchResults', 'maxValues', 'maxWidth', 'minValues', 'moreText', 'noOfDisplayValues', 'noOptionsText', 'noSearchResultsText', 'optionHeight', 'optionSelectedText', 'optionsCount', 'optionsSelectedText', 'popupDropboxBreakpoint', 'popupPosition', 'position', 'search', 'searchByStartsWith', 'searchDelay', 'searchFormLabel', 'searchGroup', 'searchNormalize', 'searchPlaceholderText', 'selectAllOnlyVisible', 'selectAllText', 'setValueAsArray', 'showDropboxAsPopup', 'showOptionsOnlyOnSearch', 'showSelectedOptionsFirst', 'showValueAsTags', 'silentInitialValueSet', 'textDirection', 'tooltipAlignment', 'tooltipFontSize', 'tooltipMaxWidth', 'updatePositionThrottle', 'useGroupValue', 'valueKey', 'zIndex', 'hideSelectDisplayOnKeepAlwaysOpen',
+var dataProps = ['additionalClasses', 'additionalDropboxClasses', 'additionalDropboxContainerClasses', 'additionalToggleButtonClasses', 'aliasKey', 'allOptionsSelectedText', 'allowNewOption', 'alwaysShowSelectedOptionsCount', 'alwaysShowSelectedOptionsLabel', 'ariaLabelledby', 'ariaLabelText', 'ariaLabelClearButtonText', 'autoSelectFirstOption', 'clearButtonText', 'descriptionKey', 'disableAllOptionsSelectedText', 'disableOptionGroupCheckbox', 'disableSelectAll', 'disableValidation', 'dropboxWidth', 'dropboxWrapper', 'emptyValue', 'enableSecureText', 'focusSelectedOptionOnOpen', 'hasOptionDescription', 'hideClearButton', 'hideValueTooltipOnSelectAll', 'keepAlwaysOpen', 'labelKey', 'markSearchResults', 'maxValues', 'maxWidth', 'minValues', 'moreText', 'noOfDisplayValues', 'noOptionsText', 'noSearchResultsText', 'optionHeight', 'optionSelectedText', 'optionsCount', 'optionsSelectedText', 'popupDropboxBreakpoint', 'popupPosition', 'position', 'search', 'searchByStartsWith', 'searchDelay', 'searchFormLabel', 'searchGroup', 'searchNormalize', 'searchPlaceholderText', 'selectAllOnlyVisible', 'selectAllText', 'setValueAsArray', 'showDropboxAsPopup', 'showOptionsOnlyOnSearch', 'showSelectedOptionsFirst', 'showValueAsTags', 'silentInitialValueSet', 'textDirection', 'tooltipAlignment', 'tooltipFontSize', 'tooltipMaxWidth', 'updatePositionThrottle', 'useGroupValue', 'valueKey', 'zIndex', 'hideSelectDisplayOnKeepAlwaysOpen',
 // Royale
 'readOnly' // Royale
 ];
@@ -614,16 +691,22 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
       var uniqueId = this.uniqueId;
       var wrapperClasses = 'vscomp-wrapper';
-      var valueTooltip = this.getTooltipAttrText(this.placeholder, true, true);
+      var toggleButtonClasses = 'vscomp-toggle-button';
+      var valueTooltip = this.showValueAsTags ? '' : this.getTooltipAttrText(this.placeholder, true, true);
       var clearButtonTooltip = this.getTooltipAttrText(this.clearButtonText);
       var ariaLabelledbyText = this.ariaLabelledby ? "aria-labelledby=\"".concat(this.ariaLabelledby, "\"") : '';
       var ariaLabelText = this.ariaLabelText ? "aria-label=\"".concat(this.ariaLabelText, "\"") : '';
+      var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
+      var isExpanded = false;
       // Royale
       var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen ? ' style="display:none;"' : '';
       // fin Royale
-      var isExpanded = false;
+
       if (this.additionalClasses) {
         wrapperClasses += " ".concat(this.additionalClasses);
+      }
+      if (this.additionalToggleButtonClasses) {
+        toggleButtonClasses += " ".concat(this.additionalToggleButtonClasses);
       }
       if (this.multiple) {
         wrapperClasses += ' multiple';
@@ -655,13 +738,14 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (this.popupPosition) {
         wrapperClasses += " popup-position-".concat(this.popupPosition.toLowerCase());
       }
-      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, "\n      >\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n\n        <div class=\"vscomp-toggle-button\" ").concat(hideDisplay, ">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n\n          <div class=\"vscomp-arrow\"></div>\n\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        <section role=\"region\" class=\"vscomp-live-region\" aria-live=\"polite\">\n          <p class=\"vscomp-live-region-title\"></p>\n        </section>\n\n        ").concat(this.renderDropbox({
+
+      // eslint-disable-next-line no-trailing-spaces
+      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, ">\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n        <div class=\"").concat(toggleButtonClasses, "\" ").concat(hideDisplay, ">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n          <div class=\"vscomp-arrow\"></div>\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, " \n          tabindex=\"0\" ").concat(ariaLabelClearBtnTxt, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        ").concat(this.renderDropbox({
         wrapperClasses: wrapperClasses
       }), "\n      </div>");
       this.$ele.innerHTML = html;
       this.$body = document.querySelector('body');
       this.$wrapper = this.$ele.querySelector('.vscomp-wrapper');
-      this.$ariaLiveElem = this.$ele.querySelector('.vscomp-live-region-title');
       if (this.hasDropboxWrapper) {
         this.$allWrappers = [this.$wrapper, this.$dropboxWrapper];
         this.$dropboxContainer = this.$dropboxWrapper.querySelector('.vscomp-dropbox-container');
@@ -676,6 +760,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.$hiddenInput = this.$ele.querySelector('.vscomp-hidden-input');
       this.$dropbox = this.$dropboxContainer.querySelector('.vscomp-dropbox');
       this.$dropboxCloseButton = this.$dropboxContainer.querySelector('.vscomp-dropbox-close-button');
+      this.$dropboxContainerBottom = this.$dropboxContainer.querySelector('.vscomp-dropbox-container-bottom');
+      this.$dropboxContainerTop = this.$dropboxContainer.querySelector('.vscomp-dropbox-container-top');
       this.$search = this.$dropboxContainer.querySelector('.vscomp-search-wrapper');
       this.$optionsContainer = this.$dropboxContainer.querySelector('.vscomp-options-container');
       this.$optionsList = this.$dropboxContainer.querySelector('.vscomp-options-list');
@@ -689,7 +775,17 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function renderDropbox(_ref) {
       var wrapperClasses = _ref.wrapperClasses;
       var $wrapper = this.dropboxWrapper !== 'self' ? document.querySelector(this.dropboxWrapper) : null;
-      var html = "<div id=\"vscomp-dropbox-container-".concat(this.uniqueId, "\" role=\"listbox\" class=\"vscomp-dropbox-container\">\n        <div class=\"vscomp-dropbox\">\n          <div class=\"vscomp-search-wrapper\"></div>\n\n          <div class=\"vscomp-options-container\">\n            <div class=\"vscomp-options-loader\"></div>\n\n            <div class=\"vscomp-options-list\">\n              <div class=\"vscomp-options\"></div>\n            </div>\n          </div>\n\n          <div class=\"vscomp-options-bottom-freezer\"></div>\n          <div class=\"vscomp-no-options\">").concat(this.noOptionsText, "</div>\n          <div class=\"vscomp-no-search-results\">").concat(this.noSearchResultsText, "</div>\n\n          <span class=\"vscomp-dropbox-close-button\"><i class=\"vscomp-clear-icon\"></i></span>\n        </div>\n      </div>\n");
+      var dropboxClasses = 'vscomp-dropbox';
+      if (this.additionalDropboxClasses) {
+        dropboxClasses += " ".concat(this.additionalDropboxClasses);
+      }
+      var dropboxContainerClasses = 'vscomp-dropbox-container';
+      if (this.additionalDropboxContainerClasses) {
+        dropboxContainerClasses += " ".concat(this.additionalDropboxContainerClasses);
+      }
+
+      // eslint-disable-next-line no-trailing-spaces
+      var html = "<div id=\"vscomp-dropbox-container-".concat(this.uniqueId, "\" role=\"listbox\" class=\"").concat(dropboxContainerClasses, "\">\n        <div class=\"vscomp-dropbox-container-top\" aria-hidden=\"true\" tabindex=\"0\">&nbsp;</div>\n        <div class=\"").concat(dropboxClasses, "\">\n          <div class=\"vscomp-search-wrapper\"></div>\n\n          <div class=\"vscomp-options-container\">\n            <div class=\"vscomp-options-loader\"></div>\n\n            <div class=\"vscomp-options-list\">\n              <div class=\"vscomp-options\"></div>\n            </div>\n          </div>\n\n          <div class=\"vscomp-options-bottom-freezer\"></div>\n          <div class=\"vscomp-no-options\">").concat(this.noOptionsText, "</div>\n          <div class=\"vscomp-no-search-results\">").concat(this.noSearchResultsText, "</div>\n\n          <span class=\"vscomp-dropbox-close-button\"><i class=\"vscomp-clear-icon\"></i></span>\n        </div>\n        <div class=\"vscomp-dropbox-container-bottom\" aria-hidden=\"true\" tabindex=\"0\">&nbsp;</div>\n      </div>");
       if ($wrapper) {
         var $dropboxWrapper = document.createElement('div');
         this.$dropboxWrapper = $dropboxWrapper;
@@ -718,6 +814,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         searchGroup = this.searchGroup;
       var hasLabelRenderer = typeof labelRenderer === 'function';
       var convertToBoolean = Utils.convertToBoolean;
+      var groupName = '';
       if (markSearchResults) {
         searchRegex = new RegExp("(".concat(Utils.regexEscape(this.searchValue), ")(?!([^<]+)?>)"), 'gi');
       }
@@ -737,12 +834,15 @@ var VirtualSelect = /*#__PURE__*/function () {
         var rightSection = '';
         var description = '';
         var groupIndexText = '';
+        var ariaLabel = '';
+        var tabIndexValue = '-1';
         var isSelected = convertToBoolean(d.isSelected);
         var ariaDisabledText = '';
         if (d.classNames) {
           optionClasses += " ".concat(d.classNames);
         }
         if (d.isFocused) {
+          tabIndexValue = '0';
           optionClasses += ' focused';
         }
         if (d.isDisabled) {
@@ -750,6 +850,7 @@ var VirtualSelect = /*#__PURE__*/function () {
           ariaDisabledText = 'aria-disabled="true"';
         }
         if (d.isGroupTitle) {
+          groupName = d.label;
           optionClasses += ' group-title';
           if (disableOptionGroupCheckbox) {
             leftSection = '';
@@ -759,8 +860,16 @@ var VirtualSelect = /*#__PURE__*/function () {
           optionClasses += ' selected';
         }
         if (d.isGroupOption) {
+          var optionDesc = '';
           optionClasses += ' group-option';
           groupIndexText = "data-group-index=\"".concat(d.groupIndex, "\"");
+          if (d.customData) {
+            groupName = d.customData.group_name !== undefined ? "".concat(d.customData.group_name, ", ") : '';
+            optionDesc = d.customData.description !== undefined ? " ".concat(d.customData.description, ",") : '';
+            ariaLabel = "aria-label=\"".concat(groupName, " ").concat(d.label, ", ").concat(optionDesc, "\"");
+          } else {
+            ariaLabel = "aria-label=\"".concat(groupName, ", ").concat(d.label, "\"");
+          }
         }
         if (hasLabelRenderer) {
           optionLabel = labelRenderer(d);
@@ -776,8 +885,9 @@ var VirtualSelect = /*#__PURE__*/function () {
         } else if (markSearchResults && (!d.isGroupTitle || searchGroup)) {
           optionLabel = optionLabel.replace(searchRegex, '<mark>$1</mark>');
         }
-        html += "<div role=\"option\" aria-selected=\"".concat(isSelected, "\" id=\"vscomp-option-").concat(uniqueId, "-").concat(index, "\"\n          class=\"").concat(optionClasses, "\" data-value=\"").concat(d.value, "\" data-index=\"").concat(index, "\" data-visible-index=\"").concat(d.visibleIndex, "\"\n          tabindex=\"0\" ").concat(groupIndexText, " ").concat(ariaDisabledText, "\n        >\n          ").concat(leftSection, "\n          <span class=\"vscomp-option-text\" ").concat(optionTooltip, ">\n            ").concat(optionLabel, "\n          </span>\n          ").concat(description, "\n          ").concat(rightSection, "\n        </div>");
+        html += "<div role=\"option\" aria-selected=\"".concat(isSelected, "\" id=\"vscomp-option-").concat(uniqueId, "-").concat(index, "\"\n          class=\"").concat(optionClasses, "\" data-value=\"").concat(d.value, "\" data-index=\"").concat(index, "\" data-visible-index=\"").concat(d.visibleIndex, "\"\n          tabindex=").concat(tabIndexValue, " ").concat(groupIndexText, " ").concat(ariaDisabledText, " ").concat(ariaLabel, "\n        >\n          ").concat(leftSection, "\n          <span class=\"vscomp-option-text\" ").concat(optionTooltip, ">\n            ").concat(optionLabel, "\n          </span>\n          ").concat(description, "\n          ").concat(rightSection, "\n        </div>");
       });
+      groupName = '';
       this.$options.innerHTML = html;
       this.$visibleOptions = this.$options.querySelectorAll('.vscomp-option');
       this.afterRenderOptions();
@@ -805,6 +915,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.addEvent(this.$searchInput, 'input', 'onSearch');
       this.addEvent(this.$searchClear, 'click', 'onSearchClear');
       this.addEvent(this.$toggleAllButton, 'click', 'onToggleAllOptions');
+      this.addEvent(this.$dropboxContainerBottom, 'focus', 'onDropboxContainerTopOrBottomFocus');
+      this.addEvent(this.$dropboxContainerTop, 'focus', 'onDropboxContainerTopOrBottomFocus');
     }
     /** render methods - end */
 
@@ -815,7 +927,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.addEvent(document, 'click', 'onDocumentClick');
       this.addEvent(this.$allWrappers, 'keydown', 'onKeyDown');
       this.addEvent(this.$toggleButton, 'click', 'onToggleButtonClick');
-      this.addEvent(this.$clearButton, 'click', 'onClearButtonClick');
+      this.addEvent(this.$clearButton, 'click keydown', 'onClearButtonClick');
       this.addEvent(this.$dropboxContainer, 'click', 'onDropboxContainerClick');
       this.addEvent(this.$dropboxCloseButton, 'click', 'onDropboxCloseButtonClick');
       this.addEvent(this.$optionsContainer, 'scroll', 'onOptionsScroll');
@@ -842,19 +954,22 @@ var VirtualSelect = /*#__PURE__*/function () {
         DomUtils.addEvent($ele, event, callback);
       });
     }
+
+    /** dom event methods - start */
   }, {
     key: "removeEvents",
     value: function removeEvents() {
       this.removeEvent(document, 'click', 'onDocumentClick');
       this.removeEvent(this.$allWrappers, 'keydown', 'onKeyDown');
       this.removeEvent(this.$toggleButton, 'click', 'onToggleButtonClick');
-      this.removeEvent(this.$clearButton, 'click', 'onClearButtonClick');
+      this.removeEvent(this.$clearButton, 'click keydown', 'onClearButtonClick');
       this.removeEvent(this.$dropboxContainer, 'click', 'onDropboxContainerClick');
       this.removeEvent(this.$dropboxCloseButton, 'click', 'onDropboxCloseButtonClick');
       this.removeEvent(this.$optionsContainer, 'scroll', 'onOptionsScroll');
       this.removeEvent(this.$options, 'click', 'onOptionsClick');
       this.removeEvent(this.$options, 'mouseover', 'onOptionsMouseOver');
       this.removeEvent(this.$options, 'touchmove', 'onOptionsTouchMove');
+      this.removeMutationObserver();
     }
   }, {
     key: "removeEvent",
@@ -866,10 +981,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       var eventsArray = Utils.removeArrayEmpty(events.split(' '));
       eventsArray.forEach(function (event) {
         var eventsKey = "".concat(method, "-").concat(event);
-        // eslint-disable-next-line prefer-const
         var callback = _this3.events[eventsKey];
         if (callback) {
-          delete _this3.events[eventsKey];
           DomUtils.removeEvent($ele, event, callback);
         }
       });
@@ -887,8 +1000,14 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function onKeyDown(e) {
       var key = e.which || e.keyCode;
       var method = keyDownMethodMapping[key];
-      if (document.activeElement === this.$searchInput && (key === 9 || e.shiftKey && key === 9)) {
-        this.closeDropbox();
+      if (document.activeElement === this.$searchInput && e.shiftKey && key === 9) {
+        e.preventDefault();
+        this.$dropboxContainerTop.focus();
+        return;
+      }
+      if (document.activeElement === this.$searchInput && key === 9) {
+        e.preventDefault();
+        this.focusFirstVisibleOption();
         return;
       }
       // Handle the Escape key when showing the dropdown as a popup, closing it
@@ -906,7 +1025,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       e.preventDefault();
       if (this.isOpened()) {
         this.selectFocusedOption();
-      } else {
+      } else if (this.$ele.disabled === false) {
         this.openDropbox();
       }
     }
@@ -935,6 +1054,16 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "onBackspaceOrDeletePress",
+    value: function onBackspaceOrDeletePress(e) {
+      if (e.target === this.$wrapper) {
+        e.preventDefault();
+        if (this.selectedValues.length > 0) {
+          this.reset();
+        }
+      }
+    }
+  }, {
     key: "onToggleButtonClick",
     value: function onToggleButtonClick(e) {
       var $target = e.target;
@@ -946,8 +1075,13 @@ var VirtualSelect = /*#__PURE__*/function () {
     }
   }, {
     key: "onClearButtonClick",
-    value: function onClearButtonClick() {
-      this.reset();
+    value: function onClearButtonClick(e) {
+      if (e.type === 'click') {
+        this.reset();
+      } else if (e.type === 'keydown' && (e.code === 'Enter' || e.code === 'Space')) {
+        e.stopPropagation();
+        this.reset();
+      }
     }
   }, {
     key: "onOptionsScroll",
@@ -1027,6 +1161,11 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.toggleAllOptions();
     }
   }, {
+    key: "onDropboxContainerTopOrBottomFocus",
+    value: function onDropboxContainerTopOrBottomFocus() {
+      this.closeDropbox();
+    }
+  }, {
     key: "onResize",
     value: function onResize() {
       // Royale
@@ -1062,7 +1201,7 @@ var VirtualSelect = /*#__PURE__*/function () {
     key: "addMutationObserver",
     value: function addMutationObserver() {
       var _this4 = this;
-      if (!this.hasDropboxWrapper || this.mutationObserver) {
+      if (!this.hasDropboxWrapper) {
         return;
       }
       var $vscompEle = this.$ele;
@@ -1090,8 +1229,17 @@ var VirtualSelect = /*#__PURE__*/function () {
         subtree: true
       });
     }
-    /** dom event methods - end */
+  }, {
+    key: "removeMutationObserver",
+    value: function removeMutationObserver() {
+      // Royale. Add error in 1.44.0
+      if (!this.hasDropboxWrapper) {
+        return;
+      }
+      this.mutationObserver.disconnect();
+    }
 
+    /** dom event methods - end */
     /** before event methods - start */
   }, {
     key: "beforeValueSet",
@@ -1158,11 +1306,31 @@ var VirtualSelect = /*#__PURE__*/function () {
       var hasNoSearchResults = !hasNoOptions && !visibleOptions.length;
       if (!this.allowNewOption || this.hasServerSearch || this.showOptionsOnlyOnSearch) {
         DomUtils.toggleClass(this.$allWrappers, 'has-no-search-results', hasNoSearchResults);
+        if (hasNoSearchResults) {
+          DomUtils.setAttr(this.$noSearchResults, 'tabindex', '0');
+          DomUtils.setAttr(this.$noSearchResults, 'aria-hidden', 'false');
+        } else {
+          DomUtils.setAttr(this.$noSearchResults, 'tabindex', '-1');
+          DomUtils.setAttr(this.$noSearchResults, 'aria-hidden', 'true');
+        }
       }
       DomUtils.toggleClass(this.$allWrappers, 'has-no-options', hasNoOptions);
+      if (hasNoOptions) {
+        DomUtils.setAttr(this.$noOptions, 'tabindex', '0');
+        DomUtils.setAttr(this.$noOptions, 'aria-hidden', 'false');
+      } else {
+        DomUtils.setAttr(this.$noOptions, 'tabindex', '-1');
+        DomUtils.setAttr(this.$noOptions, 'aria-hidden', 'true');
+      }
       this.setOptionAttr();
       this.setOptionsPosition();
       this.setOptionsTooltip();
+      if (document.activeElement !== this.$searchInput) {
+        var focusedOption = DomUtils.getElementsBySelector('.focused', this.$dropboxContainer)[0];
+        if (focusedOption !== undefined) {
+          focusedOption.focus();
+        }
+      }
     }
   }, {
     key: "afterSetOptionsContainerHeight",
@@ -1295,6 +1463,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.minValues = parseInt(options.minValues);
       this.name = this.secureText(options.name);
       this.additionalClasses = options.additionalClasses;
+      this.additionalDropboxClasses = options.additionalDropboxClasses;
+      this.additionalDropboxContainerClasses = options.additionalDropboxContainerClasses;
+      this.additionalToggleButtonClasses = options.additionalToggleButtonClasses;
       this.popupDropboxBreakpoint = options.popupDropboxBreakpoint;
       this.popupPosition = options.popupPosition;
       this.onServerSearch = options.onServerSearch;
@@ -1303,6 +1474,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.emptyValue = options.emptyValue;
       this.ariaLabelledby = options.ariaLabelledby;
       this.ariaLabelText = options.ariaLabelText;
+      this.ariaLabelClearButtonText = options.ariaLabelClearButtonText;
       this.maxWidth = options.maxWidth;
       this.searchDelay = options.searchDelay;
       this.hideSelectDisplayOnKeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnKeepAlwaysOpen); // Royale
@@ -1353,6 +1525,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         descriptionKey: 'description',
         aliasKey: 'alias',
         ariaLabelText: 'Options list',
+        ariaLabelClearButtonText: 'Clear button',
         optionsCount: 5,
         noOfDisplayValues: 50,
         optionHeight: '40px',
@@ -1376,6 +1549,9 @@ var VirtualSelect = /*#__PURE__*/function () {
         updatePositionThrottle: 100,
         name: '',
         additionalClasses: '',
+        additionalDropboxClasses: '',
+        additionalDropboxContainerClasses: '',
+        additionalToggleButtonClasses: '',
         maxValues: 0,
         showDropboxAsPopup: true,
         popupDropboxBreakpoint: '576px',
@@ -1388,7 +1564,6 @@ var VirtualSelect = /*#__PURE__*/function () {
         // Royale
         readOnly: false // Royale
       };
-
       if (options.hasOptionDescription) {
         defaultOptions.optionsCount = 4;
         defaultOptions.optionHeight = '50px';
@@ -1782,6 +1957,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       } else {
         this.updatePosition();
       }
+      this.setVisibleOptionsCount();
       DomUtils.removeClass(this.$allWrappers, 'server-searching');
     }
   }, {
@@ -1831,12 +2007,15 @@ var VirtualSelect = /*#__PURE__*/function () {
         visibleOptions = [newOption].concat(virtual_select_Ext_toConsumableArray(visibleOptions));
       }
       this.visibleOptions = visibleOptions;
+      // update number of visible options
+      this.visibleOptionsCount = visibleOptions.length;
       this.renderOptions();
     }
   }, {
     key: "setOptionsPosition",
     value: function setOptionsPosition(startIndex) {
-      var top = (startIndex || this.getVisibleStartIndex()) * this.optionHeight;
+      // We use the parseInt to fix a Chrome issue when dealing with decimal pixels in translate3d
+      var top = parseInt((startIndex || this.getVisibleStartIndex()) * this.optionHeight);
       this.$options.style.transform = "translate3d(0, ".concat(top, "px, 0)");
       DomUtils.setData(this.$options, 'top', top);
     }
@@ -1888,6 +2067,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "setValueText",
     value: function setValueText() {
+      var _this10 = this;
       var multiple = this.multiple,
         selectedValues = this.selectedValues,
         noOfDisplayValues = this.noOfDisplayValues,
@@ -1918,7 +2098,9 @@ var VirtualSelect = /*#__PURE__*/function () {
           valueText.push(label);
           selectedValuesCount += 1;
           if (showValueAsTags) {
-            var valueTagHtml = "<span class=\"vscomp-value-tag\" data-index=\"".concat(d.index, "\">\n              <span class=\"vscomp-value-tag-content\">").concat(label, "</span>\n              <span class=\"vscomp-value-tag-clear-button\">\n                <i class=\"vscomp-clear-icon\"></i>\n              </span>\n            </span>");
+            // Will cause text overflow in runtime and if so,the tooltip information is prepared
+            var valueTooltipForTags = Utils.willTextOverflow($valueText.parentElement, label) ? _this10.getTooltipAttrText(label, false, true) : '';
+            var valueTagHtml = "<span class=\"vscomp-value-tag\" data-index=\"".concat(d.index, "\" ").concat(valueTooltipForTags, ">\n                  <span class=\"vscomp-value-tag-content\">").concat(label, "</span>\n                  <span class=\"vscomp-value-tag-clear-button\">\n                    <i class=\"vscomp-clear-icon\"></i>\n                  </span>\n                </span>");
             valueTooltip.push(valueTagHtml);
           } else {
             valueTooltip.push(label);
@@ -1968,10 +2150,13 @@ var VirtualSelect = /*#__PURE__*/function () {
       } else if (!showValueAsTags) {
         tooltipText = valueTooltip.join(', ');
       }
-      DomUtils.setData($valueText, 'tooltip', tooltipText);
+      if (!showValueAsTags) {
+        DomUtils.setData($valueText, 'tooltip', tooltipText);
+      }
       if (multiple) {
-        DomUtils.setData($valueText, 'tooltipEllipsisOnly', selectedLength === 0);
-        if (showValueAsTags) {
+        if (!showValueAsTags) {
+          DomUtils.setData($valueText, 'tooltipEllipsisOnly', selectedLength === 0);
+        } else {
           this.updatePosition();
         }
       }
@@ -2319,8 +2504,9 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function getTooltipAttrText(text) {
       var ellipsisOnly = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       var allowHtml = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+      var tootltipText = Utils.containsHTML(text) ? Utils.replaceDoubleQuotesWithHTML(text) : text;
       var data = {
-        'data-tooltip': text || '',
+        'data-tooltip': tootltipText || '',
         'data-tooltip-enter-delay': this.tooltipEnterDelay,
         'data-tooltip-z-index': this.zIndex,
         'data-tooltip-font-size': this.tooltipFontSize,
@@ -2588,7 +2774,7 @@ var VirtualSelect = /*#__PURE__*/function () {
           DomUtils.addClass(this.$body, 'vscomp-popup-active');
           this.isPopupActive = true;
         } else {
-          this.focusSearchInput();
+          this.focusElementOnOpen();
         }
         DomUtils.dispatchEvent(this.$ele, 'afterOpen');
       }
@@ -2628,7 +2814,10 @@ var VirtualSelect = /*#__PURE__*/function () {
       DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
         DomUtils.dispatchEvent(this.$ele, 'afterClose');
-        this.focus();
+        // Only focus there are no pre-selected options or when selecting new options
+        if (this.initialSelectedValue && this.initialSelectedValue.length === 0 || this.selectedValues.length > 0) {
+          this.focus();
+        }
       }
     }
   }, {
@@ -2675,6 +2864,54 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
     }
   }, {
+    key: "focusElementOnOpen",
+    value: function focusElementOnOpen() {
+      var $ele = this.$searchInput;
+      var hasNoOptions = !this.options.length && !this.hasServerSearch;
+      if ($ele) {
+        if (hasNoOptions && !this.allowNewOption) {
+          DomUtils.setAttr($ele, 'disabled', '');
+          this.$noOptions.focus();
+        } else {
+          $ele.removeAttribute('disabled');
+          $ele.focus();
+        }
+      } else {
+        var $focusableEle = this.$dropbox.querySelector('[tabindex="0"]');
+        var optIndex = DomUtils.getData($focusableEle, 'index');
+        if (optIndex !== undefined) {
+          this.focusOption({
+            direction: 'next'
+          });
+        } else if ($focusableEle) {
+          $focusableEle.focus();
+        } else {
+          this.focusFirstVisibleOption();
+        }
+      }
+    }
+  }, {
+    key: "focusFirstVisibleOption",
+    value: function focusFirstVisibleOption() {
+      var $focusableEle = this.$optionsContainer.querySelector("[data-index='".concat(this.getFirstVisibleOptionIndex(), "']"));
+      if ($focusableEle) {
+        if (DomUtils.hasClass($focusableEle, 'group-title')) {
+          $focusableEle = this.getSibling($focusableEle, 'next');
+        }
+        DomUtils.setAttr($focusableEle, 'tabindex', '0');
+        this.$optionsContainer.scrollTop = this.optionHeight * this.getFirstVisibleOptionIndex();
+        this.focusOption({
+          focusFirst: true
+        });
+        $focusableEle.focus();
+      } else {
+        $focusableEle = this.$dropbox.querySelector('[tabindex="0"]');
+        if ($focusableEle) {
+          $focusableEle.focus();
+        }
+      }
+    }
+  }, {
     key: "focusOption",
     value: function focusOption() {
       var _ref5 = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
@@ -2698,9 +2935,6 @@ var VirtualSelect = /*#__PURE__*/function () {
       if ($newFocusedEle && $newFocusedEle !== $focusedEle) {
         if ($focusedEle) {
           this.toggleOptionFocusedState($focusedEle, false);
-        }
-        if (this.$ariaLiveElem) {
-          this.$ariaLiveElem.textContent = $newFocusedEle.textContent;
         }
         this.toggleOptionFocusedState($newFocusedEle, true);
         this.toggleFocusedProp(DomUtils.getData($newFocusedEle, 'index'), true);
@@ -2824,7 +3058,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "selectRangeOptions",
     value: function selectRangeOptions(lastSelectedOptionIndex, selectedIndex) {
-      var _this10 = this;
+      var _this11 = this;
       if (typeof lastSelectedOptionIndex !== 'number' || this.maxValues) {
         return;
       }
@@ -2870,7 +3104,7 @@ var VirtualSelect = /*#__PURE__*/function () {
 
       /** using setTimeout to fix the issue of dropbox getting closed on select */
       setTimeout(function () {
-        _this10.renderOptions();
+        _this11.renderOptions();
       }, 0);
     }
   }, {
@@ -2892,8 +3126,8 @@ var VirtualSelect = /*#__PURE__*/function () {
 
         /** unselected items are */
         if ( /** when unselecting all, selectAllOnlyVisible feature disabled or visible items or already unselected items */
-        !selectingAll && (!selectAllOnlyVisible || isVisible || !isSelected) || /** when selecting all, selectAllOnlyVisible feature enabled and hidden items those are not already selected */
-        selectingAll && selectAllOnlyVisible && !isVisible && !isSelected) {
+        !selectingAll && (!selectAllOnlyVisible || isVisible || !isSelected) || ( /** when selecting all, selectAllOnlyVisible feature enabled and hidden items those are not already selected */
+        selectingAll && selectAllOnlyVisible && !isVisible && !isSelected)) {
           option.isSelected = false;
         } else {
           option.isSelected = true;
@@ -2919,8 +3153,10 @@ var VirtualSelect = /*#__PURE__*/function () {
         isAllSelected = this.isAllOptionsSelected();
       }
 
-      /** when all options not selected, checking if all visible options selected */
-      if (!isAllSelected && this.selectAllOnlyVisible) {
+      /** When all options not selected, checking if all visible options selected
+       *  Also, in a search mode, validate that we still have visible items
+      */
+      if (!isAllSelected && this.selectAllOnlyVisible && this.searchValue !== '' && (this.visibleOptionsCount > 0 || this.searchValue === '')) {
         isAllVisibleSelected = this.isAllOptionsSelected(true);
       }
       DomUtils.toggleClass(this.$toggleAllCheckbox, 'checked', isAllSelected || isAllVisibleSelected);
@@ -2977,7 +3213,7 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "toggleGroupOptions",
     value: function toggleGroupOptions($ele, isSelected) {
-      var _this11 = this;
+      var _this12 = this;
       if (!this.hasOptionGroup || this.disableOptionGroupCheckbox || !$ele) {
         return;
       }
@@ -3013,7 +3249,7 @@ var VirtualSelect = /*#__PURE__*/function () {
 
       /** using setTimeout to fix the issue of dropbox getting closed on select */
       setTimeout(function () {
-        _this11.renderOptions();
+        _this12.renderOptions();
       }, 0);
     }
   }, {
@@ -3061,12 +3297,14 @@ var VirtualSelect = /*#__PURE__*/function () {
     key: "reset",
     value: function reset() {
       var formReset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var disableChangeEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
       this.options.forEach(function (d) {
         // eslint-disable-next-line no-param-reassign
         d.isSelected = false;
       });
       this.beforeValueSet(true);
       this.setValue(null, {
+        disableEvent: disableChangeEvent,
         disableValidation: formReset
       });
       this.afterValueSet();
@@ -3240,6 +3478,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.$ele.removeAttribute('disabled');
       this.$hiddenInput.removeAttribute('disabled');
       DomUtils.setAria(this.$wrapper, 'disabled', false);
+      DomUtils.changeTabIndex(this.$wrapper, 0);
     }
   }, {
     key: "disable",
@@ -3248,6 +3487,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.$ele.setAttribute('disabled', '');
       this.$hiddenInput.setAttribute('disabled', '');
       DomUtils.setAria(this.$wrapper, 'disabled', true);
+      DomUtils.changeTabIndex(this.$wrapper, -1);
+      this.$wrapper.blur();
     }
   }, {
     key: "setReadOnly",
@@ -3274,8 +3515,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       var hasError = false;
       var selectedValues = this.selectedValues,
         minValues = this.minValues;
-      if (this.required && (Utils.isEmpty(selectedValues) || /** required minium options not selected */
-      this.multiple && minValues && selectedValues.length < minValues)) {
+      if (this.required && (Utils.isEmpty(selectedValues) || ( /** required minium options not selected */
+      this.multiple && minValues && selectedValues.length < minValues))) {
         hasError = true;
       }
       DomUtils.toggleClass(this.$allWrappers, 'has-error', hasError);
@@ -3290,7 +3531,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       $ele.innerHTML = '';
       if (this.hasDropboxWrapper) {
         this.$dropboxWrapper.remove();
-        this.mutationObserver.disconnect();
+        this.removeEvents();
       }
       if (this.dropboxPopover) {
         this.dropboxPopover.destroy();
@@ -3336,6 +3577,10 @@ var VirtualSelect = /*#__PURE__*/function () {
         return;
       }
       DomUtils.toggleClass($ele, 'focused', isFocused);
+      DomUtils.setAttr($ele, 'tabindex', isFocused ? '0' : '-1');
+      if (document.activeElement !== this.$searchInput) {
+        $ele.focus();
+      }
       if (isFocused) {
         DomUtils.setAria(this.$wrapper, 'activedescendant', $ele.id);
       }
@@ -3477,7 +3722,9 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "reset",
     value: function reset() {
-      this.virtualSelect.reset();
+      var formReset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      var disableChangeEvent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      this.virtualSelect.reset(formReset, disableChangeEvent);
     }
   }, {
     key: "setValueMethod",
@@ -3613,10 +3860,10 @@ if (typeof NodeList !== 'undefined' && NodeList.prototype && !NodeList.prototype
 // This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
 !function() {
 /*!
- * Popover v1.0.12
+ * Popover v1.0.13
  * https://sa-si-dev.github.io/popover
  * Licensed under MIT (https://github.com/sa-si-dev/popover/blob/master/LICENSE)
- */!function(){"use strict";function e(e){return function(e){if(Array.isArray(e))return t(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||function(e,o){if(e){if("string"==typeof e)return t(e,o);var i=Object.prototype.toString.call(e).slice(8,-1);return"Object"===i&&e.constructor&&(i=e.constructor.name),"Map"===i||"Set"===i?Array.from(e):"Arguments"===i||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(i)?t(e,o):void 0}}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function t(e,t){(null==t||t>e.length)&&(t=e.length);for(var o=0,i=new Array(t);o<t;o++)i[o]=e[o];return i}function o(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var i=function(){function t(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t)}var i,n;return i=t,(n=[{key:"addClass",value:function(o,i){o&&(i=i.split(" "),t.getElements(o).forEach((function(t){var o;(o=t.classList).add.apply(o,e(i))})))}},{key:"removeClass",value:function(o,i){o&&(i=i.split(" "),t.getElements(o).forEach((function(t){var o;(o=t.classList).remove.apply(o,e(i))})))}},{key:"getElements",value:function(e){if(e)return void 0===e.forEach&&(e=[e]),e}},{key:"getMoreVisibleSides",value:function(e){if(!e)return{};var t=e.getBoundingClientRect(),o=window.innerWidth,i=window.innerHeight,n=t.left,r=t.top;return{horizontal:n>o-n-t.width?"left":"right",vertical:r>i-r-t.height?"top":"bottom"}}},{key:"getAbsoluteCoords",value:function(e){if(e){var t=e.getBoundingClientRect(),o=window.pageXOffset,i=window.pageYOffset;return{width:t.width,height:t.height,top:t.top+i,right:t.right+o,bottom:t.bottom+i,left:t.left+o}}}},{key:"getCoords",value:function(e){return e?e.getBoundingClientRect():{}}},{key:"getData",value:function(e,t,o){if(e){var i=e?e.dataset[t]:"";return"number"===o?i=parseFloat(i)||0:"true"===i?i=!0:"false"===i&&(i=!1),i}}},{key:"setData",value:function(e,t,o){e&&(e.dataset[t]=o)}},{key:"setStyle",value:function(e,t,o){e&&(e.style[t]=o)}},{key:"show",value:function(e){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"block";t.setStyle(e,"display",o)}},{key:"hide",value:function(e){t.setStyle(e,"display","none")}},{key:"getHideableParent",value:function(e){for(var t,o=e.parentElement;o;){var i=getComputedStyle(o).overflow;if(-1!==i.indexOf("scroll")||-1!==i.indexOf("auto")){t=o;break}o=o.parentElement}return t}}])&&o(i,n),t}();function n(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var r=["top","bottom","left","right"].map((function(e){return"position-".concat(e)})),a={top:"rotate(180deg)",left:"rotate(90deg)",right:"rotate(-90deg)"},s=function(){function e(t){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e);try{this.setProps(t),this.init()}catch(e){console.warn("Couldn't initiate popper"),console.error(e)}}var t,o;return t=e,(o=[{key:"init",value:function(){var e=this.$popperEle;e&&this.$triggerEle&&(i.setStyle(e,"zIndex",this.zIndex),this.setPosition())}},{key:"setProps",value:function(e){var t=(e=this.setDefaultProps(e)).position?e.position.toLowerCase():"auto";if(this.$popperEle=e.$popperEle,this.$triggerEle=e.$triggerEle,this.$arrowEle=e.$arrowEle,this.margin=parseFloat(e.margin),this.offset=parseFloat(e.offset),this.enterDelay=parseFloat(e.enterDelay),this.exitDelay=parseFloat(e.exitDelay),this.showDuration=parseFloat(e.showDuration),this.hideDuration=parseFloat(e.hideDuration),this.transitionDistance=parseFloat(e.transitionDistance),this.zIndex=parseFloat(e.zIndex),this.afterShowCallback=e.afterShow,this.afterHideCallback=e.afterHide,this.hasArrow=!!this.$arrowEle,-1!==t.indexOf(" ")){var o=t.split(" ");this.position=o[0],this.secondaryPosition=o[1]}else this.position=t}},{key:"setDefaultProps",value:function(e){return Object.assign({position:"auto",margin:8,offset:5,enterDelay:0,exitDelay:0,showDuration:300,hideDuration:200,transitionDistance:10,zIndex:1},e)}},{key:"setPosition",value:function(){i.show(this.$popperEle,"inline-flex");var e,t,o,n=window.innerWidth,s=window.innerHeight,l=i.getAbsoluteCoords(this.$popperEle),h=i.getAbsoluteCoords(this.$triggerEle),p=l.width,u=l.height,c=l.top,f=l.right,v=l.bottom,d=l.left,y=h.width,m=h.height,g=h.top,w=h.right,E=h.bottom,b=h.left,k=g-c,$=b-d,D=$,C=k,P=this.position,S=this.secondaryPosition,O=y/2-p/2,A=m/2-u/2,T=this.margin,x=this.transitionDistance,H=window.scrollY-c,L=s+H,R=window.scrollX-d,z=n+R,F=this.offset;F&&(H+=F,L-=F,R+=F,z-=F),"auto"===P&&(P=i.getMoreVisibleSides(this.$triggerEle).vertical);var I={top:{top:C-u-T,left:D+O},bottom:{top:C+m+T,left:D+O},right:{top:C+A,left:D+y+T},left:{top:C+A,left:D-p-T}},M=I[P];if(C=M.top,D=M.left,S&&("top"===S?C=k:"bottom"===S?C=k+m-u:"left"===S?D=$:"right"===S&&(D=$+y-p)),D<R?"left"===P?o="right":D=R+d>w?w-d:R:D+p>z&&("right"===P?o="left":D=z+d<b?b-f:z-p),C<H?"top"===P?o="bottom":C=H+c>E?E-c:H:C+u>L&&("bottom"===P?o="top":C=L+c<g?g-v:L-u),o){var j=I[o];"top"===(P=o)||"bottom"===P?C=j.top:"left"!==P&&"right"!==P||(D=j.left)}"top"===P?(e=C+x,t=D):"right"===P?(e=C,t=D-x):"left"===P?(e=C,t=D+x):(e=C-x,t=D);var U="translate3d(".concat(t,"px, ").concat(e,"px, 0)");if(i.setStyle(this.$popperEle,"transform",U),i.setData(this.$popperEle,"fromLeft",t),i.setData(this.$popperEle,"fromTop",e),i.setData(this.$popperEle,"top",C),i.setData(this.$popperEle,"left",D),i.removeClass(this.$popperEle,r.join(" ")),i.addClass(this.$popperEle,"position-".concat(P)),this.hasArrow){var B=0,q=0,W=D+d,K=C+c,V=this.$arrowEle.offsetWidth/2,X=a[P]||"";"top"===P||"bottom"===P?(B=y/2+b-W)<V?B=V:B>p-V&&(B=p-V):"left"!==P&&"right"!==P||((q=m/2+g-K)<V?q=V:q>u-V&&(q=u-V)),i.setStyle(this.$arrowEle,"transform","translate3d(".concat(B,"px, ").concat(q,"px, 0) ").concat(X))}i.hide(this.$popperEle)}},{key:"resetPosition",value:function(){i.setStyle(this.$popperEle,"transform","none"),this.setPosition()}},{key:"show",value:function(){var e=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},o=t.resetPosition,n=t.data;clearTimeout(this.exitDelayTimeout),clearTimeout(this.hideDurationTimeout),o&&this.resetPosition(),this.enterDelayTimeout=setTimeout((function(){var t=i.getData(e.$popperEle,"left"),o=i.getData(e.$popperEle,"top"),r="translate3d(".concat(t,"px, ").concat(o,"px, 0)"),a=e.showDuration;i.show(e.$popperEle,"inline-flex"),i.getCoords(e.$popperEle),i.setStyle(e.$popperEle,"transitionDuration",a+"ms"),i.setStyle(e.$popperEle,"transform",r),i.setStyle(e.$popperEle,"opacity",1),e.showDurationTimeout=setTimeout((function(){"function"==typeof e.afterShowCallback&&e.afterShowCallback(n)}),a)}),this.enterDelay)}},{key:"hide",value:function(){var e=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},o=t.data;clearTimeout(this.enterDelayTimeout),clearTimeout(this.showDurationTimeout),this.exitDelayTimeout=setTimeout((function(){if(e.$popperEle){var t=i.getData(e.$popperEle,"fromLeft"),n=i.getData(e.$popperEle,"fromTop"),r="translate3d(".concat(t,"px, ").concat(n,"px, 0)"),a=e.hideDuration;i.setStyle(e.$popperEle,"transitionDuration",a+"ms"),i.setStyle(e.$popperEle,"transform",r),i.setStyle(e.$popperEle,"opacity",0),e.hideDurationTimeout=setTimeout((function(){i.hide(e.$popperEle),"function"==typeof e.afterHideCallback&&e.afterHideCallback(o)}),a)}}),this.exitDelay)}},{key:"updatePosition",value:function(){i.setStyle(this.$popperEle,"transitionDuration","0ms"),this.resetPosition();var e=i.getData(this.$popperEle,"left"),t=i.getData(this.$popperEle,"top");i.show(this.$popperEle,"inline-flex"),i.setStyle(this.$popperEle,"transform","translate3d(".concat(e,"px, ").concat(t,"px, 0)"))}}])&&n(t.prototype,o),e}();window.PopperComponent=s}(),function(){"use strict";function e(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var t=function(){function t(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t)}var o,i,n;return o=t,n=[{key:"convertToBoolean",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]&&arguments[1];return e=!0===e||"true"===e||!1!==e&&"false"!==e&&t}},{key:"removeArrayEmpty",value:function(e){return Array.isArray(e)&&e.length?e.filter((function(e){return!!e})):[]}},{key:"throttle",value:function(e,t){var o,i=0;return function(){for(var n=arguments.length,r=new Array(n),a=0;a<n;a++)r[a]=arguments[a];var s=(new Date).getTime(),l=t-(s-i);clearTimeout(o),l<=0?(i=s,e.apply(void 0,r)):o=setTimeout((function(){e.apply(void 0,r)}),l)}}}],(i=null)&&e(o.prototype,i),n&&e(o,n),Object.defineProperty(o,"prototype",{writable:!1}),t}();function o(e){return function(e){if(Array.isArray(e))return i(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||function(e,t){if(e){if("string"==typeof e)return i(e,t);var o=Object.prototype.toString.call(e).slice(8,-1);return"Object"===o&&e.constructor&&(o=e.constructor.name),"Map"===o||"Set"===o?Array.from(e):"Arguments"===o||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(o)?i(e,t):void 0}}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function i(e,t){(null==t||t>e.length)&&(t=e.length);for(var o=0,i=new Array(t);o<t;o++)i[o]=e[o];return i}function n(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var r=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}var i,r,a;return i=e,a=[{key:"addClass",value:function(t,i){t&&(i=i.split(" "),e.getElements(t).forEach((function(e){var t;(t=e.classList).add.apply(t,o(i))})))}},{key:"removeClass",value:function(t,i){t&&(i=i.split(" "),e.getElements(t).forEach((function(e){var t;(t=e.classList).remove.apply(t,o(i))})))}},{key:"hasClass",value:function(e,t){return!!e&&e.classList.contains(t)}},{key:"getElement",value:function(e){return e&&("string"==typeof e?e=document.querySelector(e):void 0!==e.length&&(e=e[0])),e||null}},{key:"getElements",value:function(e){if(e)return void 0===e.forEach&&(e=[e]),e}},{key:"addEvent",value:function(t,o,i){e.addOrRemoveEvent(t,o,i,"add")}},{key:"removeEvent",value:function(t,o,i){e.addOrRemoveEvent(t,o,i,"remove")}},{key:"addOrRemoveEvent",value:function(o,i,n,r){o&&(i=t.removeArrayEmpty(i.split(" "))).forEach((function(t){(o=e.getElements(o)).forEach((function(e){"add"===r?e.addEventListener(t,n):e.removeEventListener(t,n)}))}))}},{key:"getScrollableParents",value:function(e){if(!e)return[];for(var t=[window],o=e.parentElement;o;){var i=getComputedStyle(o).overflow;-1===i.indexOf("scroll")&&-1===i.indexOf("auto")||t.push(o),o=o.parentElement}return t}},{key:"convertPropToDataAttr",value:function(e){return e?"data-popover-".concat(e).replace(/([A-Z])/g,"-$1").toLowerCase():""}}],(r=null)&&n(i.prototype,r),a&&n(i,a),Object.defineProperty(i,"prototype",{writable:!1}),e}();function a(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var s,l={27:"onEscPress"},h=["target","position","margin","offset","enterDelay","exitDelay","showDuration","hideDuration","transitionDistance","updatePositionThrottle","zIndex","hideOnOuterClick","showOnHover","hideArrowIcon","disableManualAction","disableUpdatePosition"],p=function(){function e(t){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e);try{this.setProps(t),this.init()}catch(e){console.warn("Couldn't initiate Popover component"),console.error(e)}}var o,i,n;return o=e,n=[{key:"init",value:function(t){var o=t.ele;if(o){var i=!1;if("string"==typeof o){if(!(o=document.querySelectorAll(o)))return;1===o.length&&(i=!0)}void 0===o.length&&(o=[o],i=!0);var n=[];return o.forEach((function(o){t.ele=o,e.destroy(o),n.push(new e(t))})),i?n[0]:n}}},{key:"destroy",value:function(e){if(e){var t=e.popComp;t&&t.destroy()}}},{key:"showMethod",value:function(){this.popComp.show()}},{key:"hideMethod",value:function(){this.popComp.hide()}},{key:"updatePositionMethod",value:function(){this.popComp.popper.updatePosition()}},{key:"getAttrProps",value:function(){var e=r.convertPropToDataAttr,t={};return h.forEach((function(o){t[e(o)]=o})),t}}],(i=[{key:"init",value:function(){this.$popover&&(this.setElementProps(),this.renderArrow(),this.initPopper(),this.addEvents())}},{key:"getEvents",value:function(){var e=[{$ele:document,event:"click",method:"onDocumentClick"},{$ele:document,event:"keydown",method:"onDocumentKeyDown"}];return this.disableManualAction||(e.push({$ele:this.$ele,event:"click",method:"onTriggerEleClick"}),this.showOnHover&&(e.push({$ele:this.$ele,event:"mouseenter",method:"onTriggerEleMouseEnter"}),e.push({$ele:this.$ele,event:"mouseleave",method:"onTriggerEleMouseLeave"}))),e}},{key:"addOrRemoveEvents",value:function(e){var t=this;this.getEvents().forEach((function(o){t.addOrRemoveEvent({action:e,$ele:o.$ele,events:o.event,method:o.method})}))}},{key:"addEvents",value:function(){this.addOrRemoveEvents("add")}},{key:"removeEvents",value:function(){this.addOrRemoveEvents("remove"),this.removeScrollEventListeners(),this.removeResizeEventListeners()}},{key:"addOrRemoveEvent",value:function(e){var o=this,i=e.action,n=e.$ele,a=e.events,s=e.method,l=e.throttle;n&&(a=t.removeArrayEmpty(a.split(" "))).forEach((function(e){var a="".concat(s,"-").concat(e),h=o.events[a];h||(h=o[s].bind(o),l&&(h=t.throttle(h,l)),o.events[a]=h),"add"===i?r.addEvent(n,e,h):r.removeEvent(n,e,h)}))}},{key:"addScrollEventListeners",value:function(){this.$scrollableElems=r.getScrollableParents(this.$ele),this.addOrRemoveEvent({action:"add",$ele:this.$scrollableElems,events:"scroll",method:"onAnyParentScroll",throttle:this.updatePositionThrottle})}},{key:"removeScrollEventListeners",value:function(){this.$scrollableElems&&(this.addOrRemoveEvent({action:"remove",$ele:this.$scrollableElems,events:"scroll",method:"onAnyParentScroll"}),this.$scrollableElems=null)}},{key:"addResizeEventListeners",value:function(){this.addOrRemoveEvent({action:"add",$ele:window,events:"resize",method:"onResize",throttle:this.updatePositionThrottle})}},{key:"removeResizeEventListeners",value:function(){this.addOrRemoveEvent({action:"remove",$ele:window,events:"resize",method:"onResize"})}},{key:"onAnyParentScroll",value:function(){this.popper.updatePosition()}},{key:"onResize",value:function(){this.popper.updatePosition()}},{key:"onDocumentClick",value:function(e){var t=e.target,o=t.closest(".pop-comp-ele"),i=t.closest(".pop-comp-wrapper");this.hideOnOuterClick&&o!==this.$ele&&i!==this.$popover&&this.hide()}},{key:"onDocumentKeyDown",value:function(e){var t=e.which||e.keyCode,o=l[t];o&&this[o](e)}},{key:"onEscPress",value:function(){this.hideOnOuterClick&&this.hide()}},{key:"onTriggerEleClick",value:function(){this.toggle()}},{key:"onTriggerEleMouseEnter",value:function(){this.show()}},{key:"onTriggerEleMouseLeave",value:function(){this.hide()}},{key:"setProps",value:function(e){e=this.setDefaultProps(e),this.setPropsFromElementAttr(e);var o=t.convertToBoolean;this.$ele=e.ele,this.target=e.target,this.position=e.position,this.margin=parseFloat(e.margin),this.offset=parseFloat(e.offset),this.enterDelay=parseFloat(e.enterDelay),this.exitDelay=parseFloat(e.exitDelay),this.showDuration=parseFloat(e.showDuration),this.hideDuration=parseFloat(e.hideDuration),this.transitionDistance=parseFloat(e.transitionDistance),this.updatePositionThrottle=parseFloat(e.updatePositionThrottle),this.zIndex=parseFloat(e.zIndex),this.hideOnOuterClick=o(e.hideOnOuterClick),this.showOnHover=o(e.showOnHover),this.hideArrowIcon=o(e.hideArrowIcon),this.disableManualAction=o(e.disableManualAction),this.disableUpdatePosition=o(e.disableUpdatePosition),this.beforeShowCallback=e.beforeShow,this.afterShowCallback=e.afterShow,this.beforeHideCallback=e.beforeHide,this.afterHideCallback=e.afterHide,this.events={},this.$popover=r.getElement(this.target)}},{key:"setDefaultProps",value:function(e){return Object.assign({position:"auto",margin:8,offset:5,enterDelay:0,exitDelay:0,showDuration:300,hideDuration:200,transitionDistance:10,updatePositionThrottle:100,zIndex:1,hideOnOuterClick:!0,showOnHover:!1,hideArrowIcon:!1,disableManualAction:!1,disableUpdatePosition:!1},e)}},{key:"setPropsFromElementAttr",value:function(e){var t=e.ele;for(var o in s){var i=t.getAttribute(o);i&&(e[s[o]]=i)}}},{key:"setElementProps",value:function(){var t=this.$ele;t.popComp=this,t.show=e.showMethod,t.hide=e.hideMethod,t.updatePosition=e.updatePositionMethod,r.addClass(this.$ele,"pop-comp-ele"),r.addClass(this.$popover,"pop-comp-wrapper")}},{key:"getOtherTriggerPopComp",value:function(){var e,t=this.$popover.popComp;return t&&t.$ele!==this.$ele&&(e=t),e}},{key:"initPopper",value:function(){var e={$popperEle:this.$popover,$triggerEle:this.$ele,$arrowEle:this.$arrowEle,position:this.position,margin:this.margin,offset:this.offset,enterDelay:this.enterDelay,exitDelay:this.exitDelay,showDuration:this.showDuration,hideDuration:this.hideDuration,transitionDistance:this.transitionDistance,zIndex:this.zIndex,afterShow:this.afterShow.bind(this),afterHide:this.afterHide.bind(this)};this.popper=new PopperComponent(e)}},{key:"beforeShow",value:function(){"function"==typeof this.beforeShowCallback&&this.beforeShowCallback(this)}},{key:"beforeHide",value:function(){"function"==typeof this.beforeHideCallback&&this.beforeHideCallback(this)}},{key:"show",value:function(){this.isShown()||(this.isShownForOtherTrigger()?this.showAfterOtherHide():(r.addClass(this.$popover,"pop-comp-disable-events"),this.$popover.popComp=this,this.beforeShow(),this.popper.show({resetPosition:!0}),r.addClass(this.$ele,"pop-comp-active")))}},{key:"hide",value:function(){this.isShown()&&(this.beforeHide(),this.popper.hide(),this.removeScrollEventListeners(),this.removeResizeEventListeners())}},{key:"toggle",value:function(e){void 0===e&&(e=!this.isShown()),e?this.show():this.hide()}},{key:"isShown",value:function(){return r.hasClass(this.$ele,"pop-comp-active")}},{key:"isShownForOtherTrigger",value:function(){var e=this.getOtherTriggerPopComp();return!!e&&e.isShown()}},{key:"showAfterOtherHide",value:function(){var e=this,t=this.getOtherTriggerPopComp();if(t){var o=t.exitDelay+t.hideDuration+100;setTimeout((function(){e.show()}),o)}}},{key:"afterShow",value:function(){var e=this;this.showOnHover?setTimeout((function(){r.removeClass(e.$popover,"pop-comp-disable-events")}),2e3):r.removeClass(this.$popover,"pop-comp-disable-events"),this.disableUpdatePosition||(this.addScrollEventListeners(),this.addResizeEventListeners()),"function"==typeof this.afterShowCallback&&this.afterShowCallback(this)}},{key:"afterHide",value:function(){r.removeClass(this.$ele,"pop-comp-active"),"function"==typeof this.afterHideCallback&&this.afterHideCallback(this)}},{key:"renderArrow",value:function(){if(!this.hideArrowIcon){var e=this.$popover.querySelector(".pop-comp-arrow");e||(this.$popover.insertAdjacentHTML("afterbegin",'<i class="pop-comp-arrow"></i>'),e=this.$popover.querySelector(".pop-comp-arrow")),this.$arrowEle=e}}},{key:"destroy",value:function(){this.removeEvents()}}])&&a(o.prototype,i),n&&a(o,n),Object.defineProperty(o,"prototype",{writable:!1}),e}();s=p.getAttrProps(),window.PopoverComponent=p}();
+ */!function(){"use strict";function e(e){return function(e){if(Array.isArray(e))return t(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||function(e,o){if(e){if("string"==typeof e)return t(e,o);var i=Object.prototype.toString.call(e).slice(8,-1);return"Object"===i&&e.constructor&&(i=e.constructor.name),"Map"===i||"Set"===i?Array.from(e):"Arguments"===i||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(i)?t(e,o):void 0}}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function t(e,t){(null==t||t>e.length)&&(t=e.length);for(var o=0,i=new Array(t);o<t;o++)i[o]=e[o];return i}function o(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var i=function(){function t(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,t)}var i,r;return i=t,r=[{key:"addClass",value:function(o,i){o&&(i=i.split(" "),t.getElements(o).forEach((function(t){var o;(o=t.classList).add.apply(o,e(i))})))}},{key:"removeClass",value:function(o,i){o&&(i=i.split(" "),t.getElements(o).forEach((function(t){var o;(o=t.classList).remove.apply(o,e(i))})))}},{key:"getElements",value:function(e){if(e)return void 0===e.forEach&&(e=[e]),e}},{key:"getMoreVisibleSides",value:function(e){if(!e)return{};var t=e.getBoundingClientRect(),o=window.innerWidth,i=window.innerHeight,r=t.left,n=t.top;return{horizontal:r>o-r-t.width?"left":"right",vertical:n>i-n-t.height?"top":"bottom"}}},{key:"getAbsoluteCoords",value:function(e){if(e){var t=e.getBoundingClientRect(),o=window.pageXOffset,i=window.pageYOffset;return{width:t.width,height:t.height,top:t.top+i,right:t.right+o,bottom:t.bottom+i,left:t.left+o}}}},{key:"getCoords",value:function(e){return e?e.getBoundingClientRect():{}}},{key:"getData",value:function(e,t,o){if(e){var i=e?e.dataset[t]:"";return"number"===o?i=parseFloat(i)||0:"true"===i?i=!0:"false"===i&&(i=!1),i}}},{key:"setData",value:function(e,t,o){e&&(e.dataset[t]=o)}},{key:"setStyle",value:function(e,t,o){e&&(e.style[t]=o)}},{key:"show",value:function(e){var o=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"block";t.setStyle(e,"display",o)}},{key:"hide",value:function(e){t.setStyle(e,"display","none")}},{key:"getHideableParent",value:function(e){for(var t,o=e.parentElement;o;){var i=getComputedStyle(o).overflow;if(-1!==i.indexOf("scroll")||-1!==i.indexOf("auto")){t=o;break}o=o.parentElement}return t}}],r&&o(i,r),t}();function r(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,i.key,i)}}var n=["top","bottom","left","right"].map((function(e){return"position-".concat(e)})),a={top:"rotate(180deg)",left:"rotate(90deg)",right:"rotate(-90deg)"},s=function(){function e(t){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e);try{this.setProps(t),this.init()}catch(e){console.warn("Couldn't initiate popper"),console.error(e)}}var t,o;return t=e,o=[{key:"init",value:function(){var e=this.$popperEle;e&&this.$triggerEle&&(i.setStyle(e,"zIndex",this.zIndex),this.setPosition())}},{key:"setProps",value:function(e){var t=(e=this.setDefaultProps(e)).position?e.position.toLowerCase():"auto";if(this.$popperEle=e.$popperEle,this.$triggerEle=e.$triggerEle,this.$arrowEle=e.$arrowEle,this.margin=parseFloat(e.margin),this.offset=parseFloat(e.offset),this.enterDelay=parseFloat(e.enterDelay),this.exitDelay=parseFloat(e.exitDelay),this.showDuration=parseFloat(e.showDuration),this.hideDuration=parseFloat(e.hideDuration),this.transitionDistance=parseFloat(e.transitionDistance),this.zIndex=parseFloat(e.zIndex),this.afterShowCallback=e.afterShow,this.afterHideCallback=e.afterHide,this.hasArrow=!!this.$arrowEle,-1!==t.indexOf(" ")){var o=t.split(" ");this.position=o[0],this.secondaryPosition=o[1]}else this.position=t}},{key:"setDefaultProps",value:function(e){return Object.assign({position:"auto",margin:8,offset:5,enterDelay:0,exitDelay:0,showDuration:300,hideDuration:200,transitionDistance:10,zIndex:1},e)}},{key:"setPosition",value:function(){i.show(this.$popperEle,"inline-flex");var e,t,o,r=window.innerWidth,s=window.innerHeight,l=i.getAbsoluteCoords(this.$popperEle),u=i.getAbsoluteCoords(this.$triggerEle),p=l.width,h=l.height,c=l.top,f=l.right,v=l.bottom,d=l.left,y=u.width,m=u.height,g=u.top,b=u.right,w=u.bottom,E=u.left,k=g-c,$=E-d,D=$,S=k,C=this.position,P=this.secondaryPosition,O=y/2-p/2,T=m/2-h/2,A=this.margin,x=this.transitionDistance,I=window.scrollY-c,H=s+I,j=window.scrollX-d,L=r+j,R=this.offset;R&&(I+=R,H-=R,j+=R,L-=R),"auto"===C&&(C=i.getMoreVisibleSides(this.$triggerEle).vertical);var z={top:{top:S-h-A,left:D+O},bottom:{top:S+m+A,left:D+O},right:{top:S+T,left:D+y+A},left:{top:S+T,left:D-p-A}},F=z[C];if(S=F.top,D=F.left,P&&("top"===P?S=k:"bottom"===P?S=k+m-h:"left"===P?D=$:"right"===P&&(D=$+y-p)),D<j?"left"===C?o="right":D=j+d>b?b-d:j:D+p>L&&("right"===C?o="left":D=L+d<E?E-f:L-p),S<I?"top"===C?o="bottom":S=I+c>w?w-c:I:S+h>H&&("bottom"===C?o="top":S=H+c<g?g-v:H-h),o){var M=z[o];"top"===(C=o)||"bottom"===C?S=M.top:"left"!==C&&"right"!==C||(D=M.left)}"top"===C?(e=S+x,t=D):"right"===C?(e=S,t=D-x):"left"===C?(e=S,t=D+x):(e=S-x,t=D);var U="translate3d(".concat(parseInt(t),"px, ").concat(parseInt(e),"px, 0)");if(i.setStyle(this.$popperEle,"transform",U),i.setData(this.$popperEle,"fromLeft",t),i.setData(this.$popperEle,"fromTop",e),i.setData(this.$popperEle,"top",S),i.setData(this.$popperEle,"left",D),i.removeClass(this.$popperEle,n.join(" ")),i.addClass(this.$popperEle,"position-".concat(C)),this.hasArrow){var B=0,q=0,N=D+d,W=S+c,K=this.$arrowEle.offsetWidth/2,V=a[C]||"";"top"===C||"bottom"===C?(B=y/2+E-N)<K?B=K:B>p-K&&(B=p-K):"left"!==C&&"right"!==C||((q=m/2+g-W)<K?q=K:q>h-K&&(q=h-K)),i.setStyle(this.$arrowEle,"transform","translate3d(".concat(parseInt(B),"px, ").concat(parseInt(q),"px, 0) ").concat(V))}i.hide(this.$popperEle)}},{key:"resetPosition",value:function(){i.setStyle(this.$popperEle,"transform","none"),this.setPosition()}},{key:"show",value:function(){var e=this,t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},o=t.resetPosition,r=t.data;clearTimeout(this.exitDelayTimeout),clearTimeout(this.hideDurationTimeout),o&&this.resetPosition(),this.enterDelayTimeout=setTimeout((function(){var t=i.getData(e.$popperEle,"left"),o=i.getData(e.$popperEle,"top"),n="translate3d(".concat(parseInt(t),"px, ").concat(parseInt(o),"px, 0)"),a=e.showDuration;i.show(e.$popperEle,"inline-flex"),i.getCoords(e.$popperEle),i.setStyle(e.$popperEle,"transitionDuration",a+"ms"),i.setStyle(e.$popperEle,"transform",n),i.setStyle(e.$popperEle,"opacity",1),e.showDurationTimeout=setTimeout((function(){"function"==typeof e.afterShowCallback&&e.afterShowCallback(r)}),a)}),this.enterDelay)}},{key:"hide",value:function(){var e=this,t=(arguments.length>0&&void 0!==arguments[0]?arguments[0]:{}).data;clearTimeout(this.enterDelayTimeout),clearTimeout(this.showDurationTimeout),this.exitDelayTimeout=setTimeout((function(){if(e.$popperEle){var o=parseInt(i.getData(e.$popperEle,"fromLeft")),r=parseInt(i.getData(e.$popperEle,"fromTop")),n="translate3d(".concat(o,"px, ").concat(r,"px, 0)"),a=e.hideDuration;i.setStyle(e.$popperEle,"transitionDuration",a+"ms"),i.setStyle(e.$popperEle,"transform",n),i.setStyle(e.$popperEle,"opacity",0),e.hideDurationTimeout=setTimeout((function(){i.hide(e.$popperEle),"function"==typeof e.afterHideCallback&&e.afterHideCallback(t)}),a)}}),this.exitDelay)}},{key:"updatePosition",value:function(){i.setStyle(this.$popperEle,"transitionDuration","0ms"),this.resetPosition();var e=parseInt(i.getData(this.$popperEle,"left")),t=parseInt(i.getData(this.$popperEle,"top"));i.show(this.$popperEle,"inline-flex"),i.setStyle(this.$popperEle,"transform","translate3d(".concat(e,"px, ").concat(t,"px, 0)"))}}],o&&r(t.prototype,o),e}();window.PopperComponent=s}(),function(){"use strict";function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(e,t){for(var i=0;i<t.length;i++){var r=t[i];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,o(r.key),r)}}function o(t){var o=function(t,o){if("object"!=e(t)||!t)return t;var i=t[Symbol.toPrimitive];if(void 0!==i){var r=i.call(t,o||"default");if("object"!=e(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===o?String:Number)(t)}(t,"string");return"symbol"==e(o)?o:o+""}var i=function(){return e=function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)},i=[{key:"convertToBoolean",value:function(e){return e=!0===e||"true"===e||!1!==e&&"false"!==e&&arguments.length>1&&void 0!==arguments[1]&&arguments[1]}},{key:"removeArrayEmpty",value:function(e){return Array.isArray(e)&&e.length?e.filter((function(e){return!!e})):[]}},{key:"throttle",value:function(e,t){var o,i=0;return function(){for(var r=arguments.length,n=new Array(r),a=0;a<r;a++)n[a]=arguments[a];var s=(new Date).getTime(),l=t-(s-i);clearTimeout(o),l<=0?(i=s,e.apply(void 0,n)):o=setTimeout((function(){e.apply(void 0,n)}),l)}}}],(o=null)&&t(e.prototype,o),i&&t(e,i),Object.defineProperty(e,"prototype",{writable:!1}),e;var e,o,i}();function r(e){return r="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},r(e)}function n(e){return function(e){if(Array.isArray(e))return a(e)}(e)||function(e){if("undefined"!=typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||function(e,t){if(e){if("string"==typeof e)return a(e,t);var o=Object.prototype.toString.call(e).slice(8,-1);return"Object"===o&&e.constructor&&(o=e.constructor.name),"Map"===o||"Set"===o?Array.from(e):"Arguments"===o||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(o)?a(e,t):void 0}}(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}function a(e,t){(null==t||t>e.length)&&(t=e.length);for(var o=0,i=new Array(t);o<t;o++)i[o]=e[o];return i}function s(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,l(i.key),i)}}function l(e){var t=function(e,t){if("object"!=r(e)||!e)return e;var o=e[Symbol.toPrimitive];if(void 0!==o){var i=o.call(e,t||"default");if("object"!=r(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==r(t)?t:t+""}var u=function(){function e(){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e)}return t=e,r=[{key:"addClass",value:function(t,o){t&&(o=o.split(" "),e.getElements(t).forEach((function(e){var t;(t=e.classList).add.apply(t,n(o))})))}},{key:"removeClass",value:function(t,o){t&&(o=o.split(" "),e.getElements(t).forEach((function(e){var t;(t=e.classList).remove.apply(t,n(o))})))}},{key:"hasClass",value:function(e,t){return!!e&&e.classList.contains(t)}},{key:"getElement",value:function(e){return e&&("string"==typeof e?e=document.querySelector(e):void 0!==e.length&&(e=e[0])),e||null}},{key:"getElements",value:function(e){if(e)return void 0===e.forEach&&(e=[e]),e}},{key:"addEvent",value:function(t,o,i){e.addOrRemoveEvent(t,o,i,"add")}},{key:"removeEvent",value:function(t,o,i){e.addOrRemoveEvent(t,o,i,"remove")}},{key:"addOrRemoveEvent",value:function(t,o,r,n){t&&(o=i.removeArrayEmpty(o.split(" "))).forEach((function(o){(t=e.getElements(t)).forEach((function(e){"add"===n?e.addEventListener(o,r):e.removeEventListener(o,r)}))}))}},{key:"getScrollableParents",value:function(e){if(!e)return[];for(var t=[window],o=e.parentElement;o;){var i=getComputedStyle(o).overflow;-1===i.indexOf("scroll")&&-1===i.indexOf("auto")||t.push(o),o=o.parentElement}return t}},{key:"convertPropToDataAttr",value:function(e){return e?"data-popover-".concat(e).replace(/([A-Z])/g,"-$1").toLowerCase():""}}],(o=null)&&s(t.prototype,o),r&&s(t,r),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,o,r}();function p(e){return p="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},p(e)}function h(e,t){for(var o=0;o<t.length;o++){var i=t[o];i.enumerable=i.enumerable||!1,i.configurable=!0,"value"in i&&(i.writable=!0),Object.defineProperty(e,c(i.key),i)}}function c(e){var t=function(e,t){if("object"!=p(e)||!e)return e;var o=e[Symbol.toPrimitive];if(void 0!==o){var i=o.call(e,t||"default");if("object"!=p(i))return i;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===t?String:Number)(e)}(e,"string");return"symbol"==p(t)?t:t+""}var f,v={27:"onEscPress"},d=["target","position","margin","offset","enterDelay","exitDelay","showDuration","hideDuration","transitionDistance","updatePositionThrottle","zIndex","hideOnOuterClick","showOnHover","hideArrowIcon","disableManualAction","disableUpdatePosition"],y=function(){function e(t){!function(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}(this,e);try{this.setProps(t),this.init()}catch(e){console.warn("Couldn't initiate Popover component"),console.error(e)}}return t=e,r=[{key:"init",value:function(t){var o=t.ele;if(o){var i=!1;if("string"==typeof o){if(!(o=document.querySelectorAll(o)))return;1===o.length&&(i=!0)}void 0===o.length&&(o=[o],i=!0);var r=[];return o.forEach((function(o){t.ele=o,e.destroy(o),r.push(new e(t))})),i?r[0]:r}}},{key:"destroy",value:function(e){if(e){var t=e.popComp;t&&t.destroy()}}},{key:"showMethod",value:function(){this.popComp.show()}},{key:"hideMethod",value:function(){this.popComp.hide()}},{key:"updatePositionMethod",value:function(){this.popComp.popper.updatePosition()}},{key:"getAttrProps",value:function(){var e=u.convertPropToDataAttr,t={};return d.forEach((function(o){t[e(o)]=o})),t}}],(o=[{key:"init",value:function(){this.$popover&&(this.setElementProps(),this.renderArrow(),this.initPopper(),this.addEvents())}},{key:"getEvents",value:function(){var e=[{$ele:document,event:"click",method:"onDocumentClick"},{$ele:document,event:"keydown",method:"onDocumentKeyDown"}];return this.disableManualAction||(e.push({$ele:this.$ele,event:"click",method:"onTriggerEleClick"}),this.showOnHover&&(e.push({$ele:this.$ele,event:"mouseenter",method:"onTriggerEleMouseEnter"}),e.push({$ele:this.$ele,event:"mouseleave",method:"onTriggerEleMouseLeave"}))),e}},{key:"addOrRemoveEvents",value:function(e){var t=this;this.getEvents().forEach((function(o){t.addOrRemoveEvent({action:e,$ele:o.$ele,events:o.event,method:o.method})}))}},{key:"addEvents",value:function(){this.addOrRemoveEvents("add")}},{key:"removeEvents",value:function(){this.addOrRemoveEvents("remove"),this.removeScrollEventListeners(),this.removeResizeEventListeners()}},{key:"addOrRemoveEvent",value:function(e){var t=this,o=e.action,r=e.$ele,n=e.events,a=e.method,s=e.throttle;r&&(n=i.removeArrayEmpty(n.split(" "))).forEach((function(e){var n="".concat(a,"-").concat(e),l=t.events[n];l||(l=t[a].bind(t),s&&(l=i.throttle(l,s)),t.events[n]=l),"add"===o?u.addEvent(r,e,l):u.removeEvent(r,e,l)}))}},{key:"addScrollEventListeners",value:function(){this.$scrollableElems=u.getScrollableParents(this.$ele),this.addOrRemoveEvent({action:"add",$ele:this.$scrollableElems,events:"scroll",method:"onAnyParentScroll",throttle:this.updatePositionThrottle})}},{key:"removeScrollEventListeners",value:function(){this.$scrollableElems&&(this.addOrRemoveEvent({action:"remove",$ele:this.$scrollableElems,events:"scroll",method:"onAnyParentScroll"}),this.$scrollableElems=null)}},{key:"addResizeEventListeners",value:function(){this.addOrRemoveEvent({action:"add",$ele:window,events:"resize",method:"onResize",throttle:this.updatePositionThrottle})}},{key:"removeResizeEventListeners",value:function(){this.addOrRemoveEvent({action:"remove",$ele:window,events:"resize",method:"onResize"})}},{key:"onAnyParentScroll",value:function(){this.popper.updatePosition()}},{key:"onResize",value:function(){this.popper.updatePosition()}},{key:"onDocumentClick",value:function(e){var t=e.target,o=t.closest(".pop-comp-ele"),i=t.closest(".pop-comp-wrapper");this.hideOnOuterClick&&o!==this.$ele&&i!==this.$popover&&this.hide()}},{key:"onDocumentKeyDown",value:function(e){var t=e.which||e.keyCode,o=v[t];o&&this[o](e)}},{key:"onEscPress",value:function(){this.hideOnOuterClick&&this.hide()}},{key:"onTriggerEleClick",value:function(){this.toggle()}},{key:"onTriggerEleMouseEnter",value:function(){this.show()}},{key:"onTriggerEleMouseLeave",value:function(){this.hide()}},{key:"setProps",value:function(e){e=this.setDefaultProps(e),this.setPropsFromElementAttr(e);var t=i.convertToBoolean;this.$ele=e.ele,this.target=e.target,this.position=e.position,this.margin=parseFloat(e.margin),this.offset=parseFloat(e.offset),this.enterDelay=parseFloat(e.enterDelay),this.exitDelay=parseFloat(e.exitDelay),this.showDuration=parseFloat(e.showDuration),this.hideDuration=parseFloat(e.hideDuration),this.transitionDistance=parseFloat(e.transitionDistance),this.updatePositionThrottle=parseFloat(e.updatePositionThrottle),this.zIndex=parseFloat(e.zIndex),this.hideOnOuterClick=t(e.hideOnOuterClick),this.showOnHover=t(e.showOnHover),this.hideArrowIcon=t(e.hideArrowIcon),this.disableManualAction=t(e.disableManualAction),this.disableUpdatePosition=t(e.disableUpdatePosition),this.beforeShowCallback=e.beforeShow,this.afterShowCallback=e.afterShow,this.beforeHideCallback=e.beforeHide,this.afterHideCallback=e.afterHide,this.events={},this.$popover=u.getElement(this.target)}},{key:"setDefaultProps",value:function(e){return Object.assign({position:"auto",margin:8,offset:5,enterDelay:0,exitDelay:0,showDuration:300,hideDuration:200,transitionDistance:10,updatePositionThrottle:100,zIndex:1,hideOnOuterClick:!0,showOnHover:!1,hideArrowIcon:!1,disableManualAction:!1,disableUpdatePosition:!1},e)}},{key:"setPropsFromElementAttr",value:function(e){var t=e.ele;for(var o in f){var i=t.getAttribute(o);i&&(e[f[o]]=i)}}},{key:"setElementProps",value:function(){var t=this.$ele;t.popComp=this,t.show=e.showMethod,t.hide=e.hideMethod,t.updatePosition=e.updatePositionMethod,u.addClass(this.$ele,"pop-comp-ele"),u.addClass(this.$popover,"pop-comp-wrapper")}},{key:"getOtherTriggerPopComp",value:function(){var e,t=this.$popover.popComp;return t&&t.$ele!==this.$ele&&(e=t),e}},{key:"initPopper",value:function(){var e={$popperEle:this.$popover,$triggerEle:this.$ele,$arrowEle:this.$arrowEle,position:this.position,margin:this.margin,offset:this.offset,enterDelay:this.enterDelay,exitDelay:this.exitDelay,showDuration:this.showDuration,hideDuration:this.hideDuration,transitionDistance:this.transitionDistance,zIndex:this.zIndex,afterShow:this.afterShow.bind(this),afterHide:this.afterHide.bind(this)};this.popper=new PopperComponent(e)}},{key:"beforeShow",value:function(){"function"==typeof this.beforeShowCallback&&this.beforeShowCallback(this)}},{key:"beforeHide",value:function(){"function"==typeof this.beforeHideCallback&&this.beforeHideCallback(this)}},{key:"show",value:function(){this.isShown()||(this.isShownForOtherTrigger()?this.showAfterOtherHide():(u.addClass(this.$popover,"pop-comp-disable-events"),this.$popover.popComp=this,this.beforeShow(),this.popper.show({resetPosition:!0}),u.addClass(this.$ele,"pop-comp-active")))}},{key:"hide",value:function(){this.isShown()&&(this.beforeHide(),this.popper.hide(),this.removeScrollEventListeners(),this.removeResizeEventListeners())}},{key:"toggle",value:function(e){void 0===e&&(e=!this.isShown()),e?this.show():this.hide()}},{key:"isShown",value:function(){return u.hasClass(this.$ele,"pop-comp-active")}},{key:"isShownForOtherTrigger",value:function(){var e=this.getOtherTriggerPopComp();return!!e&&e.isShown()}},{key:"showAfterOtherHide",value:function(){var e=this,t=this.getOtherTriggerPopComp();if(t){var o=t.exitDelay+t.hideDuration+100;setTimeout((function(){e.show()}),o)}}},{key:"afterShow",value:function(){var e=this;this.showOnHover?setTimeout((function(){u.removeClass(e.$popover,"pop-comp-disable-events")}),2e3):u.removeClass(this.$popover,"pop-comp-disable-events"),this.disableUpdatePosition||(this.addScrollEventListeners(),this.addResizeEventListeners()),"function"==typeof this.afterShowCallback&&this.afterShowCallback(this)}},{key:"afterHide",value:function(){u.removeClass(this.$ele,"pop-comp-active"),"function"==typeof this.afterHideCallback&&this.afterHideCallback(this)}},{key:"renderArrow",value:function(){if(!this.hideArrowIcon){var e=this.$popover.querySelector(".pop-comp-arrow");e||(this.$popover.insertAdjacentHTML("afterbegin",'<i class="pop-comp-arrow"></i>'),e=this.$popover.querySelector(".pop-comp-arrow")),this.$arrowEle=e}}},{key:"destroy",value:function(){this.removeEvents()}}])&&h(t.prototype,o),r&&h(t,r),Object.defineProperty(t,"prototype",{writable:!1}),t;var t,o,r}();f=y.getAttrProps(),window.PopoverComponent=y}();
 }();
 /******/ })()
 ;
