@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** cSpell:ignore nocheck, Labelledby, vscomp, tabindex, combobox, haspopup, listbox, activedescendant */
 /* eslint-disable class-methods-use-this */
 // @ts-nocheck
@@ -86,7 +87,6 @@ const dataProps = [
   'useGroupValue',
   'valueKey',
   'zIndex',
-  'hideSelectDisplayOnKeepAlwaysOpen', // Royale
 ];
 
 /** Class representing VirtualSelect */
@@ -680,32 +680,6 @@ export class VirtualSelect {
   }
 
   onResize() {
-    // Royale
-    if (this.showDropboxAsPopup && !this.keepAlwaysOpen) {
-      const newvalue = window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
-
-      if (newvalue !== this.showAsPopup) {
-        this.showAsPopup = newvalue;
-        this.optionsCount = this.getOptionsCount(this.optionsCountInit);
-        this.halfOptionsCount = Math.ceil(this.optionsCount / 2);
-        this.optionsHeight = this.getOptionsHeight();
-
-        if (this.hasDropboxWrapper) {
-          this.$dropboxWrapper.remove();
-          this.mutationObserver.disconnect();
-        }
-
-        if (this.dropboxPopover) {
-          this.dropboxPopover.destroy();
-        }
-
-        this.render();
-        this.setValue(this.selectedValues, { disableEvent: true, disableValidation: true });
-        return;
-      }
-    }
-    // End Royale
-
     this.setOptionsContainerHeight(true);
   }
 
@@ -982,7 +956,6 @@ export class VirtualSelect {
 
     this.maxWidth = options.maxWidth;
     this.searchDelay = options.searchDelay;
-    this.hideSelectDisplayOnKeepAlwaysOpen = convertToBoolean(options.hideSelectDisplayOnKeepAlwaysOpen); // Royale
 
     /** @type {string[]} */
     this.selectedValues = [];
@@ -1013,10 +986,7 @@ export class VirtualSelect {
     this.showAsPopup =
       this.showDropboxAsPopup && !this.keepAlwaysOpen && window.innerWidth <= parseFloat(this.popupDropboxBreakpoint);
     this.hasSearchContainer = this.hasSearch || (this.multiple && !this.disableSelectAll);
-    // Royale
-    this.optionsCountInit = parseInt(options.optionsCount);
-    this.optionsCount = this.getOptionsCount(this.optionsCountInit);
-    // End Royale
+    this.optionsCount = this.getOptionsCount(options.optionsCount);
     this.halfOptionsCount = Math.ceil(this.optionsCount / 2);
     this.optionsHeight = this.getOptionsHeight();
     this.uniqueId = this.getUniqueId();
@@ -1068,7 +1038,6 @@ export class VirtualSelect {
       emptyValue: '',
       searchDelay: 300,
       focusSelectedOptionOnOpen: true,
-      hideSelectDisplayOnKeepAlwaysOpen: true, // Royale
     };
 
     if (options.hasOptionDescription) {
@@ -1833,12 +1802,7 @@ export class VirtualSelect {
       }
     }
 
-    // Royale. If the component always has the dropdown open, we set the size.
-    if (this.keepAlwaysOpen) {
-      DomUtils.setStyle(this.$optionsContainer, 'min-height', optionsHeight);
-    } else {
-      DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
-    }
+    DomUtils.setStyle(this.$optionsContainer, 'max-height', optionsHeight);
 
     this.afterSetOptionsContainerHeight(reset);
   }
@@ -3379,11 +3343,6 @@ export class VirtualSelect {
 
   static setValueMethod(...params) {
     this.virtualSelect.setValueMethod(...params);
-    // Royale
-    if (this.virtualSelect.focusSelectedOptionOnOpen && this.virtualSelect.keepAlwaysOpen) {
-      this.virtualSelect.setScrollTop();
-    }
-    // End Royale
   }
 
   static setOptionsMethod(...params) {

@@ -521,26 +521,6 @@ var DomUtils = /*#__PURE__*/function () {
 
     /**
      * @param {HTMLElement} $ele
-     * @param {string} events
-     * @param {Function} callback
-     */
-  }, {
-    key: "removeEvent",
-    value: function removeEvent($ele, events, callback) {
-      if (!$ele) {
-        return;
-      }
-      var eventsArray = Utils.removeArrayEmpty(events.split(' '));
-      eventsArray.forEach(function (event) {
-        var $eleArray = DomUtils.getElements($ele);
-        $eleArray.forEach(function ($this) {
-          $this.removeEventListener(event, callback);
-        });
-      });
-    }
-
-    /**
-     * @param {HTMLElement} $ele
      * @param {string} eventName
      * @param {boolean} [bubbles]
      */
@@ -912,6 +892,7 @@ function virtual_select_Ext_defineProperties(target, props) { for (var i = 0; i 
 function virtual_select_Ext_createClass(Constructor, protoProps, staticProps) { if (protoProps) virtual_select_Ext_defineProperties(Constructor.prototype, protoProps); if (staticProps) virtual_select_Ext_defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function virtual_select_Ext_toPropertyKey(arg) { var key = virtual_select_Ext_toPrimitive(arg, "string"); return virtual_select_Ext_typeof(key) === "symbol" ? key : String(key); }
 function virtual_select_Ext_toPrimitive(input, hint) { if (virtual_select_Ext_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (virtual_select_Ext_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+/* eslint-disable linebreak-style */
 /** cSpell:ignore nocheck, Labelledby, vscomp, tabindex, combobox, haspopup, listbox, activedescendant */
 /* eslint-disable class-methods-use-this */
 // @ts-nocheck
@@ -970,6 +951,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       var clearButtonTooltip = this.getTooltipAttrText(this.clearButtonText);
       var ariaLabelledbyText = this.ariaLabelledby ? "aria-labelledby=\"".concat(this.ariaLabelledby, "\"") : '';
       var ariaLabelText = this.ariaLabelText ? "aria-label=\"".concat(this.ariaLabelText, "\"") : '';
+      var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
+      var isExpanded = false;
       // Royale
       var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
       var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
@@ -1226,19 +1209,22 @@ var VirtualSelect = /*#__PURE__*/function () {
         DomUtils.addEvent($ele, event, callback);
       });
     }
+
+    /** dom event methods - start */
   }, {
     key: "removeEvents",
     value: function removeEvents() {
       this.removeEvent(document, 'click', 'onDocumentClick');
       this.removeEvent(this.$allWrappers, 'keydown', 'onKeyDown');
       this.removeEvent(this.$toggleButton, 'click', 'onToggleButtonClick');
-      this.removeEvent(this.$clearButton, 'click', 'onClearButtonClick');
+      this.removeEvent(this.$clearButton, 'click keydown', 'onClearButtonClick');
       this.removeEvent(this.$dropboxContainer, 'click', 'onDropboxContainerClick');
       this.removeEvent(this.$dropboxCloseButton, 'click', 'onDropboxCloseButtonClick');
       this.removeEvent(this.$optionsContainer, 'scroll', 'onOptionsScroll');
       this.removeEvent(this.$options, 'click', 'onOptionsClick');
       this.removeEvent(this.$options, 'mouseover', 'onOptionsMouseOver');
       this.removeEvent(this.$options, 'touchmove', 'onOptionsTouchMove');
+      this.removeMutationObserver();
     }
   }, {
     key: "removeEvent",
@@ -1250,10 +1236,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       var eventsArray = Utils.removeArrayEmpty(events.split(' '));
       eventsArray.forEach(function (event) {
         var eventsKey = "".concat(method, "-").concat(event);
-        // eslint-disable-next-line prefer-const
         var callback = _this3.events[eventsKey];
         if (callback) {
-          delete _this3.events[eventsKey];
           DomUtils.removeEvent($ele, event, callback);
         }
       });
@@ -1867,7 +1851,6 @@ var VirtualSelect = /*#__PURE__*/function () {
         // Royale
         readOnly: false // Royale
       };
-
       if (options.hasOptionDescription) {
         defaultOptions.optionsCount = 4;
         defaultOptions.optionHeight = '50px';
