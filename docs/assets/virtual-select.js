@@ -3075,6 +3075,7 @@ var VirtualSelect = /*#__PURE__*/function () {
         DomUtils.setAria(this.$wrapper, 'expanded', false);
         DomUtils.setAria(this.$wrapper, 'activedescendant', '');
       }
+      this.$wrapper.focus();
       if (this.dropboxPopover && !isSilent) {
         this.dropboxPopover.hide();
       } else {
