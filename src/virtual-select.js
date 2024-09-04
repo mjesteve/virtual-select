@@ -525,7 +525,11 @@ export class VirtualSelect {
 
     if (document.activeElement === this.$searchInput && (e.shiftKey && key === 9)) {
       e.preventDefault();
-      this.$dropboxContainerTop.focus();
+      if (this.keepAlwaysOpen) {
+        this.$dropboxContainerTop.focus();
+      } else {
+        this.closeDropbox();
+      }
       return;
     }
     if (document.activeElement === this.$searchInput && key === 9) {
@@ -534,9 +538,12 @@ export class VirtualSelect {
       return;
     }
     // Handle the Escape key when showing the dropdown as a popup, closing it
-    if (document.activeElement === this.$wrapper && (key === 27 || e.key === 'Escape') && this.showAsPopup) {
-      this.closeDropbox();
-      return;
+    if (key === 27 || e.key === 'Escape') {
+      const wrapper = this.showAsPopup ? this.$wrapper : this.$dropboxWrapper;
+      if ((document.activeElement === wrapper || wrapper.contains(document.activeElement)) && !this.keepAlwaysOpen) {
+        this.closeDropbox();
+        return;
+      }
     }
     if (method) {
       this[method](e);
@@ -940,6 +947,7 @@ export class VirtualSelect {
     this.popupPosition = options.popupPosition;
     this.onServerSearch = options.onServerSearch;
     this.labelRenderer = options.labelRenderer;
+    this.selectedLabelRenderer = options.selectedLabelRenderer;
     this.initialSelectedValue = options.selectedValue === 0 ? '0' : options.selectedValue;
     this.emptyValue = options.emptyValue;
     this.ariaLabelledby = options.ariaLabelledby;
@@ -1560,7 +1568,7 @@ export class VirtualSelect {
   }
 
   setValueText() {
-    const { multiple, selectedValues, noOfDisplayValues, showValueAsTags, $valueText } = this;
+    const { multiple, selectedValues, noOfDisplayValues, showValueAsTags, $valueText, selectedLabelRenderer } = this;
     const valueText = [];
     let valueTooltip = [];
     const selectedLength = selectedValues.length;
@@ -1586,7 +1594,12 @@ export class VirtualSelect {
           return true;
         }
 
-        const { label } = d;
+        let { label } = d;
+
+        if (typeof selectedLabelRenderer === 'function') {
+          label = selectedLabelRenderer(d);
+        }
+
         valueText.push(label);
         selectedValuesCount += 1;
 
@@ -2344,6 +2357,7 @@ export class VirtualSelect {
       DomUtils.setAria(this.$wrapper, 'activedescendant', '');
     }
 
+    this.$wrapper.focus();
     if (this.dropboxPopover && !isSilent) {
       this.dropboxPopover.hide();
     } else {
