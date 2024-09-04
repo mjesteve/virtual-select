@@ -2361,6 +2361,7 @@ export class VirtualSelect {
       DomUtils.setAria(this.$wrapper, 'activedescendant', '');
     }
 
+    this.$wrapper.focus();
     if (this.dropboxPopover && !isSilent) {
       this.dropboxPopover.hide();
     } else {
