@@ -2805,7 +2805,6 @@ var VirtualSelect = /*#__PURE__*/function () {
         DomUtils.setAria(this.$wrapper, 'expanded', false);
         DomUtils.setAria(this.$wrapper, 'activedescendant', '');
       }
-      this.$wrapper.focus();
       if (this.dropboxPopover && !isSilent) {
         this.dropboxPopover.hide();
       } else {
@@ -3833,11 +3832,6 @@ var VirtualSelect = /*#__PURE__*/function () {
     }
 
     // End Royale
-  }, {
-    key: "setReadOnlyMethod",
-    value: function setReadOnlyMethod(value) {
-      return this.virtualSelect.setReadOnly(value);
-    }
   }, {
     key: "destroyMethod",
     value: function destroyMethod() {
