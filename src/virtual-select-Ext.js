@@ -547,7 +547,6 @@ export class VirtualSelect {
         return;
       }
     }
-
     if (method) {
       this[method](e);
     }

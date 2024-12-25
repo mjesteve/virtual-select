@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** cSpell:ignore Labelledby */
 /**
  * @typedef {object} virtualSelectOptions

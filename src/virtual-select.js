@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** cSpell:ignore nocheck, Labelledby, vscomp, tabindex, combobox, haspopup, listbox, activedescendant */
 /* eslint-disable class-methods-use-this */
 // @ts-nocheck
@@ -2357,6 +2358,7 @@ export class VirtualSelect {
       DomUtils.setAria(this.$wrapper, 'activedescendant', '');
     }
 
+    this.$wrapper.focus();
     if (this.dropboxPopover && !isSilent) {
       this.dropboxPopover.hide();
     } else {
