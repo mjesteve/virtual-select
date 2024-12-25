@@ -1,16 +1,15 @@
 /*!
- * Virtual Select v1.0.46
+ * Virtual Select v1.0.46.1
  * https://sa-si-dev.github.io/virtual-select
  * Licensed under MIT (https://github.com/sa-si-dev/virtual-select/blob/master/LICENSE)
  *//******/ (function() { // webpackBootstrap
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry needs to be wrapped in an IIFE because it needs to be in strict mode.
 !function() {
 "use strict";
 
 // UNUSED EXPORTS: VirtualSelect
 
-;// CONCATENATED MODULE: ./src/utils/utils.js
+;// ./src/utils/utils.js
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -218,7 +217,7 @@ var Utils = /*#__PURE__*/function () {
   }]);
   return Utils;
 }();
-;// CONCATENATED MODULE: ./src/utils/dom-utils.js
+;// ./src/utils/dom-utils.js
 function dom_utils_typeof(obj) { "@babel/helpers - typeof"; return dom_utils_typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, dom_utils_typeof(obj); }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || dom_utils_unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -617,262 +616,7 @@ var DomUtils = /*#__PURE__*/function () {
   }]);
   return DomUtils;
 }();
-
-/***/ }),
-
-/***/ "./src/utils/index.js":
-/*!****************************!*\
-  !*** ./src/utils/index.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "DomUtils": function() { return /* reexport safe */ _dom_utils__WEBPACK_IMPORTED_MODULE_1__.DomUtils; },
-/* harmony export */   "Utils": function() { return /* reexport safe */ _utils__WEBPACK_IMPORTED_MODULE_0__.Utils; }
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils/utils.js");
-/* harmony import */ var _dom_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dom-utils */ "./src/utils/dom-utils.js");
-
-
-
-/***/ }),
-
-/***/ "./src/utils/utils.js":
-/*!****************************!*\
-  !*** ./src/utils/utils.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Utils": function() { return /* binding */ Utils; }
-/* harmony export */ });
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-var Utils = /*#__PURE__*/function () {
-  function Utils() {
-    _classCallCheck(this, Utils);
-  }
-  _createClass(Utils, null, [{
-    key: "getString",
-    value:
-    /**
-     * @param {any} text
-     * @returns {string}
-     */
-    function getString(text) {
-      return text || text === 0 ? text.toString() : '';
-    }
-
-    /**
-     * @param {any} value
-     * @param {boolean} defaultValue
-     * @returns {boolean}
-     */
-  }, {
-    key: "convertToBoolean",
-    value: function convertToBoolean(value) {
-      var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var result;
-      if (value === true || value === 'true') {
-        result = true;
-      } else if (value === false || value === 'false') {
-        result = false;
-      } else {
-        result = defaultValue;
-      }
-      return result;
-    }
-
-    /**
-     * @param {any} value
-     * @returns {boolean}
-     */
-  }, {
-    key: "isEmpty",
-    value: function isEmpty(value) {
-      var result = false;
-      if (!value) {
-        result = true;
-      } else if (Array.isArray(value)) {
-        if (value.length === 0) {
-          result = true;
-        }
-      } else if (_typeof(value) === 'object' && Object.keys(value).length === 0) {
-        result = true;
-      }
-      return result;
-    }
-
-    /**
-     * @param {any} value
-     * @returns {boolean}
-     */
-  }, {
-    key: "isNotEmpty",
-    value: function isNotEmpty(value) {
-      return !this.isEmpty(value);
-    }
-
-    /**
-     * @param {any[]} array
-     * @param {any} value
-     * @param {boolean} cloneArray
-     * @returns {any[]}
-     */
-  }, {
-    key: "removeItemFromArray",
-    value: function removeItemFromArray(array, value) {
-      var cloneArray = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-      if (!Array.isArray(array) || !array.length) {
-        return array;
-      }
-      var inputArr = cloneArray ? _toConsumableArray(array) : array;
-      var index = inputArr.indexOf(value);
-      if (index !== -1) {
-        inputArr.splice(index, 1);
-      }
-      return inputArr;
-    }
-
-    /**
-     * @param {any[]} array
-     * @returns {any[]}
-     */
-  }, {
-    key: "removeArrayEmpty",
-    value: function removeArrayEmpty(array) {
-      if (!Array.isArray(array) || !array.length) {
-        return [];
-      }
-      return array.filter(function (d) {
-        return !!d;
-      });
-    }
-
-    /**
-     * @param {number} max
-     * @param {number} max
-     * @returns {number}
-     */
-  }, {
-    key: "getRandomInt",
-    value: function getRandomInt(max) {
-      var min = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-      var minN = Math.ceil(min);
-      var maxN = Math.floor(max);
-      return Math.floor(Math.random() * (maxN - minN - 1)) + minN;
-    }
-
-    /**
-     * @param {string} text
-     * @return {string}
-     */
-  }, {
-    key: "regexEscape",
-    value: function regexEscape(text) {
-      var ESC_REGEX = /[-/\\^$*+?.()|[\]{}]/g;
-      return text.replace(ESC_REGEX, '\\$&');
-    }
-
-    /**
-     * @param {string} text
-     * @return {string}
-     */
-  }, {
-    key: "normalizeString",
-    value: function normalizeString(text) {
-      var NON_WORD_REGEX = /[^\w]/g;
-      return text.normalize('NFD').replace(NON_WORD_REGEX, '');
-    }
-  }]);
-  return Utils;
-}();
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-!function() {
-"use strict";
-var __webpack_exports__ = {};
-/*!*******************************!*\
-  !*** ./src/virtual-select.js ***!
-  \*******************************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "VirtualSelect": function() { return /* binding */ VirtualSelect; }
-/* harmony export */ });
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./src/utils/index.js");
+;// ./src/virtual-select-Ext.js
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = virtual_select_Ext_toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -954,9 +698,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
       var isExpanded = false;
       // Royale
-      var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnkeepAlwaysOpen ? ' style="display:none;"' : '';
-      var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
-      var isExpanded = false;
+      var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen ? ' style="display:none;"' : '';
+      // fin Royale
+
       if (this.additionalClasses) {
         wrapperClasses += " ".concat(this.additionalClasses);
       }
@@ -995,7 +739,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
 
       // eslint-disable-next-line no-trailing-spaces
-      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, ">\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n        <div class=\"").concat(toggleButtonClasses, "\">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n          <div class=\"vscomp-arrow\"></div>\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, " \n          tabindex=\"0\" ").concat(ariaLabelClearBtnTxt, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        ").concat(this.renderDropbox({
+      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, ">\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n        <div class=\"").concat(toggleButtonClasses, "\" ").concat(hideDisplay, ">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n          <div class=\"vscomp-arrow\"></div>\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, " \n          tabindex=\"0\" ").concat(ariaLabelClearBtnTxt, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        ").concat(this.renderDropbox({
         wrapperClasses: wrapperClasses
       }), "\n      </div>");
       this.$ele.innerHTML = html;
@@ -1207,39 +951,6 @@ var VirtualSelect = /*#__PURE__*/function () {
           _this2.events[eventsKey] = callback;
         }
         DomUtils.addEvent($ele, event, callback);
-      });
-    }
-
-    /** dom event methods - start */
-  }, {
-    key: "removeEvents",
-    value: function removeEvents() {
-      this.removeEvent(document, 'click', 'onDocumentClick');
-      this.removeEvent(this.$allWrappers, 'keydown', 'onKeyDown');
-      this.removeEvent(this.$toggleButton, 'click', 'onToggleButtonClick');
-      this.removeEvent(this.$clearButton, 'click keydown', 'onClearButtonClick');
-      this.removeEvent(this.$dropboxContainer, 'click', 'onDropboxContainerClick');
-      this.removeEvent(this.$dropboxCloseButton, 'click', 'onDropboxCloseButtonClick');
-      this.removeEvent(this.$optionsContainer, 'scroll', 'onOptionsScroll');
-      this.removeEvent(this.$options, 'click', 'onOptionsClick');
-      this.removeEvent(this.$options, 'mouseover', 'onOptionsMouseOver');
-      this.removeEvent(this.$options, 'touchmove', 'onOptionsTouchMove');
-      this.removeMutationObserver();
-    }
-  }, {
-    key: "removeEvent",
-    value: function removeEvent($ele, events, method) {
-      var _this3 = this;
-      if (!$ele) {
-        return;
-      }
-      var eventsArray = Utils.removeArrayEmpty(events.split(' '));
-      eventsArray.forEach(function (event) {
-        var eventsKey = "".concat(method, "-").concat(event);
-        var callback = _this3.events[eventsKey];
-        if (callback) {
-          DomUtils.removeEvent($ele, event, callback);
-        }
       });
     }
 
@@ -1522,6 +1233,10 @@ var VirtualSelect = /*#__PURE__*/function () {
   }, {
     key: "removeMutationObserver",
     value: function removeMutationObserver() {
+      // Royale. Add error in 1.44.0
+      if (!this.hasDropboxWrapper) {
+        return;
+      }
       this.mutationObserver.disconnect();
     }
 
@@ -1577,9 +1292,11 @@ var VirtualSelect = /*#__PURE__*/function () {
       if (this.initialDisabled) {
         this.disable();
       }
+      // Royale
       if (this.initialReadOnly) {
         this.setReadOnly(this.initialReadOnly);
       }
+      // Fin Royale
       if (this.autofocus) {
         this.focus();
       }
@@ -1880,7 +1597,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       $ele.value = this.multiple ? [] : '';
       $ele.name = this.name;
       $ele.disabled = false;
-      $ele.readOnly = false;
+      $ele.readOnly = false; // Royale
       $ele.required = this.required;
       $ele.autofocus = this.autofocus;
       $ele.multiple = this.multiple;
@@ -1902,7 +1619,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       $ele.focus = VirtualSelect.focusMethod;
       $ele.enable = VirtualSelect.enableMethod;
       $ele.disable = VirtualSelect.disableMethod;
-      $ele.setReadOnly = VirtualSelect.setReadOnlyMethod;
+      $ele.setReadOnly = VirtualSelect.setReadOnlyMethod; // Royale
       $ele.destroy = VirtualSelect.destroyMethod;
       $ele.validate = VirtualSelect.validateMethod;
       $ele.toggleRequired = VirtualSelect.toggleRequiredMethod;
@@ -3088,7 +2805,6 @@ var VirtualSelect = /*#__PURE__*/function () {
         DomUtils.setAria(this.$wrapper, 'expanded', false);
         DomUtils.setAria(this.$wrapper, 'activedescendant', '');
       }
-      this.$wrapper.focus();
       if (this.dropboxPopover && !isSilent) {
         this.dropboxPopover.hide();
       } else {
@@ -3109,6 +2825,10 @@ var VirtualSelect = /*#__PURE__*/function () {
       DomUtils.addClass(this.$allWrappers, 'closed');
       if (!isSilent) {
         DomUtils.dispatchEvent(this.$ele, 'afterClose');
+        // Only focus there are no pre-selected options or when selecting new options
+        // if ((this.initialSelectedValue && this.initialSelectedValue.length === 0) || this.selectedValues.length > 0) {
+        //  this.focus();
+        // }
       }
       this.$wrapper.focus();
     }
@@ -3775,6 +3495,8 @@ var VirtualSelect = /*#__PURE__*/function () {
       DomUtils.changeTabIndex(this.$wrapper, -1);
       this.$wrapper.blur();
     }
+
+    // Royale
   }, {
     key: "setReadOnly",
     value: function setReadOnly(value) {
@@ -3784,13 +3506,14 @@ var VirtualSelect = /*#__PURE__*/function () {
       this.$ele.readOnly = value;
       this.$ele.toggleAttribute('read-only');
       this.$hiddenInput.toggleAttribute('read-only');
-      //_utils__WEBPACK_IMPORTED_MODULE_0__.DomUtils.setAria(this.$wrapper, 'read-only', value);
+      DomUtils.setAria(this.$wrapper, 'read-only', value);
       if (value) {
         this.removeEvents();
       } else {
         this.addEvents();
       }
     }
+    // End Royale
   }, {
     key: "validate",
     value: function validate() {
@@ -4100,11 +3823,15 @@ var VirtualSelect = /*#__PURE__*/function () {
     value: function disableMethod() {
       return this.virtualSelect.disable();
     }
+
+    // Royale
   }, {
     key: "setReadOnlyMethod",
     value: function setReadOnlyMethod(value) {
       return this.virtualSelect.setReadOnly(value);
     }
+
+    // End Royale
   }, {
     key: "destroyMethod",
     value: function destroyMethod() {
@@ -4142,7 +3869,7 @@ if (typeof NodeList !== 'undefined' && NodeList.prototype && !NodeList.prototype
   NodeList.prototype.forEach = Array.prototype.forEach;
 }
 }();
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
 !function() {
 /*!
  * Popover v1.0.13

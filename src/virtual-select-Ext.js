@@ -414,7 +414,7 @@ export class VirtualSelect {
     let searchInput = '';
 
     if (this.multiple && !this.disableSelectAll) {
-      checkboxHtml = `<span class="vscomp-toggle-all-button">
+      checkboxHtml = `<span class="vscomp-toggle-all-button" tabindex="0" aria-label="${this.selectAllText}">
           <span class="checkbox-icon vscomp-toggle-all-checkbox"></span>
           <span class="vscomp-toggle-all-label">${this.selectAllText}</span>
         </span>`;
@@ -529,20 +529,16 @@ export class VirtualSelect {
     const key = e.which || e.keyCode;
     const method = keyDownMethodMapping[key];
 
-    if (document.activeElement === this.$searchInput && (e.shiftKey && key === 9)) {
-      e.preventDefault();
-      if (this.keepAlwaysOpen) {
-        this.$dropboxContainerTop.focus();
-      } else {
-        this.closeDropbox();
-      }
-      return;
-    }
-    if (document.activeElement === this.$searchInput && key === 9) {
+    if (document.activeElement === this.$searchInput && (!e.shiftKey && key === 9)) {
       e.preventDefault();
       this.focusFirstVisibleOption();
+    }
+
+    if (document.activeElement === this.$toggleAllButton && key === 13) {
+      this.toggleAllOptions();
       return;
     }
+
     // Handle the Escape key when showing the dropdown as a popup, closing it
     if (key === 27 || e.key === 'Escape') {
       const wrapper = this.showAsPopup ? this.$wrapper : this.$dropboxWrapper;
@@ -551,6 +547,7 @@ export class VirtualSelect {
         return;
       }
     }
+
     if (method) {
       this[method](e);
     }
@@ -805,11 +802,11 @@ export class VirtualSelect {
     if (this.initialDisabled) {
       this.disable();
     }
-
+    // Royale
     if (this.initialReadOnly) {
       this.setReadOnly(this.initialReadOnly);
     }
-
+    // Fin Royale
     if (this.autofocus) {
       this.focus();
     }
@@ -1118,7 +1115,7 @@ export class VirtualSelect {
     $ele.value = this.multiple ? [] : '';
     $ele.name = this.name;
     $ele.disabled = false;
-    $ele.readOnly = false;
+    $ele.readOnly = false; // Royale
     $ele.required = this.required;
     $ele.autofocus = this.autofocus;
     $ele.multiple = this.multiple;
@@ -1141,7 +1138,7 @@ export class VirtualSelect {
     $ele.focus = VirtualSelect.focusMethod;
     $ele.enable = VirtualSelect.enableMethod;
     $ele.disable = VirtualSelect.disableMethod;
-    $ele.setReadOnly = VirtualSelect.setReadOnlyMethod;
+    $ele.setReadOnly = VirtualSelect.setReadOnlyMethod; // Royale
     $ele.destroy = VirtualSelect.destroyMethod;
     $ele.validate = VirtualSelect.validateMethod;
     $ele.toggleRequired = VirtualSelect.toggleRequiredMethod;
@@ -2398,6 +2395,10 @@ export class VirtualSelect {
   closeDropbox(isSilent) {
     this.isSilentClose = isSilent;
 
+    if (this.isOpened() === false) {
+      return;
+    }
+
     if (this.keepAlwaysOpen) {
       this.removeOptionFocus();
       return;
@@ -2411,7 +2412,6 @@ export class VirtualSelect {
       DomUtils.setAria(this.$wrapper, 'activedescendant', '');
     }
 
-    this.$wrapper.focus();
     if (this.dropboxPopover && !isSilent) {
       this.dropboxPopover.hide();
     } else {
@@ -2436,10 +2436,12 @@ export class VirtualSelect {
     if (!isSilent) {
       DomUtils.dispatchEvent(this.$ele, 'afterClose');
       // Only focus there are no pre-selected options or when selecting new options
-      if ((this.initialSelectedValue && this.initialSelectedValue.length === 0) || this.selectedValues.length > 0) {
-        this.focus();
-      }
+      // if ((this.initialSelectedValue && this.initialSelectedValue.length === 0) || this.selectedValues.length > 0) {
+      //  this.focus();
+      // }
     }
+
+    this.$wrapper.focus();
   }
 
   moveSelectedOptionsFirst() {
@@ -2942,20 +2944,10 @@ export class VirtualSelect {
   }
 
   scrollToTop() {
-    const isClosed = !this.isOpened();
-
-    if (isClosed) {
-      this.openDropbox(true);
-    }
-
     const { scrollTop } = this.$optionsContainer;
 
     if (scrollTop > 0) {
       this.$optionsContainer.scrollTop = 0;
-    }
-
-    if (isClosed) {
-      this.closeDropbox(true);
     }
   }
 
@@ -3159,6 +3151,7 @@ export class VirtualSelect {
     this.$wrapper.blur();
   }
 
+  // Royale
   setReadOnly(value) {
     if (value === this.$ele.readOnly) {
       return;
@@ -3174,6 +3167,7 @@ export class VirtualSelect {
       this.addEvents();
     }
   }
+  // End Royale
 
   validate() {
     if (this.disableValidation) {
@@ -3493,10 +3487,12 @@ export class VirtualSelect {
     return this.virtualSelect.disable();
   }
 
+  // Royale
   static setReadOnlyMethod(value) {
     return this.virtualSelect.setReadOnly(value);
   }
 
+  // End Royale
   static destroyMethod() {
     return this.virtualSelect.destroy();
   }

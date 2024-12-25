@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /** cSpell:ignore nocheck, Labelledby, vscomp, tabindex, combobox, haspopup, listbox, activedescendant */
 /* eslint-disable class-methods-use-this */
 // @ts-nocheck
@@ -123,8 +122,6 @@ export class VirtualSelect {
     const ariaLabelledbyText = this.ariaLabelledby ? `aria-labelledby="${this.ariaLabelledby}"` : '';
     const ariaLabelText = this.ariaLabelText ? `aria-label="${this.ariaLabelText}"` : '';
     const ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? `aria-label="${this.ariaLabelClearButtonText}"` : '';
-    // Royale
-    const hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen ? ' style="display:none;"' : '';
     let isExpanded = false;
 
     if (this.additionalClasses) {
@@ -180,8 +177,7 @@ export class VirtualSelect {
         role="combobox" aria-haspopup="listbox" aria-controls="vscomp-dropbox-container-${uniqueId}"
         aria-expanded="${isExpanded}" ${ariaLabelledbyText} ${ariaLabelText}>
         <input type="hidden" name="${this.name}" class="vscomp-hidden-input">
-
-        <div class="${toggleButtonClasses}" ${hideDisplay}>
+        <div class="${toggleButtonClasses}">
           <div class="vscomp-value" ${valueTooltip}>
             ${this.placeholder}
           </div>
@@ -2361,7 +2357,6 @@ export class VirtualSelect {
       DomUtils.setAria(this.$wrapper, 'activedescendant', '');
     }
 
-    this.$wrapper.focus();
     if (this.dropboxPopover && !isSilent) {
       this.dropboxPopover.hide();
     } else {
