@@ -250,6 +250,7 @@
 
 .vscomp-option-text {
   @include ellipse;
+  -webkit-user-select: none;
   user-select: none;
   width: 100%;
 }
@@ -308,6 +309,7 @@
   font-size: 25px;
   height: $search-clear-width;
   justify-content: center;
+  -webkit-user-select: none;
   user-select: none;
   visibility: hidden;
   width: $search-clear-width;
@@ -346,6 +348,7 @@
 .vscomp-ele {
   &[disabled] {
     cursor: not-allowed;
+    -webkit-user-select: none;
     user-select: none;
 
     .vscomp-wrapper {
