@@ -128,7 +128,9 @@ export class VirtualSelect {
     const ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? `aria-label="${this.ariaLabelClearButtonText}"` : '';
     let isExpanded = false;
     // Royale
-    const hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen ? ' style="display:none;"' : '';
+    if (this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen) {
+      wrapperClasses += ' hide-select-display';
+    }
     // fin Royale
 
     if (this.additionalClasses) {
@@ -184,7 +186,7 @@ export class VirtualSelect {
         role="combobox" aria-haspopup="listbox" aria-controls="vscomp-dropbox-container-${uniqueId}"
         aria-expanded="${isExpanded}" ${ariaLabelledbyText} ${ariaLabelText}>
         <input type="hidden" name="${this.name}" class="vscomp-hidden-input">
-        <div class="${toggleButtonClasses}" ${hideDisplay}>
+        <div class="${toggleButtonClasses}">
           <div class="vscomp-value" ${valueTooltip}>
             ${this.placeholder}
           </div>

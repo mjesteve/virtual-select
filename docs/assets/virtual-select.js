@@ -698,7 +698,9 @@ var VirtualSelect = /*#__PURE__*/function () {
       var ariaLabelClearBtnTxt = this.ariaLabelClearButtonText ? "aria-label=\"".concat(this.ariaLabelClearButtonText, "\"") : '';
       var isExpanded = false;
       // Royale
-      var hideDisplay = this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen ? ' style="display:none;"' : '';
+      if (this.keepAlwaysOpen && this.hideSelectDisplayOnKeepAlwaysOpen) {
+        wrapperClasses += ' hide-select-display';
+      }
       // fin Royale
 
       if (this.additionalClasses) {
@@ -739,7 +741,7 @@ var VirtualSelect = /*#__PURE__*/function () {
       }
 
       // eslint-disable-next-line no-trailing-spaces
-      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, ">\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n        <div class=\"").concat(toggleButtonClasses, "\" ").concat(hideDisplay, ">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n          <div class=\"vscomp-arrow\"></div>\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, " \n          tabindex=\"0\" ").concat(ariaLabelClearBtnTxt, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        ").concat(this.renderDropbox({
+      var html = "<div id=\"vscomp-ele-wrapper-".concat(uniqueId, "\" class=\"vscomp-ele-wrapper ").concat(wrapperClasses, "\" tabindex=\"0\"\n        role=\"combobox\" aria-haspopup=\"listbox\" aria-controls=\"vscomp-dropbox-container-").concat(uniqueId, "\"\n        aria-expanded=\"").concat(isExpanded, "\" ").concat(ariaLabelledbyText, " ").concat(ariaLabelText, ">\n        <input type=\"hidden\" name=\"").concat(this.name, "\" class=\"vscomp-hidden-input\">\n        <div class=\"").concat(toggleButtonClasses, "\">\n          <div class=\"vscomp-value\" ").concat(valueTooltip, ">\n            ").concat(this.placeholder, "\n          </div>\n          <div class=\"vscomp-arrow\"></div>\n          <div class=\"vscomp-clear-button toggle-button-child\" ").concat(clearButtonTooltip, " \n          tabindex=\"0\" ").concat(ariaLabelClearBtnTxt, ">\n            <i class=\"vscomp-clear-icon\"></i>\n          </div>\n        </div>\n\n        ").concat(this.renderDropbox({
         wrapperClasses: wrapperClasses
       }), "\n      </div>");
       this.$ele.innerHTML = html;

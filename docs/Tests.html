@@ -35,6 +35,7 @@
     <button type="button" onclick="readonly(true)">Set read only</button>
     <button type="button" onclick="readonly(false)">Set read write</button>
     <div id="sample-list" style="margin-top: 20px;"></div>
+    <div id="sample-list2" style="margin-top: 20px;"></div>
   </div>
 
   <script type="text/javascript">
@@ -90,6 +91,20 @@
       search: true,
       multiple: false, maxValues:3, dropboxWrapper: 'self'
     });
+
+
+var milist2 =  VirtualSelect.init({
+    ele: '#sample-list2',
+    options: arPages,
+    hideClearButton: true,
+    optionsCount: 10,
+    optionHeight:"34px",
+    keepAlwaysOpen: true,
+    hideSelectDisplayOnKeepAlwaysOpen: true,
+    markSearchResults: true,
+    search: true,
+    multiple: false, maxValues:3, dropboxWrapper: 'self'
+  });
  
     //alert(document.getElementById('sample-select').value); //return 20
     //alert(misel.$ele.value); //return 20

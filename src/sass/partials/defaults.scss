@@ -34,6 +34,22 @@
       }
     }
   }
+
+  &.hide-select-display {
+      &.keep-always-open {
+          .vscomp-toggle-button {
+              display: none;
+          }
+      }
+  }
+
+  &:not(.hide-select-display) {
+      &.keep-always-open {
+          .vscomp-dropbox {
+              border-top-width: 0;
+          }
+      }
+  }
 }
 
 /*
