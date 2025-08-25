@@ -43,6 +43,18 @@ declare namespace Cypress {
 
     /**
      * @example
+     * cy.resetSearchValue(vsElem)
+     */
+    resetSearchValue(): Chainable<any>;
+
+    /**
+     * @example
+     * cy.resetValuePopup(vsElem)
+     */
+    resetValuePopup(): Chainable<any>;
+
+    /**
+     * @example
      * cy.scrollOptions(600)
      */
     scrollOptions(distance: number): Chainable<any>;
@@ -57,15 +69,48 @@ declare namespace Cypress {
 
     /**
      * @example
+     * cy.checkOptionLabelExists('Option 2')
+     * cy.checkOptionLabelExists(['Option 2', 'Option 3'])
+     */
+    checkOptionLabelExists(label: string | number | (string | number)[]): Chainable<any>;
+
+    /**
+     * @example
+     * cy.checkActiveElementHasClass('vscomp-search-input')
+     */
+    checkActiveElementHasClass(className: string): Chainable<Subject>;
+
+    /**
+     * @example
      * cy.hasValueText('Option 2')
      */
     hasValueText(valueText: string): Chainable<any>;
 
     /**
      * @example
+     * cy.searchClear()
+     */
+    searchClear(): Chainable<any>;
+
+    /**
+     * @example
      * cy.search('Option 2')
      */
     search(value: string): Chainable<any>;
+
+    /**
+     * @example
+     * cy.typeValue('Option 2')
+     * cy.typeValue('Option 2', true)
+     */
+    typeValue(value: string, clearText?: boolean): Chainable<any>;
+
+    /**
+     * @example
+     * cy.pressKeys('Enter')
+     * cy.pressKeys(['ArrowDown', 'Enter'])
+     */
+    pressKeys(keys: string | string[]): Chainable<Subject>;
 
     /**
      * @example
@@ -86,6 +131,21 @@ declare namespace Cypress {
      * cy.checkClearButton(false)
      */
     checkClearButton(isExist: boolean): Chainable<any>;
+
+    /**
+     * @example
+     * cy.checkSearchClearButton(true)
+     * cy.checkSearchClearButton(false)
+     */
+    checkSearchClearButton(isExist: boolean): Chainable<any>;
+    
+    /**
+     * @example
+     * cy.checkClearButtonPopup(true)
+     * cy.checkClearButtonPopup(false)
+     */
+    checkClearButtonPopup(isExist: boolean): Chainable<any>;
+    
 
     /**
      * @example
@@ -126,7 +186,7 @@ declare namespace Cypress {
 
     /**
      * @example
-     * cy.dropboxIsFixed('single-select')
+     * cy.closePopup('single-select')
      */
     closePopup(id: string): Chainable<any>;
 

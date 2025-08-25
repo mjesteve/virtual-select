@@ -207,6 +207,9 @@ export class DomUtils {
    * @param {string} value
    */
   static setAria($ele, name, value) {
+    if (!$ele) {
+      return;
+    }
     let attrName = name;
 
     if (attrName !== 'role') {

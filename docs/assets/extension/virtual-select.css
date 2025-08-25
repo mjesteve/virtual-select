@@ -224,6 +224,7 @@
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  -webkit-user-select: none;
   user-select: none;
   width: 100%;
 }
@@ -750,6 +751,7 @@
   text-decoration: none;
   text-shadow: none;
   text-transform: none;
+  -webkit-user-select: none;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
